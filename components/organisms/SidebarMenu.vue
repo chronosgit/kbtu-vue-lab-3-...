@@ -1,33 +1,15 @@
 <script setup lang="ts">
+	const props = defineProps<{isActive: Boolean}>()
+
 	const router = useRouter();
 
-	const topicLinks = [
-		{
-			text: 'Adventure blog',
-			url: '/topics/adventure',
-			twGradient: 'bg-gradient-to-r from-[#4cd97c] to-[#3dd55f]',
-		},
-		{
-			text: 'Nature blog',
-			url: '/topics/nature',
-			twGradient: 'bg-gradient-to-r from-[#5cde69] to-[#22cd1e]',
-		},
-		{
-			text: 'Fashion blog',
-			url: '/topics/fashion',
-			twGradient: 'bg-gradient-to-r from-[#79de56] to-[#49e521]',
-		},
-		{
-			text: 'Modern blog',
-			url: '/topics/modern',
-			twGradient: 'bg-gradient-to-r from-[#68e674] to-[#7dcc85]',
-		},
-	];
+	const topicLinks = getTopicLinks();
 </script>
 
 <template>
 	<aside
-		class="max-w-[50%] sm:max-w-none z-10 space-y-5 p-2 absolute left-0 top-0 bottom-0 bg-[#c1ebf1]"
+		class="transition-transform translate-x-0 left-0 max-w-[50%] sm:max-w-none  z-10 space-y-5 p-2 absolute top-0 bottom-0 bg-[#c1ebf1]"
+		:class="{'-translate-x-full': !isActive}""
 	>
 		<div class="p-1 text-center bg-white rounded-lg">
 			<h2 class="text-3xl font-bold text-gray-700 uppercase font-handjet">
@@ -41,7 +23,7 @@
 			>
 				<div
 					v-for="tl in topicLinks"
-					:class="'p-2 cursor-pointer ' + tl.twGradient"
+					:class="['p-2', 'cursor-pointer', tl.twGradient]"
 					@click="router.push(tl.url)"
 				>
 					<p>{{ tl.text }}</p>
