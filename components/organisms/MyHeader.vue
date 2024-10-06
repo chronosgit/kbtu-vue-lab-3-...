@@ -2,20 +2,18 @@
 	import IconBurger from '../atoms/IconBurger.vue';
 	import IconUser from '../atoms/IconUser.vue';
 
-	const onBurgerClick = () => {
-		console.log('burger');
-	};
+	const emit = defineEmits<{
+		(e: 'onBurgerClick'): void;
+	}>();
 
-	const onUserClick = () => {
-		console.log('user');
-	};
+	const onUserClick = () => console.log('user');
 </script>
 
 <template>
 	<header
 		class="flex items-center justify-between gap-4 p-2 bg-white bg-opacity-45"
 	>
-		<div class="cursor-pointer" @click="onBurgerClick">
+		<div class="cursor-pointer" @click.stop="emit('onBurgerClick')">
 			<IconBurger />
 		</div>
 
@@ -28,7 +26,7 @@
 			>
 		</div>
 
-		<div class="cursor-pointer" @click="onUserClick">
+		<div class="cursor-pointer" @click.stop="onUserClick">
 			<IconUser />
 		</div>
 	</header>
