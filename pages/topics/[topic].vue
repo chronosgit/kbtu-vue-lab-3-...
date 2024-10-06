@@ -9,14 +9,18 @@
 	if (!topic) {
 		throw createError({
 			statusCode: 400,
-			statusMessage: 'Invalid topic: Topic must be specified.',
+			statusMessage: 'Invalid topic parameter.',
 			fatal: true,
 		});
 	}
-	useHead({ title: `${capitalize(topic)} blog` });
 
 	const sidebarMenuRef = useTemplateRef('sidebar-menu-ref');
+
 	const { activate, isActive } = useClickaway(sidebarMenuRef);
+
+	watchEffect(() => {
+		useHead({ title: capitalize(topic) + ' blog' });
+	});
 </script>
 
 <template>
@@ -24,7 +28,7 @@
 		<SidebarMenu ref="sidebar-menu-ref" :is-active="isActive" />
 
 		<div class="pt-2">
-			<MyHeader @on-burger-click="activate()" />
+			<MyHeader @burger-click="activate()" />
 		</div>
 	</div>
 </template>
