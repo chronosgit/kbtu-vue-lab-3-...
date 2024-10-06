@@ -1,3 +1,9 @@
+<script setup lang="ts">
+	definePageMeta({
+		title: 'Page not found',
+	});
+</script>
+
 <template>
 	<div
 		class="px-2 w-screen h-screen bg-[url(~/assets/images/bg-trees.png)] bg-cover bg-center flex justify-center items-center"
