@@ -18,6 +18,9 @@ module.exports = {
 				poppins: ['Poppins', 'sans-serif'],
 				handjet: ['Handjet', 'Comic Sans MS', 'Verdana', 'Arial', 'sans-serif'],
 			},
+			backgroundImage: {
+				trees: 'url(~/assets/images/bg-trees.png)',
+			},
 		},
 	},
 	plugins: [],
