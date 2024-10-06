@@ -1,7 +1,5 @@
 <script setup lang="ts">
-	const route = useRoute();
-
-	const title = route.meta.title || 'Sophisticated blog';
+	const { title } = useHtmlTitle();
 </script>
 
 <template>
