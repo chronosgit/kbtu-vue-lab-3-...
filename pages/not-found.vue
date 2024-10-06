@@ -1,7 +1,5 @@
 <script setup lang="ts">
-	definePageMeta({
-		title: 'Page not found',
-	});
+	useHead({ title: 'Page not found' });
 </script>
 
 <template>
