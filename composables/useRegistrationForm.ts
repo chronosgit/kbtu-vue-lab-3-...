@@ -1,32 +1,38 @@
-export default function () {
-	interface FormItem {
-		id: string;
-		label: string;
-		value: string;
-	}
+import type IRegistrationFormItem from '~/interfaces/IRegistrationFormItem';
 
-	const form = ref<FormItem[]>([
+export default function () {
+	const form = ref<IRegistrationFormItem[]>([
 		{
 			id: 'email',
+			inputType: 'email',
 			label: 'Enter your email',
 			value: '',
+			placeholder: 'user@example.com',
 		},
 		{
 			id: 'username',
+			inputType: 'text',
 			label: 'Create username',
 			value: '',
+			placeholder: 'user',
 		},
 		{
 			id: 'password',
+			inputType: 'password',
 			label: 'Create password',
 			value: '',
+			placeholder: '*********',
 		},
 		{
 			id: 're-password',
+			inputType: 'password',
 			label: 'Confirm password',
 			value: '',
+			placeholder: '*********',
 		},
 	]);
+
+	const isConfirmationPanelActive = ref(false);
 
 	const onFormValueChange = (event: Event) => {
 		const { value: newValue, id: formInputId } =
@@ -43,9 +49,7 @@ export default function () {
 		formItem.value = newValue;
 	};
 
-	const onFormSubmit = () => {
-		console.log(form);
-	};
+	const toConfirmPanel = () => (isConfirmationPanelActive.value = true);
 
-	return { form, onFormValueChange, onFormSubmit };
+	return { form, isConfirmationPanelActive, onFormValueChange, toConfirmPanel };
 }
