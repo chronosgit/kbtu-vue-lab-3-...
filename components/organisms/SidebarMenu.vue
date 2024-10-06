@@ -1,15 +1,13 @@
 <script setup lang="ts">
-	const props = defineProps<{isActive: Boolean}>()
-
-	const router = useRouter();
+	const props = defineProps<{ isActive: Boolean }>();
 
 	const topicLinks = getTopicLinks();
 </script>
 
 <template>
 	<aside
-		class="transition-transform translate-x-0 left-0 max-w-[50%] sm:max-w-none  z-10 space-y-5 p-2 absolute top-0 bottom-0 bg-[#c1ebf1]"
-		:class="{'-translate-x-full': !isActive}""
+		class="transition-transform translate-x-0 left-0 max-w-[50%] sm:max-w-none z-10 space-y-5 p-2 absolute top-0 bottom-0 bg-[#c1ebf1]"
+		:class="{ '-translate-x-full': !props.isActive }"
 	>
 		<div class="p-1 text-center bg-white rounded-lg">
 			<h2 class="text-3xl font-bold text-gray-700 uppercase font-handjet">
@@ -24,7 +22,7 @@
 				<div
 					v-for="tl in topicLinks"
 					:class="['p-2', 'cursor-pointer', tl.twGradient]"
-					@click="router.push(tl.url)"
+					@click="navigateTo(tl.url)"
 				>
 					<p>{{ tl.text }}</p>
 				</div>
