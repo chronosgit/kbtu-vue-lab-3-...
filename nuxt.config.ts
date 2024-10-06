@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 	components: false,
 	alias: {
 		components: './components',
+		interfaces: './interfaces',
 	},
 
 	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', '@nuxt/fonts'],
