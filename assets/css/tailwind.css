@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.text-outline {
+		--color: rgba(0, 0, 0, 1);
+		text-shadow:
+			1px 1px 0px var(--color),
+			-1px -1px 0px var(--color),
+			1px -1px 0px var(--color),
+			-1px 1px 0px var(--color);
+	}
+}

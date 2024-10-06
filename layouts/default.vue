@@ -1,13 +1,7 @@
-<script setup lang="ts">
-	const { title } = useHtmlTitle();
-</script>
-
 <template>
 	<div>
 		<Html>
-			<Head>
-				<Title>{{ title }}</Title>
-			</Head>
+			<Head></Head>
 
 			<Body>
 				<slot />
