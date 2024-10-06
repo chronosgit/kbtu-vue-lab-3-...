@@ -6,18 +6,18 @@
 
 <template>
 	<aside
-		class="transition-transform translate-x-0 left-0 max-w-[50%] sm:max-w-none z-10 space-y-5 p-2 absolute top-0 bottom-0 bg-[#c1ebf1]"
-		:class="{ '-translate-x-full': !props.isActive }"
+		class="absolute bottom-0 left-0 top-0 z-10 max-w-[50%] -translate-x-full space-y-5 bg-[#c1ebf1] p-2 transition-transform sm:max-w-none"
+		:class="{ 'translate-x-0': props.isActive }"
 	>
-		<div class="p-1 text-center bg-white rounded-lg">
-			<h2 class="text-3xl font-bold text-gray-700 uppercase font-handjet">
+		<div class="rounded-lg bg-white p-1 text-center">
+			<h2 class="font-handjet text-3xl font-bold uppercase text-gray-700">
 				Menu
 			</h2>
 		</div>
 
-		<div class="py-2 space-y-20 bg-white rounded-lg">
+		<div class="space-y-20 rounded-lg bg-white py-2">
 			<div
-				class="space-y-5 text-3xl font-semibold text-center text-white uppercase font-handjet"
+				class="space-y-5 text-center font-handjet text-3xl font-semibold uppercase text-white"
 			>
 				<div
 					v-for="tl in topicLinks"
@@ -29,9 +29,9 @@
 			</div>
 
 			<div
-				class="font-handjet text-white font-bold p-3 mx-4 rounded-lg bg-gradient-to-b from-[#acef8d] via-[#7ddb63] to-[#48c433]"
+				class="mx-4 rounded-lg bg-gradient-to-b from-[#acef8d] via-[#7ddb63] to-[#48c433] p-3 font-handjet font-bold text-white"
 			>
-				<h3 class="mb-3 text-3xl font-bold text-center uppercase">Contacts</h3>
+				<h3 class="mb-3 text-center text-3xl font-bold uppercase">Contacts</h3>
 
 				<ul class="space-y-3 text-2xl font-semibold">
 					<li>Phone: +1(232)-23-45-22</li>
