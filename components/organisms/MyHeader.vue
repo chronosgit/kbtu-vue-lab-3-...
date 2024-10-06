@@ -47,10 +47,12 @@
 					class="mt-1 text-center font-tnr text-xl font-bold uppercase text-[#548eff]"
 				>
 					<div class="border-[1px] border-black bg-[#43e567] p-2">
-						<p class="text-outline">Login</p>
+						<NuxtLink to="/auth/login" class="text-outline">Login</NuxtLink>
 					</div>
 					<div class="border-[1px] border-black bg-[#f8f14d] p-2">
-						<p class="text-outline">Register</p>
+						<NuxtLink to="/auth/registration" class="text-outline"
+							>Register</NuxtLink
+						>
 					</div>
 				</div>
 			</Dropdown>
