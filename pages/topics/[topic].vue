@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import SidebarMenu from '~/components/organisms/SidebarMenu.vue';
 
 	const {
 		params: { topic },
@@ -18,6 +19,8 @@
 
 <template>
 	<div class="w-screen h-screen bg-center bg-cover bg-trees">
+		<SidebarMenu />
+
 		<div class="pt-2">
 			<MyHeader />
 		</div>
