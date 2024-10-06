@@ -1,4 +1,6 @@
 <script setup lang="ts">
+	import MyHeader from '~/components/organisms/MyHeader.vue';
+
 	const {
 		params: { topic },
 	} = useRoute() as { params: { topic?: string } };
@@ -15,7 +17,9 @@
 </script>
 
 <template>
-	<div>
-		<h1>{{ topic }}</h1>
+	<div class="w-screen h-screen bg-center bg-cover bg-trees">
+		<div class="pt-2">
+			<MyHeader />
+		</div>
 	</div>
 </template>
