@@ -10,6 +10,14 @@ export default defineNuxtConfig({
 
 	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon'],
 
+	css: ['~/assets/css/tailwind.css'],
+	postcss: {
+		plugins: {
+			tailwindcss: {},
+			autoprefixer: {},
+		},
+	},
+
 	icon: {
 		componentName: 'NuxtIcon',
 	},
