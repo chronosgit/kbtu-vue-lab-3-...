@@ -13,16 +13,18 @@
 			fatal: true,
 		});
 	}
-
 	useHead({ title: `${capitalize(topic)} blog` });
+
+	const sidebarMenuRef = useTemplateRef('sidebar-menu-ref');
+	const { activate, isActive } = useClickaway(sidebarMenuRef);
 </script>
 
 <template>
 	<div class="w-screen h-screen bg-center bg-cover bg-trees">
-		<SidebarMenu />
+		<SidebarMenu ref="sidebar-menu-ref" :is-active="isActive" />
 
 		<div class="pt-2">
-			<MyHeader />
+			<MyHeader @on-burger-click="activate()" />
 		</div>
 	</div>
 </template>
