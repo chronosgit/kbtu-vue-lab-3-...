@@ -3,7 +3,7 @@
 	import IconUser from '../atoms/IconUser.vue';
 
 	const emit = defineEmits<{
-		(e: 'onBurgerClick'): void;
+		(e: 'burgerClick'): void;
 	}>();
 
 	const onUserClick = () => console.log('user');
@@ -13,7 +13,7 @@
 	<header
 		class="flex items-center justify-between gap-4 p-2 bg-white bg-opacity-45"
 	>
-		<div class="cursor-pointer" @click.stop="emit('onBurgerClick')">
+		<div class="cursor-pointer" @click.stop="emit('burgerClick')">
 			<IconBurger />
 		</div>
 
