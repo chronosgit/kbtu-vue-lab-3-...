@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import DummySchema from '../schemas/DummySchema';
 
-const DummyModel = mongoose.model('Post', DummySchema);
+const Dummy = mongoose.model('Dummy', DummySchema);
 
-export default DummyModel;
+export default Dummy;
