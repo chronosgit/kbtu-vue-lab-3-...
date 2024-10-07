@@ -9,6 +9,11 @@ export default defineNuxtConfig({
 		interfaces: './interfaces',
 	},
 
+	runtimeConfig: {
+		MONGO_URI: import.meta.env?.MONGO_URI,
+	},
+
+	plugins: ['~/plugins/mongodb.ts'],
 	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', '@nuxt/fonts'],
 
 	css: ['~/assets/css/tailwind.css'],
