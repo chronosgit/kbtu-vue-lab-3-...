@@ -1,8 +1,8 @@
-import DummyModel from '../models/Dummy';
+import Dummy from '../models/Dummy';
 
 export default defineEventHandler(async () => {
 	try {
-		const dummyData = await DummyModel.find();
+		const dummyData = await Dummy.find();
 
 		return getSuccessResponse(
 			200,
