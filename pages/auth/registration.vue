@@ -6,6 +6,8 @@
 
 	useHead({ title: 'Registration' });
 
+	const isRegistrationRequestLoading = ref(false);
+
 	const {
 		form,
 		isConfirmationPanelActive,
@@ -22,18 +24,28 @@
 				form.value.email,
 				form.value.username,
 				form.value.password
-			),
+			)
+				.then((res) => toConfirmPanel())
+				.catch((err) => {
+					switch (err.statusCode) {
+						case 400:
+							error.value = 'User already exists or credentials are wrong';
+							break;
+						default:
+							error.value = 'Something went wrong, please try again later';
+					}
+				})
+				.finally(() => (isRegistrationRequestLoading.value = false)),
 		{ immediate: false }
 	);
 
 	const toConfirmationAuthStepHandler = () => {
 		if (!validateForm()) return;
 
+		isRegistrationRequestLoading.value = true;
+
 		// Register the user from here
 		registerUser();
-
-		// Change UI to confirmation
-		toConfirmPanel();
 	};
 </script>
 
@@ -50,6 +62,7 @@
 				v-if="!isConfirmationPanelActive"
 				:form
 				:error
+				:is-loading="isRegistrationRequestLoading"
 				@form-value-change="onFormValueChange"
 				@form-submit="toConfirmationAuthStepHandler"
 			/>

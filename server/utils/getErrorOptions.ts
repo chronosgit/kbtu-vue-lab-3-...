@@ -6,7 +6,7 @@ interface HandledError {
 
 export default function (handledError: HandledError) {
 	const code = handledError?.statusCode;
-	const msg = handledError?.message || handledError?.statusMessage;
+	const msg = handledError?.statusMessage || handledError?.message;
 
 	switch (code) {
 		case 400:

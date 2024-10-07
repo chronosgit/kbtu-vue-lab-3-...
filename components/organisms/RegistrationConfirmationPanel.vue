@@ -1,5 +1,18 @@
 <script setup lang="ts">
-	const confirm = () => alert('confirm');
+	import AuthService from '~/services/AuthService';
+
+	const { data, execute: sendConfirmationLetter } = useLazyAsyncData(
+		'confirm-email',
+		() =>
+			AuthService.sendEmailConfirmationLetter()
+				.then((res) => {
+					console.log(res);
+				})
+				.catch((err) => {
+					console.error(err);
+				}),
+		{ immediate: false }
+	);
 
 	const create = () => alert('create');
 </script>
@@ -19,7 +32,7 @@
 
 			<button
 				class="rounded-lg bg-[#d6e243] p-2 font-tnr font-black uppercase"
-				@click="confirm"
+				@click="sendConfirmationLetter()"
 			>
 				Click to confirm
 			</button>

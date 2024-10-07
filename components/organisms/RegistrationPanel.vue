@@ -1,9 +1,11 @@
 <script setup lang="ts">
+	import LoadingSpinner from '../atoms/LoadingSpinner.vue';
 	import type IRegistrationForm from '~/interfaces/IRegistrationForm';
 
 	const props = defineProps<{
 		form: IRegistrationForm;
 		error: String;
+		isLoading: Boolean;
 	}>();
 
 	const emit = defineEmits<{
@@ -94,7 +96,14 @@
 				</div>
 			</div>
 
+			<LoadingSpinner
+				v-show="isLoading"
+				active-color="#49f364"
+				bg-color="transparent"
+			/>
+
 			<button
+				v-show="!isLoading"
 				class="max-w-max whitespace-nowrap rounded-lg bg-[#49f364] p-3 font-tnr font-semibold uppercase text-white sm:text-xl"
 			>
 				Create user
