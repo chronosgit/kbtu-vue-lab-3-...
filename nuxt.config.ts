@@ -7,8 +7,14 @@ export default defineNuxtConfig({
 	alias: {
 		components: './components',
 		interfaces: './interfaces',
+		services: './services',
 	},
 
+	runtimeConfig: {
+		MONGO_URI: import.meta.env?.MONGO_URI,
+	},
+
+	plugins: ['~/plugins/mongodb.server.ts'],
 	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', '@nuxt/fonts'],
 
 	css: ['~/assets/css/tailwind.css'],

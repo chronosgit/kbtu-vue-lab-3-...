@@ -1,12 +1,40 @@
 <script setup lang="ts">
+	import AuthService from '~/services/AuthService';
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 	import RegistrationConfirmationPanel from '~/components/organisms/RegistrationConfirmationPanel.vue';
 	import RegistrationPanel from '~/components/organisms/RegistrationPanel.vue';
 
 	useHead({ title: 'Registration' });
 
-	const { form, isConfirmationPanelActive, onFormValueChange, toConfirmPanel } =
-		useRegistrationForm();
+	const {
+		form,
+		isConfirmationPanelActive,
+		error,
+		onFormValueChange,
+		toConfirmPanel,
+		validateForm,
+	} = useRegistrationForm();
+
+	const { execute: registerUser } = useLazyAsyncData(
+		'registration',
+		() =>
+			AuthService.register(
+				form.value.email,
+				form.value.username,
+				form.value.password
+			),
+		{ immediate: false }
+	);
+
+	const toConfirmationAuthStepHandler = () => {
+		if (!validateForm()) return;
+
+		// Register the user from here
+		registerUser();
+
+		// Change UI to confirmation
+		toConfirmPanel();
+	};
 </script>
 
 <template>
@@ -21,8 +49,9 @@
 			<RegistrationPanel
 				v-if="!isConfirmationPanelActive"
 				:form
+				:error
 				@form-value-change="onFormValueChange"
-				@form-submit="toConfirmPanel"
+				@form-submit="toConfirmationAuthStepHandler"
 			/>
 
 			<RegistrationConfirmationPanel v-else />

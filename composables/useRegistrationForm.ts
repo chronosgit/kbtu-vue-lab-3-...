@@ -1,55 +1,58 @@
-import type IRegistrationFormItem from '~/interfaces/IRegistrationFormItem';
+import type IRegistrationForm from '~/interfaces/IRegistrationForm';
 
 export default function () {
-	const form = ref<IRegistrationFormItem[]>([
-		{
-			id: 'email',
-			inputType: 'email',
-			label: 'Enter your email',
-			value: '',
-			placeholder: 'user@example.com',
-		},
-		{
-			id: 'username',
-			inputType: 'text',
-			label: 'Create username',
-			value: '',
-			placeholder: 'user',
-		},
-		{
-			id: 'password',
-			inputType: 'password',
-			label: 'Create password',
-			value: '',
-			placeholder: '*********',
-		},
-		{
-			id: 're-password',
-			inputType: 'password',
-			label: 'Confirm password',
-			value: '',
-			placeholder: '*********',
-		},
-	]);
+	const form = ref<IRegistrationForm>({
+		email: '',
+		username: '',
+		password: '',
+		rePassword: '',
+	});
 
 	const isConfirmationPanelActive = ref(false);
+	const error = ref('');
 
-	const onFormValueChange = (event: Event) => {
-		const { value: newValue, id: formInputId } =
-			event.target as HTMLInputElement;
+	const validateForm = () => {
+		if (form.value.password !== form.value.rePassword) {
+			error.value = "Passwords don't match";
 
-		const formItem = form.value.find((i) => i.id === formInputId);
-
-		if (!formItem) {
-			throw createError({
-				statusMessage: "Registration form item with such ID doesn'n exist",
-			});
+			return false;
 		}
 
-		formItem.value = newValue;
+		return true;
 	};
 
 	const toConfirmPanel = () => (isConfirmationPanelActive.value = true);
 
-	return { form, isConfirmationPanelActive, onFormValueChange, toConfirmPanel };
+	const onFormValueChange = (event: Event) => {
+		const { value, id } = event.target as HTMLInputElement;
+
+		switch (id) {
+			case 'username':
+				form.value.username = value;
+				break;
+			case 'email':
+				form.value.email = value;
+				break;
+			case 'password':
+				form.value.password = value;
+				break;
+			case 're-password':
+				form.value.rePassword = value;
+				break;
+			default:
+				throw createError({
+					statusCode: 400,
+					statusMessage: 'Invalid registration form input',
+				});
+		}
+	};
+
+	return {
+		form,
+		error,
+		isConfirmationPanelActive,
+		onFormValueChange,
+		toConfirmPanel,
+		validateForm,
+	};
 }
