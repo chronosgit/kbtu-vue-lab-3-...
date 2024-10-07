@@ -9,12 +9,10 @@ class AuthService {
 			});
 		}
 
-		return () => {
-			$fetch('/api/auth/register', {
-				method: 'POST',
-				data: { email, username, password },
-			});
-		};
+		return $fetch('/api/auth/register', {
+			method: 'POST',
+			body: { email, username, password },
+		});
 	}
 }
 
