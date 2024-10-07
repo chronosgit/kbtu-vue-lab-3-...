@@ -14,6 +14,10 @@ class AuthService {
 			body: { email, username, password },
 		});
 	}
+
+	static async sendEmailConfirmationLetter() {
+		return $fetch('/api/auth/confirm-email');
+	}
 }
 
 export default AuthService;
