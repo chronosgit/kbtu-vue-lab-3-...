@@ -4,13 +4,11 @@ export default defineEventHandler(async (e) => {
 	try {
 		const { email, username, password } = await readBody(e);
 
-		console.log(123);
+		const res = new User({ email, username, password });
 
-		// const res = new User({ email, username, password });
+		await res.save();
 
-		// await res.save();
-
-		return getSuccessResponse(201, 'Confirmation letter is sent', {});
+		return getSuccessResponse(201, 'Confirmation letter is sent');
 	} catch (err) {
 		console.error(err);
 
