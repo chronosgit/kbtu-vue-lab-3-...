@@ -1,8 +1,9 @@
 <script setup lang="ts">
-	import type IRegistrationFormItem from '~/interfaces/IRegistrationFormItem';
+	import type IRegistrationForm from '~/interfaces/IRegistrationForm';
 
 	const props = defineProps<{
-		form: IRegistrationFormItem[];
+		form: IRegistrationForm;
+		error: String;
 	}>();
 
 	const emit = defineEmits<{
@@ -20,21 +21,73 @@
 		</div>
 
 		<form
-			class="flex items-end justify-between gap-4"
+			class="mb-3 flex items-end justify-between gap-4"
 			@submit.prevent="emit('formSubmit')"
 		>
 			<div class="flex flex-col gap-2">
-				<div v-for="i in props.form" class="flex flex-col gap-1 text-xl">
-					<label :for="i.id" class="font-tnr font-semibold text-white">
-						{{ i.label }}
+				<!-- Email -->
+				<div class="flex flex-col gap-1 text-xl">
+					<label for="email" class="font-tnr font-semibold text-white">
+						Enter your email
 					</label>
 
 					<input
-						:type="i.inputType"
-						:id="i.id"
-						:value="i.value"
+						type="email"
+						id="email"
+						:value="form.email"
+						placeholder="user@example.com"
 						required
-						:placeholder="i.placeholder"
+						class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+						@change="(e) => emit('formValueChange', e)"
+					/>
+				</div>
+
+				<!-- Username -->
+				<div class="flex flex-col gap-1 text-xl">
+					<label for="username" class="font-tnr font-semibold text-white">
+						Create username
+					</label>
+
+					<input
+						type="text"
+						id="username"
+						:value="form.username"
+						placeholder="user"
+						required
+						class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+						@change="(e) => emit('formValueChange', e)"
+					/>
+				</div>
+
+				<!-- Password -->
+				<div class="flex flex-col gap-1 text-xl">
+					<label for="password" class="font-tnr font-semibold text-white">
+						Create password
+					</label>
+
+					<input
+						type="password"
+						id="password"
+						:value="form.password"
+						placeholder="*********"
+						required
+						class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+						@change="(e) => emit('formValueChange', e)"
+					/>
+				</div>
+
+				<!-- Confirm password -->
+				<div class="flex flex-col gap-1 text-xl">
+					<label for="re-password" class="font-tnr font-semibold text-white">
+						Confirm password
+					</label>
+
+					<input
+						type="password"
+						id="re-password"
+						:value="form.rePassword"
+						placeholder="*********"
+						required
 						class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
 						@change="(e) => emit('formValueChange', e)"
 					/>
@@ -47,5 +100,9 @@
 				Create user
 			</button>
 		</form>
+
+		<p v-show="error" class="text-lg font-bold text-error-solid">
+			{{ error }}
+		</p>
 	</div>
 </template>
