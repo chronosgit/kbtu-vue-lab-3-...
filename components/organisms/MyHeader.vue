@@ -49,9 +49,16 @@
 					<div class="border-[1px] border-black bg-[#43e567] p-2">
 						<NuxtLink to="/auth/login" class="text-outline">Login</NuxtLink>
 					</div>
+
 					<div class="border-[1px] border-black bg-[#f8f14d] p-2">
 						<NuxtLink to="/auth/registration" class="text-outline"
 							>Register</NuxtLink
+						>
+					</div>
+
+					<div class="border-[1px] border-black bg-[#cfa0dd] p-2">
+						<NuxtLink to="/auth/confirmation" class="text-outline"
+							>Confirm</NuxtLink
 						>
 					</div>
 				</div>

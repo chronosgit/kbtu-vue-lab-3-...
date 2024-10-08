@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '~/server/models/User';
 
-// Dummy logic
 export default defineEventHandler(async (e) => {
 	try {
 		const accessToken = getCookie(e, 'access_token');
@@ -12,13 +11,18 @@ export default defineEventHandler(async (e) => {
 
 		const { email } = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
 
-		const emailConfirmationToken = await User.findOne(
+		const { emailConfirmationToken } = await readBody(e);
+
+		if (!emailConfirmationToken) throw createError({ statusCode: 400 });
+
+		const updatedUser = await User.findOneAndUpdate(
 			{ email },
-			{ emailConfirmationToken: 1, _id: 0 }
+			{ isEmailConfirmed: true },
+			{ new: true }
 		);
 
-		return getSuccessResponse(200, 'Letter sent', {
-			confirmationToken: emailConfirmationToken,
+		return getSuccessResponse(200, 'Account activated', {
+			updatedUser,
 		});
 	} catch (err) {
 		console.error(err);

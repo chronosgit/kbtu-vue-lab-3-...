@@ -1,21 +1,14 @@
 <script setup lang="ts">
 	import AuthService from '~/services/AuthService';
 	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import RegistrationConfirmationPanel from '~/components/organisms/RegistrationConfirmationPanel.vue';
-	import RegistrationPanel from '~/components/organisms/RegistrationPanel.vue';
+	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
 	useHead({ title: 'Registration' });
 
 	const isRegistrationRequestLoading = ref(false);
 
-	const {
-		form,
-		isConfirmationPanelActive,
-		error,
-		onFormValueChange,
-		toConfirmPanel,
-		validateForm,
-	} = useRegistrationForm();
+	const { form, error, onFormValueChange, validateForm } =
+		useRegistrationForm();
 
 	const { execute: registerUser } = useLazyAsyncData(
 		'registration',
@@ -25,26 +18,17 @@
 				form.value.username,
 				form.value.password
 			)
-				.then((res) => toConfirmPanel())
-				.catch((err) => {
-					switch (err.statusCode) {
-						case 400:
-							error.value = 'User already exists or credentials are wrong';
-							break;
-						default:
-							error.value = 'Something went wrong, please try again later';
-					}
-				})
+				.then(async () => await navigateTo('/auth/confirmation'))
+				.catch((err) => (error.value = err.statusMessage))
 				.finally(() => (isRegistrationRequestLoading.value = false)),
 		{ immediate: false }
 	);
 
-	const toConfirmationAuthStepHandler = () => {
+	const onFormSubmit = () => {
 		if (!validateForm()) return;
 
 		isRegistrationRequestLoading.value = true;
 
-		// Register the user from here
 		registerUser();
 	};
 </script>
@@ -58,16 +42,108 @@
 		</div>
 
 		<div class="px-2">
-			<RegistrationPanel
-				v-if="!isConfirmationPanelActive"
-				:form
-				:error
-				:is-loading="isRegistrationRequestLoading"
-				@form-value-change="onFormValueChange"
-				@form-submit="toConfirmationAuthStepHandler"
-			/>
+			<div class="mx-auto my-0 w-full max-w-[80%] lg:max-w-[50%]">
+				<div class="mb-16 max-w-max rounded-lg bg-[#62e3eb] px-2 py-3">
+					<p class="font-tnr text-xl font-semibold uppercase text-white">
+						Profile | Registration
+					</p>
+				</div>
 
-			<RegistrationConfirmationPanel v-else />
+				<form
+					class="mb-3 flex items-end justify-between gap-4"
+					@submit.prevent="onFormSubmit"
+				>
+					<div class="flex flex-col gap-2">
+						<!-- Email -->
+						<div class="flex flex-col gap-1 text-xl">
+							<label for="email" class="font-tnr font-semibold text-white">
+								Enter your email
+							</label>
+
+							<input
+								type="email"
+								id="email"
+								:value="form.email"
+								placeholder="user@example.com"
+								required
+								class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+								@change="(e) => onFormValueChange(e)"
+							/>
+						</div>
+
+						<!-- Username -->
+						<div class="flex flex-col gap-1 text-xl">
+							<label for="username" class="font-tnr font-semibold text-white">
+								Create username
+							</label>
+
+							<input
+								type="text"
+								id="username"
+								:value="form.username"
+								placeholder="user"
+								required
+								class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+								@change="(e) => onFormValueChange(e)"
+							/>
+						</div>
+
+						<!-- Password -->
+						<div class="flex flex-col gap-1 text-xl">
+							<label for="password" class="font-tnr font-semibold text-white">
+								Create password
+							</label>
+
+							<input
+								type="password"
+								id="password"
+								:value="form.password"
+								placeholder="*********"
+								required
+								class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+								@change="(e) => onFormValueChange(e)"
+							/>
+						</div>
+
+						<!-- Confirm password -->
+						<div class="flex flex-col gap-1 text-xl">
+							<label
+								for="re-password"
+								class="font-tnr font-semibold text-white"
+							>
+								Confirm password
+							</label>
+
+							<input
+								type="password"
+								id="re-password"
+								:value="form.rePassword"
+								placeholder="*********"
+								required
+								class="w-screen max-w-48 rounded-xl bg-[#74f0f0] p-2 font-tnr font-semibold text-white placeholder-white sm:max-w-96"
+								@change="(e) => onFormValueChange(e)"
+							/>
+						</div>
+					</div>
+
+					<LoadingSpinner
+						v-show="isRegistrationRequestLoading"
+						active-color="#49f364"
+						bg-color="transparent"
+					/>
+
+					<button
+						v-show="!isRegistrationRequestLoading"
+						class="max-w-max whitespace-nowrap rounded-lg bg-[#49f364] p-3 font-tnr font-semibold uppercase text-white sm:text-xl"
+					>
+						Create user
+					</button>
+				</form>
+
+				<p v-show="error" class="text-lg font-bold text-error-solid">
+					{{ error }}
+				</p>
+			</div>
 		</div>
 	</div>
 </template>

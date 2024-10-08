@@ -12,6 +12,8 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		MONGO_URI: import.meta.env?.MONGO_URI,
+		ACCESS_TOKEN_SECRET: import.meta.env?.ACCESS_TOKEN_SECRET,
+		REFRESH_TOKEN_SECRET: import.meta.env?.REFRESH_TOKEN_SECRET,
 	},
 
 	plugins: ['~/plugins/mongodb.server.ts'],
