@@ -48,6 +48,7 @@ const UserSchema: Schema<IUser> = new Schema(
 		},
 		emailConfirmationToken: {
 			type: String,
+			required: true,
 		},
 
 		likes: {
