@@ -6,9 +6,7 @@ export default defineEventHandler(async (e) => {
 	try {
 		const accessToken = getCookie(e, 'access_token');
 
-		if (!accessToken) {
-			throw createError({ statusCode: 401 });
-		}
+		if (!accessToken) throw createError({ statusCode: 401 });
 
 		const { ACCESS_TOKEN_SECRET } = useRuntimeConfig();
 
