@@ -18,6 +18,13 @@ class AuthService {
 	static async sendEmailConfirmationLetter() {
 		return $fetch('/api/auth/confirm-email');
 	}
+
+	static async activateAccount(emailConfirmationToken: string) {
+		return $fetch('/api/auth/activate', {
+			method: 'POST',
+			body: { emailConfirmationToken },
+		});
+	}
 }
 
 export default AuthService;
