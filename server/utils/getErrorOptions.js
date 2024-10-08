@@ -1,12 +1,6 @@
-interface HandledError {
-	statusCode?: number;
-	message?: string;
-	statusMessage?: string;
-}
-
-export default function (handledError: HandledError) {
-	const code = handledError?.statusCode;
-	const msg = handledError?.statusMessage || handledError?.message;
+export default function (error) {
+	const code = error?.statusCode;
+	const msg = error?.statusMessage || error?.message;
 
 	switch (code) {
 		case 400:
