@@ -8,7 +8,6 @@ export default function () {
 		rePassword: '',
 	});
 
-	const isConfirmationPanelActive = ref(false);
 	const error = ref('');
 
 	const validateForm = () => {
@@ -20,8 +19,6 @@ export default function () {
 
 		return true;
 	};
-
-	const toConfirmPanel = () => (isConfirmationPanelActive.value = true);
 
 	const onFormValueChange = (event: Event) => {
 		const { value, id } = event.target as HTMLInputElement;
@@ -50,9 +47,7 @@ export default function () {
 	return {
 		form,
 		error,
-		isConfirmationPanelActive,
 		onFormValueChange,
-		toConfirmPanel,
 		validateForm,
 	};
 }
