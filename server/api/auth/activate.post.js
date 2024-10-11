@@ -1,19 +1,15 @@
-import jwt from 'jsonwebtoken';
 import User from '~/server/models/User';
 
 export default defineEventHandler(async (e) => {
 	try {
-		const accessToken = getCookie(e, 'access_token');
+		const { email, confirmationToken } = await readBody(e);
 
-		if (!accessToken) throw createError({ statusCode: 401 });
-
-		const { ACCESS_TOKEN_SECRET } = useRuntimeConfig();
-
-		const { email } = jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
-
-		const { emailConfirmationToken } = await readBody(e);
-
-		if (!emailConfirmationToken) throw createError({ statusCode: 400 });
+		if (!email || !confirmationToken) {
+			throw createError({
+				statusCode: 400,
+				statusMessage: 'Missing parameters',
+			});
+		}
 
 		const updatedUser = await User.findOneAndUpdate(
 			{ email },
@@ -21,8 +17,17 @@ export default defineEventHandler(async (e) => {
 			{ new: true }
 		);
 
+		if (updatedUser.emailConfirmationToken !== confirmationToken) {
+			throw createError({
+				statusCode: 403,
+				statusMessage: 'Confirmation token is invalid',
+			});
+		}
+
 		return getSuccessResponse(200, 'Account activated', {
-			updatedUser,
+			id: updatedUser._id,
+			username: updatedUser.username,
+			email: updatedUser.email,
 		});
 	} catch (err) {
 		console.error(err);
