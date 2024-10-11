@@ -2,17 +2,18 @@
 	import Dropdown from '../molecules/Dropdown.vue';
 	import IconBurger from '../atoms/IconBurger.vue';
 	import IconUser from '../atoms/IconUser.vue';
-
-	const emit = defineEmits<{
-		(e: 'burgerClick'): void;
-	}>();
+	import SidebarMenu from './SidebarMenu.vue';
 
 	const dropdownRef = useTemplateRef('dropdown');
 	const {
 		isActive: isDropdown,
 		activate: openDropdown,
 		disactivate: closeDropdown,
-	} = useClickaway(dropdownRef);
+	} = useClickawayClient(dropdownRef);
+
+	const sidebarMenuRef = useTemplateRef('sidebar-menu-ref');
+	const { isActive: isSidebar, activate: openSidebar } =
+		useClickawayClient(sidebarMenuRef);
 
 	const onUserIconClick = () => {
 		if (isDropdown.value) closeDropdown();
@@ -21,10 +22,12 @@
 </script>
 
 <template>
+	<SidebarMenu ref="sidebar-menu-ref" :is-active="isSidebar" />
+
 	<header
 		class="flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
 	>
-		<div class="cursor-pointer" @click.stop="emit('burgerClick')">
+		<div class="cursor-pointer" @click.stop="openSidebar">
 			<IconBurger />
 		</div>
 
@@ -47,7 +50,7 @@
 					class="mt-1 text-center font-tnr text-xl font-bold uppercase text-[#548eff]"
 				>
 					<div class="border-[1px] border-black bg-[#43e567] p-2">
-						<NuxtLink to="/auth/login" class="text-outline">Login</NuxtLink>
+						<p class="text-outline">Login</p>
 					</div>
 
 					<div class="border-[1px] border-black bg-[#f8f14d] p-2">
