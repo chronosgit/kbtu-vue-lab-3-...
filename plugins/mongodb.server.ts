@@ -1,18 +1,24 @@
 import mongoose from 'mongoose';
 
-let isConnected = false;
+let isDbConnected: any;
 
-export default defineNuxtPlugin(async () => {
-	if (!isConnected) {
-		try {
-			const { MONGO_URI } = useRuntimeConfig();
+const connectDb = async () => {
+	if (isDbConnected) return;
 
-			await mongoose.connect(MONGO_URI);
+	try {
+		const { MONGO_URI } = useRuntimeConfig();
 
-			isConnected = true;
-			console.log('Connected to MongoDB');
-		} catch (err) {
-			console.error('Error connecting to MongoDB', err);
-		}
+		await mongoose.connect(MONGO_URI);
+
+		isDbConnected = true;
+		console.log('Connected to MongoDB');
+	} catch (err) {
+		console.error('Failed to connect to MongoDB:', err);
 	}
+};
+
+export default defineNuxtPlugin(async (nuxt) => {
+	nuxt.hooks.hook('app:rendered', async () => {
+		await connectDb();
+	});
 });

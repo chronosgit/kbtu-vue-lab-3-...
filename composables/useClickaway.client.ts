@@ -25,8 +25,8 @@ export default function (
 		}
 	};
 
-	onMounted(() => document.addEventListener('click', onDocumentClick));
-	onUnmounted(() => document.removeEventListener('click', onDocumentClick));
+	onMounted(() => document.addEventListener('mousedown', onDocumentClick));
+	onUnmounted(() => document.removeEventListener('mousedown', onDocumentClick));
 
 	return { activate, disactivate, isActive };
 }

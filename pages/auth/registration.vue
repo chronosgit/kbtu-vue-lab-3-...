@@ -3,7 +3,7 @@
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
-	useHead({ title: 'Registration' });
+	useHead({ title: 'Authentication' });
 
 	const isRegistrationRequestLoading = ref(false);
 
@@ -126,17 +126,15 @@
 						</div>
 					</div>
 
-					<LoadingSpinner
-						v-show="isRegistrationRequestLoading"
-						active-color="#49f364"
-						bg-color="transparent"
-					/>
-
 					<button
-						v-show="!isRegistrationRequestLoading"
 						class="max-w-max whitespace-nowrap rounded-lg bg-[#49f364] p-3 font-tnr font-semibold uppercase text-white sm:text-xl"
 					>
-						Create user
+						<LoadingSpinner
+							v-show="isRegistrationRequestLoading"
+							color="bg-white"
+						/>
+
+						<p v-show="!isRegistrationRequestLoading">Create user</p>
 					</button>
 				</form>
 

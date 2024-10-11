@@ -1,30 +1,50 @@
 <script setup lang="ts">
-	import Dropdown from '../molecules/Dropdown.vue';
-	import IconBurger from '../atoms/IconBurger.vue';
-	import IconUser from '../atoms/IconUser.vue';
-
-	const emit = defineEmits<{
-		(e: 'burgerClick'): void;
-	}>();
+	import SidebarMenu from '@/components/organisms/SidebarMenu.vue';
+	import LoginPopup from '@/components/organisms/LoginPopup.vue';
+	import Dropdown from '@/components/molecules/Dropdown.vue';
+	import IconBurger from '@/components/atoms/IconBurger.vue';
+	import IconUser from '@/components/atoms/IconUser.vue';
 
 	const dropdownRef = useTemplateRef('dropdown');
 	const {
 		isActive: isDropdown,
 		activate: openDropdown,
 		disactivate: closeDropdown,
-	} = useClickaway(dropdownRef);
+	} = useClickawayClient(dropdownRef);
+
+	const sidebarMenuRef = useTemplateRef('sidebar-menu-ref');
+	const {
+		isActive: isSidebar,
+		activate: openSidebar,
+		disactivate: closeSidebar,
+	} = useClickawayClient(sidebarMenuRef);
+
+	const loginPopupRef = useTemplateRef('login-popup-ref');
+	const { isActive: isLoginPopup, activate: openLoginPopup } =
+		useClickawayClient(loginPopupRef);
 
 	const onUserIconClick = () => {
 		if (isDropdown.value) closeDropdown();
 		else openDropdown();
 	};
+
+	const onDropdownLoginButtonClick = () => {
+		closeDropdown();
+		closeSidebar();
+		openLoginPopup();
+	};
 </script>
 
 <template>
+	<!-- Header controlled organisms -->
+	<SidebarMenu ref="sidebar-menu-ref" :is-active="isSidebar" />
+	<LoginPopup ref="login-popup-ref" :is-open="isLoginPopup" />
+
+	<!-- Actual header -->
 	<header
 		class="flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
 	>
-		<div class="cursor-pointer" @click.stop="emit('burgerClick')">
+		<div class="cursor-pointer" @click.stop="openSidebar">
 			<IconBurger />
 		</div>
 
@@ -47,7 +67,9 @@
 					class="mt-1 text-center font-tnr text-xl font-bold uppercase text-[#548eff]"
 				>
 					<div class="border-[1px] border-black bg-[#43e567] p-2">
-						<NuxtLink to="/auth/login" class="text-outline">Login</NuxtLink>
+						<p class="text-outline" @click.stop="onDropdownLoginButtonClick()">
+							Login
+						</p>
 					</div>
 
 					<div class="border-[1px] border-black bg-[#f8f14d] p-2">

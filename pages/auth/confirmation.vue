@@ -11,7 +11,7 @@
 	const { execute: sendConfirmationLetter } = useLazyAsyncData(
 		'confirm-email',
 		() =>
-			AuthService.sendEmailConfirmationLetter(email.value)
+			AuthService.sendAccountActivationLetter(email.value, secretPhrase.value)
 				.then((res) => console.log(res))
 				.catch((err) => (error.value = err.statusMessage)),
 		{ immediate: false }
@@ -21,7 +21,7 @@
 		'confirm-email',
 		() =>
 			AuthService.activateAccount(email.value, secretPhrase.value)
-				.then(async (res) => await navigateTo('/'))
+				.then(async () => await navigateTo('/'))
 				.catch((err) => (error.value = err.statusMessage)),
 		{ immediate: false }
 	);
