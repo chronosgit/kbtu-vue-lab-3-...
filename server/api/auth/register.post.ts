@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import User from '~/server/models/User';
 import getHashedPassword from '~/server/utils/getHashedPassword';
 import getTokens from '~/server/utils/getTokens';
@@ -22,7 +23,11 @@ export default defineEventHandler(async (e) => {
 		});
 		await newUser.save();
 
-		const { accessToken, refreshToken } = getTokens();
+		const { accessToken, refreshToken } = getTokens(
+			newUser._id as ObjectId,
+			newUser.email,
+			newUser.username
+		);
 
 		setCookie(e, 'access_token', accessToken, {
 			httpOnly: true,

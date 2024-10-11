@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongoose';
 
-export default function (id: string, email: string, username: string) {
+export default function (id: ObjectId, email: string, username: string) {
 	const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = useRuntimeConfig();
 
 	const accessToken = jwt.sign({ id, email, username }, ACCESS_TOKEN_SECRET, {
