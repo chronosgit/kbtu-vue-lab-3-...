@@ -1,8 +1,18 @@
 export default function () {
-	const form = useState('loginForm', () => ({
+	const form = ref({
 		username: '',
 		password: '',
-	}));
+	});
 
-	return form;
+	const isLoading = ref(false);
+	const error = ref('');
+
+	const resetStates = () => {
+		form.value.username = '';
+		form.value.password = '';
+		isLoading.value = false;
+		error.value = '';
+	};
+
+	return { form, error, isLoading, resetStates };
 }
