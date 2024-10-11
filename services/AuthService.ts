@@ -15,17 +15,45 @@ class AuthService {
 		});
 	}
 
-	static async sendEmailConfirmationLetter(email: string) {
-		return $fetch('/api/auth/confirm-email', {
+	static async sendAccountActivationLetter(
+		email: string,
+		secretPhrase: string
+	) {
+		return $fetch('/api/auth/email/activate-account', {
+			method: 'POST',
+			body: { email, confirmationToken: secretPhrase },
+		});
+	}
+
+	static async activateAccount(email: string, confirmationToken: string) {
+		return $fetch('/api/auth/me/activate', {
+			method: 'POST',
+			body: { email, confirmationToken },
+		});
+	}
+
+	static async sendPasswordChangeLetter(email: string) {
+		return $fetch('/api/auth/email/change-password', {
 			method: 'POST',
 			body: { email },
 		});
 	}
 
-	static async activateAccount(email: string, secretPassPhrase: string) {
-		return $fetch('/api/auth/activate', {
+	static async changePassword(
+		email: string,
+		newPassword: string,
+		code: string
+	) {
+		return $fetch('/api/auth/me/forgot-password', {
+			method: 'PUT',
+			body: { email, newPassword, code },
+		});
+	}
+
+	static async login(username: string, password: string) {
+		return $fetch('/api/auth/login', {
 			method: 'POST',
-			body: { email, confirmationToken: secretPassPhrase },
+			body: { username, password },
 		});
 	}
 }
