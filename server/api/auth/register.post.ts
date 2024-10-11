@@ -23,28 +23,6 @@ export default defineEventHandler(async (e) => {
 		});
 		await newUser.save();
 
-		const { accessToken, refreshToken } = getTokens(
-			newUser._id as ObjectId,
-			newUser.email,
-			newUser.username
-		);
-
-		setCookie(e, 'access_token', accessToken, {
-			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
-			sameSite: 'strict',
-			maxAge: 3600, // def: 1h
-			path: '/',
-		});
-
-		setCookie(e, 'refresh_token', refreshToken, {
-			httpOnly: true,
-			secure: process.env.NODE_ENV === 'production',
-			sameSite: 'strict',
-			maxAge: 60 * 60 * 24 * 30, // 30 days
-			path: '/',
-		});
-
 		return getSuccessResponse(201, 'User is pre-registered');
 	} catch (err) {
 		console.error(err);
