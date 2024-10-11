@@ -1,6 +1,7 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import { ObjectId } from 'mongoose';
 import User from '~/server/models/User';
+import getHashedPassword from '~/server/utils/getHashedPassword';
+import getTokens from '~/server/utils/getTokens';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -9,15 +10,9 @@ export default defineEventHandler(async (e) => {
 		const maybeExistingUser = await User.findOne({
 			$or: [{ email: email }, { username: username }],
 		});
-		if (maybeExistingUser) {
-			throw createError({
-				statusCode: 400,
-				statusMessage: 'User already exists or credentials are invalid',
-			});
-		}
+		if (maybeExistingUser) throw createError({ statusCode: 400 });
 
-		const salt = await bcrypt.genSalt(10);
-		const hashedPassword = await bcrypt.hash(password, salt);
+		const hashedPassword = await getHashedPassword(password);
 		const emailConfirmationToken = generateToken(15);
 
 		const newUser = new User({
@@ -28,18 +23,11 @@ export default defineEventHandler(async (e) => {
 		});
 		await newUser.save();
 
-		const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = useRuntimeConfig();
-
-		const accessToken = jwt.sign(
-			{ id: newUser._id, email: newUser.email, username: newUser.username },
-			ACCESS_TOKEN_SECRET,
-			{
-				expiresIn: '1h',
-			}
+		const { accessToken, refreshToken } = getTokens(
+			newUser._id as ObjectId,
+			newUser.email,
+			newUser.username
 		);
-		const refreshToken = jwt.sign({ id: newUser._id }, REFRESH_TOKEN_SECRET, {
-			expiresIn: '30d',
-		});
 
 		setCookie(e, 'access_token', accessToken, {
 			httpOnly: true,
@@ -57,7 +45,7 @@ export default defineEventHandler(async (e) => {
 			path: '/',
 		});
 
-		return getSuccessResponse(201, 'Confirmation letter is sent');
+		return getSuccessResponse(201, 'User is pre-registered');
 	} catch (err) {
 		console.error(err);
 		throw createError(getErrorOptions(err));
