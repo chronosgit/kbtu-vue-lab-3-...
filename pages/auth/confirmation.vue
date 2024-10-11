@@ -4,13 +4,14 @@
 
 	useHead({ title: 'Confirmation' });
 
+	const email = ref('');
 	const secretPhrase = ref('');
 	const error = ref('');
 
 	const { execute: sendConfirmationLetter } = useLazyAsyncData(
 		'confirm-email',
 		() =>
-			AuthService.sendEmailConfirmationLetter()
+			AuthService.sendEmailConfirmationLetter(email.value)
 				.then((res) => console.log(res))
 				.catch((err) => (error.value = err.statusMessage)),
 		{ immediate: false }
@@ -19,7 +20,7 @@
 	const { execute: activateAccount } = useLazyAsyncData(
 		'confirm-email',
 		() =>
-			AuthService.activateAccount(secretPhrase.value)
+			AuthService.activateAccount(email.value, secretPhrase.value)
 				.then(async (res) => await navigateTo('/'))
 				.catch((err) => (error.value = err.statusMessage)),
 		{ immediate: false }
@@ -45,6 +46,15 @@
 				</div>
 
 				<div class="mb-12 grid grid-cols-2 grid-rows-2 items-center gap-y-3">
+					<p class="font-tnr uppercase text-white">Enter your email</p>
+
+					<input
+						type="email"
+						v-model="email"
+						placeholder="user@email.com"
+						class="bg-[#44b3d6] p-2 text-lg font-bold text-white placeholder-white"
+					/>
+
 					<p class="font-tnr uppercase text-white">Confirm you email</p>
 
 					<button
@@ -53,6 +63,7 @@
 					>
 						Click to confirm
 					</button>
+
 					<p class="font-tnr uppercase text-white">Enter the secret phrase</p>
 
 					<input
