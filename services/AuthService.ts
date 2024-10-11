@@ -15,14 +15,17 @@ class AuthService {
 		});
 	}
 
-	static async sendEmailConfirmationLetter() {
-		return $fetch('/api/auth/confirm-email');
+	static async sendEmailConfirmationLetter(email: string) {
+		return $fetch('/api/auth/confirm-email', {
+			method: 'POST',
+			body: { email },
+		});
 	}
 
-	static async activateAccount(emailConfirmationToken: string) {
+	static async activateAccount(email: string, secretPassPhrase: string) {
 		return $fetch('/api/auth/activate', {
 			method: 'POST',
-			body: { emailConfirmationToken },
+			body: { email, confirmationToken: secretPassPhrase },
 		});
 	}
 }
