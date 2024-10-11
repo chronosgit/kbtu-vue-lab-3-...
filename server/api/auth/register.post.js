@@ -11,7 +11,7 @@ export default defineEventHandler(async (e) => {
 		});
 		if (maybeExistingUser) throw createError({ statusCode: 400 });
 
-		const hashedPassword = getHashedPassword(password);
+		const hashedPassword = await getHashedPassword(password);
 		const emailConfirmationToken = generateToken(15);
 
 		const newUser = new User({
@@ -40,7 +40,7 @@ export default defineEventHandler(async (e) => {
 			path: '/',
 		});
 
-		return getSuccessResponse(201, 'Confirmation letter is sent');
+		return getSuccessResponse(201, 'User is pre-registered');
 	} catch (err) {
 		console.error(err);
 		throw createError(getErrorOptions(err));
