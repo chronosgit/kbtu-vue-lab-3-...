@@ -1,7 +1,5 @@
-import { ObjectId } from 'mongoose';
 import User from '~/server/models/User';
 import getHashedPassword from '~/server/utils/getHashedPassword';
-import getTokens from '~/server/utils/getTokens';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -13,13 +11,11 @@ export default defineEventHandler(async (e) => {
 		if (maybeExistingUser) throw createError({ statusCode: 400 });
 
 		const hashedPassword = await getHashedPassword(password);
-		const emailConfirmationToken = generateToken(15);
 
 		const newUser = new User({
 			email,
 			username,
 			password: hashedPassword,
-			emailConfirmationToken,
 		});
 		await newUser.save();
 
