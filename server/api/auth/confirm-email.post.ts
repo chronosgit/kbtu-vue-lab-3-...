@@ -11,7 +11,7 @@ export default defineEventHandler(async (e) => {
 		);
 		if (!emailConfirmationToken) throw createError({ statusCode: 400 });
 
-		return getSuccessResponse(200, 'Letter sent (should be via email)', {
+		return getSuccessResponse(200, 'Letter sent', {
 			confirmationToken: emailConfirmationToken,
 		});
 	} catch (err) {
