@@ -10,7 +10,6 @@ interface IUser extends Document {
 	rating: number;
 	lastLoggedIn?: Date;
 	isEmailConfirmed: boolean;
-	emailConfirmationToken: string;
 
 	// followers
 	// posts
