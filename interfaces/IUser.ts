@@ -6,5 +6,7 @@ export default interface IUser {
 	location?: string | null;
 	lastLoggedIn: string | null;
 	rating?: number | null;
+	likes: number | null;
+	isEmailConfirmed: boolean | null;
 	// posts: []
 }
