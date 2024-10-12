@@ -13,7 +13,7 @@
 		() =>
 			AuthService.login(form.value.username, form.value.password)
 				.then(async (res) => {
-					const user = res.data as IUser;
+					const { user } = res.data as IUser;
 					loginUser(user);
 
 					await navigateTo('/users/me');
