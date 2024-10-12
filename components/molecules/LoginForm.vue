@@ -2,7 +2,7 @@
 	import LoginInput from '@/components/atoms/LoginInput.vue';
 	import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue';
 	import AuthService from '~/services/AuthService';
-	import useUserStore from '~/store/useUserStore';
+	import useUserStore from '~/store/useCurrentUserStore';
 	import type IUser from '~/interfaces/IUser';
 
 	const { loginUser } = useUserStore();
