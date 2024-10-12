@@ -1,14 +1,17 @@
-import type ILoginResponse from '~/interfaces/ILoginResponse';
-import type IUser from '~/interfaces/IUser';
+import type IMyUser from '~/interfaces/IMyUser';
 
 export default function () {
 	const isAuthenticated = useState<boolean | null>(
 		'isAuthenticated',
 		() => null
 	);
-	const user = useState<IUser>('user', () => ({}));
+	const user = useState<IMyUser>('user', () => ({
+		id: '',
+		username: '',
+		email: '',
+	}));
 
-	const loginUser = (loggedUser: ILoginResponse) => {
+	const loginUser = (loggedUser: IMyUser) => {
 		isAuthenticated.value = true;
 		user.value = { ...loggedUser };
 	};
@@ -19,7 +22,11 @@ export default function () {
 
 	const logoutUser = async () => {
 		isAuthenticated.value = false;
-		user.value = {};
+		user.value = {
+			id: '',
+			username: '',
+			email: '',
+		};
 
 		removeTokens();
 
