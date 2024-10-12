@@ -5,7 +5,7 @@ export default function () {
 		'isAuthenticated',
 		() => null
 	);
-	const user = useState<IUser | null>('user', () => ({
+	const user = useState<IUser>('user', () => ({
 		id: null,
 		username: null,
 		email: null,
