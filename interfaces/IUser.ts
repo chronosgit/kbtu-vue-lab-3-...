@@ -1,12 +1,12 @@
 export default interface IUser {
-	id: string | null;
-	username: string | null;
-	email: string | null;
-	age?: number | null;
-	location?: string | null;
-	lastLoggedIn: string | null;
-	rating?: number | null;
-	likes: number | null;
-	isEmailConfirmed: boolean | null;
+	id: string;
+	username: string;
+	email: string;
+	age?: number;
+	location?: string;
+	lastLoggedIn: string;
+	rating?: number;
+	likes?: number;
+	isEmailConfirmed?: boolean;
 	// posts: []
 }
