@@ -1,3 +1,4 @@
+import type ILoginResponse from '~/interfaces/ILoginResponse';
 import type IUser from '~/interfaces/IUser';
 
 export default function () {
@@ -5,37 +6,25 @@ export default function () {
 		'isAuthenticated',
 		() => null
 	);
-	const user = useState<IUser>('user', () => ({
-		id: null,
-		username: null,
-		email: null,
-		lastLoggedIn: null,
-		likes: null,
-		isEmailConfirmed: null,
-	}));
+	const user = useState<IUser>('user', () => ({}));
 
-	const loginUser = (loggedUser: IUser) => {
+	const loginUser = (loggedUser: ILoginResponse) => {
 		isAuthenticated.value = true;
 		user.value = { ...loggedUser };
 	};
+
+	const updateUser = () => {};
 
 	const removeTokens = () => $fetch('/api/auth/logout', { method: 'PUT' });
 
 	const logoutUser = async () => {
 		isAuthenticated.value = false;
-		user.value = {
-			id: null,
-			username: null,
-			email: null,
-			lastLoggedIn: null,
-			likes: null,
-			isEmailConfirmed: null,
-		};
+		user.value = {};
 
 		removeTokens();
 
 		await navigateTo('/');
 	};
 
-	return { isAuthenticated, user, loginUser, logoutUser };
+	return { isAuthenticated, user, loginUser, updateUser, logoutUser };
 }
