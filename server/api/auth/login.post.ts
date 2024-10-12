@@ -6,7 +6,20 @@ export default defineEventHandler(async (e) => {
 	try {
 		const { username, password } = await readBody(e);
 
-		const user = await User.findOne({ username });
+		const user = await User.findOne(
+			{ username },
+			{
+				_id: true,
+				username: true,
+				email: true,
+				age: true,
+				location: true,
+				likes: true,
+				rating: true,
+				lastLoggedIn: true,
+				isEmailConfirmed: true,
+			}
+		);
 		if (!user) {
 			throw createError({
 				statusCode: 404,
@@ -46,12 +59,7 @@ export default defineEventHandler(async (e) => {
 			path: '/',
 		});
 
-		return getSuccessResponse(200, 'Authenticated', {
-			id: user._id,
-			username,
-			email: user.email,
-			lastLoggedIn: user.lastLoggedIn,
-		});
+		return getSuccessResponse(200, 'Authenticated', { user });
 	} catch (err) {
 		console.error(err);
 
