@@ -21,6 +21,9 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
+		user.lastLoggedIn = new Date();
+		await user.save();
+
 		const { accessToken, refreshToken } = getTokens(
 			user._id as ObjectId,
 			user.email,
@@ -47,6 +50,7 @@ export default defineEventHandler(async (e) => {
 			id: user._id,
 			username,
 			email: user.email,
+			lastLoggedIn: user.lastLoggedIn,
 		});
 	} catch (err) {
 		console.error(err);
