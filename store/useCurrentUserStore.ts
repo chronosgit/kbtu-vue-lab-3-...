@@ -19,7 +19,15 @@ export default function () {
 		user.value = { ...loggedUser };
 	};
 
-	const logoutUser = () => {
+	const removeTokens = () => {
+		const accessToken = useCookie('access_token');
+		const refreshToken = useCookie('refresh_token');
+
+		accessToken.value = null;
+		refreshToken.value = null;
+	};
+
+	const logoutUser = async () => {
 		isAuthenticated.value = false;
 		user.value = {
 			id: null,
@@ -29,6 +37,10 @@ export default function () {
 			likes: null,
 			isEmailConfirmed: null,
 		};
+
+		removeTokens();
+
+		await navigateTo('/');
 	};
 
 	return { isAuthenticated, user, loginUser, logoutUser };
