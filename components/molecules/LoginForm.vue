@@ -1,8 +1,11 @@
 <script setup lang="ts">
+	import LoginInput from '@/components/atoms/LoginInput.vue';
+	import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue';
 	import AuthService from '~/services/AuthService';
-	import LoginInput from '../atoms/LoginInput.vue';
-	import LoadingSpinner from '../atoms/LoadingSpinner.vue';
+	import useUserStore from '~/store/useUserStore';
+	import type IUser from '~/interfaces/IUser';
 
+	const { loginUser } = useUserStore();
 	const { form, error, isLoading, resetStates } = useLoginForm();
 
 	const { execute: login } = useLazyAsyncData(
@@ -10,10 +13,10 @@
 		() =>
 			AuthService.login(form.value.username, form.value.password)
 				.then(async (res) => {
-					// TODO: auth state
-					console.log(res);
+					const user = res.data as IUser;
+					loginUser(user);
 
-					await navigateTo('/');
+					await navigateTo('/users/me');
 				})
 				.catch((err) => (error.value = err.message))
 				.finally(() => resetStates()),

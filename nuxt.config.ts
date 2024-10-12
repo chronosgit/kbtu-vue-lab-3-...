@@ -8,6 +8,7 @@ export default defineNuxtConfig({
 		components: './components',
 		interfaces: './interfaces',
 		services: './services',
+		store: './store',
 	},
 
 	runtimeConfig: {
