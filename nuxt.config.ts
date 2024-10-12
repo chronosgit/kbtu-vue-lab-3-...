@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 	components: false,
 	alias: {
 		components: './components',
+		enums: './enums',
 		interfaces: './interfaces',
 		services: './services',
 		store: './store',

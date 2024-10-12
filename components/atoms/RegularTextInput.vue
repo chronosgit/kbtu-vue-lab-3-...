@@ -1,13 +1,15 @@
 <script setup lang="ts">
+	import type CustomizeableProfileInputs from '~/enums/CustomizeableProfileInputs';
+
 	const model = defineModel<string>({ required: true });
 
 	const props = defineProps<{
-		type?: string;
+		type: CustomizeableProfileInputs;
 		placeholder: string;
 	}>();
 
 	const emit = defineEmits<{
-		(e: 'onEnterKey', value: string): void;
+		(e: 'enterKey', inputType: CustomizeableProfileInputs, value: string): void;
 	}>();
 </script>
 
@@ -17,6 +19,6 @@
 		:type="props.type || 'text'"
 		:placeholder="props.placeholder"
 		class="bg-transparent text-black placeholder-black"
-		@keydown.enter="emit('onEnterKey', model)"
+		@keydown.enter="emit('enterKey', props.type, model)"
 	/>
 </template>

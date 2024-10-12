@@ -21,7 +21,10 @@
 </script>
 
 <template>
-	<div class="absolute transition-transform" :class="[xPosTw, yPosTw]">
+	<div
+		class="absolute min-w-max transition-transform"
+		:class="[xPosTw, yPosTw]"
+	>
 		<slot />
 	</div>
 </template>

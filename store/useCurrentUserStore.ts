@@ -5,7 +5,7 @@ export default function () {
 		'isAuthenticated',
 		() => null
 	);
-	const user = useState<IUser | null>('user', () => ({
+	const user = useState<IUser>('user', () => ({
 		id: null,
 		username: null,
 		email: null,
@@ -19,7 +19,9 @@ export default function () {
 		user.value = { ...loggedUser };
 	};
 
-	const logoutUser = () => {
+	const removeTokens = () => $fetch('/api/auth/logout', { method: 'PUT' });
+
+	const logoutUser = async () => {
 		isAuthenticated.value = false;
 		user.value = {
 			id: null,
@@ -29,6 +31,10 @@ export default function () {
 			likes: null,
 			isEmailConfirmed: null,
 		};
+
+		removeTokens();
+
+		await navigateTo('/');
 	};
 
 	return { isAuthenticated, user, loginUser, logoutUser };
