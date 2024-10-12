@@ -20,20 +20,7 @@ export default defineEventHandler(async (e) => {
 			ACCESS_TOKEN_SECRET
 		) as IAccessToken;
 
-		const user = await User.findOne(
-			{ email },
-			{
-				_id: true,
-				username: true,
-				email: true,
-				age: true,
-				location: true,
-				likes: true,
-				rating: true,
-				lastLoggedIn: true,
-				isEmailConfirmed: true,
-			}
-		);
+		const user = await User.findOne({ email });
 
 		return getSuccessResponse(200, 'Authenticated', { user });
 	} catch (err) {
