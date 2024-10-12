@@ -6,6 +6,5 @@ export default defineNuxtRouteMiddleware(async () => {
 	// Authenticated, all good
 	if (isAuthenticated.value) return;
 
-	// Not-authenticated
-	if (isAuthenticated.value === false) return navigateTo('/auth/registration');
+	return navigateTo('/auth/registration');
 });
