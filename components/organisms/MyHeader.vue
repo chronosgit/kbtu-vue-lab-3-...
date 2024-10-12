@@ -4,6 +4,9 @@
 	import Dropdown from '@/components/molecules/Dropdown.vue';
 	import IconBurger from '@/components/atoms/IconBurger.vue';
 	import IconUser from '@/components/atoms/IconUser.vue';
+	import useUserStore from '~/store/useCurrentUserStore';
+
+	const { isAuthenticated, logoutUser } = useUserStore();
 
 	const dropdownRef = useTemplateRef('dropdown');
 	const {
@@ -66,23 +69,44 @@
 				<div
 					class="mt-1 text-center font-tnr text-xl font-bold uppercase text-[#548eff]"
 				>
-					<div class="border-[1px] border-black bg-[#43e567] p-2">
-						<p class="text-outline" @click.stop="onDropdownLoginButtonClick()">
-							Login
-						</p>
-					</div>
+					<template v-if="isAuthenticated">
+						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
+							<NuxtLink to="/users/me" class="text-outline">
+								My Profile
+							</NuxtLink>
+						</div>
 
-					<div class="border-[1px] border-black bg-[#f8f14d] p-2">
-						<NuxtLink to="/auth/registration" class="text-outline"
-							>Register</NuxtLink
-						>
-					</div>
+						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
+							<p class="text-outline">Favourites</p>
+						</div>
 
-					<div class="border-[1px] border-black bg-[#cfa0dd] p-2">
-						<NuxtLink to="/auth/confirmation" class="text-outline"
-							>Confirm</NuxtLink
-						>
-					</div>
+						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
+							<p class="text-outline" @click="logoutUser">Log out</p>
+						</div>
+					</template>
+
+					<template v-else>
+						<div class="border-[1px] border-black bg-[#43e567] p-2">
+							<p
+								class="text-outline"
+								@click.stop="onDropdownLoginButtonClick()"
+							>
+								Login
+							</p>
+						</div>
+
+						<div class="border-[1px] border-black bg-[#f8f14d] p-2">
+							<NuxtLink to="/auth/registration" class="text-outline"
+								>Register</NuxtLink
+							>
+						</div>
+
+						<div class="border-[1px] border-black bg-[#cfa0dd] p-2">
+							<NuxtLink to="/auth/confirmation" class="text-outline"
+								>Confirm</NuxtLink
+							>
+						</div>
+					</template>
 				</div>
 			</Dropdown>
 		</div>
