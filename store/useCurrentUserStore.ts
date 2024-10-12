@@ -19,13 +19,7 @@ export default function () {
 		user.value = { ...loggedUser };
 	};
 
-	const removeTokens = () => {
-		const accessToken = useCookie('access_token');
-		const refreshToken = useCookie('refresh_token');
-
-		accessToken.value = null;
-		refreshToken.value = null;
-	};
+	const removeTokens = () => $fetch('/api/auth/logout', { method: 'PUT' });
 
 	const logoutUser = async () => {
 		isAuthenticated.value = false;
