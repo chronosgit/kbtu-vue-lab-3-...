@@ -60,7 +60,7 @@ const UserSchema: Schema<IUser> = new Schema(
 			type: Number,
 			min: 0,
 			max: 120, // old ah
-			default: -1,
+			default: 0,
 		},
 		location: {
 			type: String,
