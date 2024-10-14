@@ -1,36 +1,16 @@
 <script setup lang="ts">
-	import AuthService from '~/services/AuthService';
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
 	useHead({ title: 'Authentication' });
 
-	const isRegistrationRequestLoading = ref(false);
-
-	const { form, error, onFormValueChange, validateForm } =
-		useRegistrationForm();
-
-	const { execute: registerUser } = useLazyAsyncData(
-		'registration',
-		() =>
-			AuthService.register(
-				form.value.email,
-				form.value.username,
-				form.value.password
-			)
-				.then(async () => await navigateTo('/auth/confirmation'))
-				.catch((err) => (error.value = err.statusMessage))
-				.finally(() => (isRegistrationRequestLoading.value = false)),
-		{ immediate: false }
-	);
-
-	const onFormSubmit = () => {
-		if (!validateForm()) return;
-
-		isRegistrationRequestLoading.value = true;
-
-		registerUser();
-	};
+	const {
+		form,
+		isRegistrationReqLoading,
+		error,
+		onFormSubmit,
+		onFormValueChange,
+	} = useRegistration();
 </script>
 
 <template>
@@ -130,11 +110,11 @@
 						class="max-w-max whitespace-nowrap rounded-lg bg-[#49f364] p-3 font-tnr font-semibold uppercase text-white sm:text-xl"
 					>
 						<LoadingSpinner
-							v-show="isRegistrationRequestLoading"
+							v-show="isRegistrationReqLoading"
 							color="bg-white"
 						/>
 
-						<p v-show="!isRegistrationRequestLoading">Create user</p>
+						<p v-show="!isRegistrationReqLoading">Create user</p>
 					</button>
 				</form>
 
