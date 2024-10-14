@@ -1,30 +1,15 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import AuthService from '~/services/AuthService';
 
 	useHead({ title: 'Confirmation' });
 
-	const email = ref('');
-	const secretPhrase = ref('');
-	const error = ref('');
-
-	const { execute: sendConfirmationLetter } = useLazyAsyncData(
-		'confirm-email',
-		() =>
-			AuthService.sendAccountActivationLetter(email.value, secretPhrase.value)
-				.then((res) => console.log(res))
-				.catch((err) => (error.value = err.statusMessage)),
-		{ immediate: false }
-	);
-
-	const { execute: activateAccount } = useLazyAsyncData(
-		'confirm-email',
-		() =>
-			AuthService.activateAccount(email.value, secretPhrase.value)
-				.then(async () => await navigateTo('/'))
-				.catch((err) => (error.value = err.statusMessage)),
-		{ immediate: false }
-	);
+	const {
+		email,
+		secretPhrase,
+		error,
+		sendConfirmationLetter,
+		activateAccount,
+	} = useAccountActivation();
 </script>
 
 <template>
