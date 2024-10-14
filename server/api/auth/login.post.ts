@@ -6,20 +6,7 @@ export default defineEventHandler(async (e) => {
 	try {
 		const { username, password } = await readBody(e);
 
-		const user = await User.findOne(
-			{ username },
-			{
-				_id: true,
-				username: true,
-				email: true,
-				age: true,
-				location: true,
-				likes: true,
-				rating: true,
-				lastLoggedIn: true,
-				isEmailConfirmed: true,
-			}
-		);
+		const user = await User.findOne({ username });
 		if (!user) {
 			throw createError({
 				statusCode: 404,
@@ -27,7 +14,7 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		if (!verifyPassword(password, user.password)) {
+		if (!(await verifyPassword(password, user.password))) {
 			throw createError({
 				statusCode: 403,
 				statusMessage: 'Invalid password',
@@ -59,7 +46,19 @@ export default defineEventHandler(async (e) => {
 			path: '/',
 		});
 
-		return getSuccessResponse(200, 'Authenticated', { user });
+		const userToReturn = {
+			id: user._id,
+			username: user.username,
+			email: user.email,
+			age: user.age,
+			location: user.location,
+			likes: user.likes,
+			rating: user.rating,
+			lastLoggedIn: user.lastLoggedIn,
+			isEmailConfirmed: user.isEmailConfirmed,
+		};
+
+		return getSuccessResponse(200, 'Authenticated', { user: userToReturn });
 	} catch (err) {
 		console.error(err);
 
