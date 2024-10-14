@@ -1,4 +1,5 @@
 import type IRegistrationForm from '~/interfaces/IRegistrationForm';
+import AuthService from '~/services/AuthService';
 
 export default function () {
 	const form = ref<IRegistrationForm>({
@@ -8,7 +9,22 @@ export default function () {
 		rePassword: '',
 	});
 
+	const isRegistrationReqLoading = ref(false);
 	const error = ref('');
+
+	const { execute: registerUser } = useLazyAsyncData(
+		'registration',
+		() =>
+			AuthService.register(
+				form.value.email,
+				form.value.username,
+				form.value.password
+			)
+				.then(async () => await navigateTo('/auth/confirmation'))
+				.catch((err) => (error.value = err.statusMessage))
+				.finally(() => (isRegistrationReqLoading.value = false)),
+		{ immediate: false }
+	);
 
 	const validateForm = () => {
 		if (form.value.password !== form.value.rePassword) {
@@ -18,6 +34,14 @@ export default function () {
 		}
 
 		return true;
+	};
+
+	const onFormSubmit = () => {
+		if (!validateForm()) return;
+
+		isRegistrationReqLoading.value = true;
+
+		registerUser();
 	};
 
 	const onFormValueChange = (event: Event) => {
@@ -47,7 +71,10 @@ export default function () {
 	return {
 		form,
 		error,
+		isRegistrationReqLoading,
 		onFormValueChange,
+		onFormSubmit,
 		validateForm,
+		registerUser,
 	};
 }
