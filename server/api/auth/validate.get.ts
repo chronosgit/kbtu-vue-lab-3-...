@@ -6,6 +6,8 @@ export default defineEventHandler(async (e) => {
 	try {
 		const accessToken = getCookie(e, 'access_token');
 
+		console.log(accessToken);
+
 		if (!accessToken) {
 			throw createError({
 				statusCode: 401,
@@ -22,7 +24,26 @@ export default defineEventHandler(async (e) => {
 
 		const user = await User.findOne({ email });
 
-		return getSuccessResponse(200, 'Authenticated', { user });
+		if (!user) {
+			throw createError({
+				statusCode: 404,
+				statusMessage: 'Such user doesn\t exist',
+			});
+		}
+
+		const userToReturn = {
+			id: user._id,
+			username: user.username,
+			email: user.email,
+			age: user.age,
+			location: user.location,
+			likes: user.likes,
+			rating: user.rating,
+			lastLoggedIn: user.lastLoggedIn,
+			isEmailConfirmed: user.isEmailConfirmed,
+		};
+
+		return getSuccessResponse(200, 'Authenticated', { user: userToReturn });
 	} catch (err) {
 		console.error(err);
 
