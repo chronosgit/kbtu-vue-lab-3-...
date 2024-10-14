@@ -1,12 +1,10 @@
 import jwt from 'jsonwebtoken';
-import IAccessToken from '~/interfaces/IAccessToken';
 import User from '~/server/models/User';
+import IAccessToken from '~/interfaces/IAccessToken';
 
 export default defineEventHandler(async (e) => {
 	try {
 		const accessToken = getCookie(e, 'access_token');
-
-		console.log(accessToken);
 
 		if (!accessToken) {
 			throw createError({
