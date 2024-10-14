@@ -3,7 +3,7 @@ import useCurrentUserStore from '~/store/useCurrentUserStore';
 import type IMyUser from '~/interfaces/IMyUser';
 
 export default function () {
-	const { loginUser } = useCurrentUserStore();
+	const { loginUser, logoutUser } = useCurrentUserStore();
 
 	const { execute: validate } = useAsyncData(
 		'validateAuthentication',
@@ -17,6 +17,7 @@ export default function () {
 				return res;
 			} catch (err) {
 				console.error('Authentication was invalid');
+				logoutUser();
 
 				return null;
 			}
