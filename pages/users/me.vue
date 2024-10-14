@@ -34,14 +34,14 @@
 						Statistic
 					</SquareBigButton>
 
-					<SquareBigButton class="uppercase" @click="updateProfile">
+					<SquareBigButton class="uppercase">
 						<LoadingSpinner
 							v-show="isLoading"
 							bg-color="bg-white"
 							class="justify-center"
 						/>
 
-						<p v-show="!isLoading">Save</p>
+						<p v-show="!isLoading" @click="updateProfile">Save</p>
 					</SquareBigButton>
 
 					<div class="space-y-1 justify-self-end">

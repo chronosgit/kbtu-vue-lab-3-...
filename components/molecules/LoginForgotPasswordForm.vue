@@ -52,7 +52,10 @@
 				type="submit"
 				class="text-outline text-md mx-auto mb-4 block w-full text-clip whitespace-nowrap rounded-lg bg-[#6aff67] px-4 py-2 uppercase tracking-[4px] text-white"
 			>
-				<div v-if="isSubmitLoading" class="flex justify-center p-[10px]">
+				<div
+					v-if="isSubmitLoading"
+					class="pointer-events-none flex justify-center p-[10px]"
+				>
 					<LoadingSpinner bg-color="bg-white" />
 				</div>
 
@@ -62,13 +65,12 @@
 			<button
 				type="button"
 				class="text-outline text-md mx-auto mb-4 block w-full text-clip whitespace-nowrap rounded-lg bg-[#e7dd54] px-4 py-2 uppercase tracking-[4px] text-white"
-				@click.stop="onSendLetterBtnClick()"
 			>
 				<div v-if="isEmailLoading" class="flex justify-center p-[10px]">
 					<LoadingSpinner bg-color="bg-white" />
 				</div>
 
-				<p v-else>Send letter</p>
+				<p v-else @click.stop="onSendLetterBtnClick()">Send letter</p>
 			</button>
 		</div>
 

@@ -112,7 +112,7 @@
 						<LoadingSpinner
 							v-show="isRegistrationReqLoading"
 							bg-color="bg-white"
-							class="m-3 justify-center"
+							class="pointer-events-none m-3 justify-center"
 						/>
 
 						<p v-show="!isRegistrationReqLoading">Create user</p>

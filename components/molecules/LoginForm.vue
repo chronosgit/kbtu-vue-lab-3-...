@@ -32,7 +32,10 @@
 			type="submit"
 			class="text-outline text-md mx-auto mb-4 block w-1/2 rounded-lg bg-[#6aff67] px-4 py-2 uppercase tracking-[4px] text-white"
 		>
-			<div v-if="isLoading" class="flex justify-center p-[10px]">
+			<div
+				v-if="isLoading"
+				class="pointer-events-none flex justify-center p-[10px]"
+			>
 				<LoadingSpinner bg-color="bg-white" />
 			</div>
 
