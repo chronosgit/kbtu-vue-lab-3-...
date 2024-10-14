@@ -39,8 +39,8 @@ class AuthService {
 		});
 	}
 
-	static async authSync() {
-		return $fetch('/api/auth/check');
+	static async validateAuthentication() {
+		return $fetch('/api/auth/validate');
 	}
 
 	static async sendPasswordChangeLetter(email: string) {
