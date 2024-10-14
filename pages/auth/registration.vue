@@ -3,7 +3,6 @@
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
 	useHead({ title: 'Authentication' });
-	useValidateAuthentication();
 
 	const {
 		form,
