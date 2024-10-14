@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import AuthService from '~/services/AuthService';
 	import LoginInput from '@/components/atoms/LoginInput.vue';
 	import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue';
 
@@ -9,56 +8,9 @@
 		error,
 		isSubmitLoading,
 		isEmailLoading,
-		validate,
-		resetStates,
+		onSendLetterBtnClick,
+		onFormSubmit,
 	} = useLoginForgotPasswordForm();
-
-	const { execute: sendCode } = useLazyAsyncData(
-		'sendLetterToEmail',
-		() =>
-			AuthService.sendPasswordChangeLetter(form.value.email)
-				.then((res) => {
-					console.log(res);
-					feedback.value = 'Letter with code is sent!';
-				})
-				.catch((err) => (error.value = err.message))
-				.finally(() => (isEmailLoading.value = false)),
-		{ immediate: false }
-	);
-
-	const { execute: changePassword } = useLazyAsyncData(
-		'changePassword',
-		() =>
-			AuthService.changePassword(
-				form.value.email,
-				form.value.newPassword,
-				'123'
-			)
-				.then((res) => {
-					console.log(res);
-
-					feedback.value = res.statusMessage ||= '';
-				})
-				.catch((err) => (error.value = err.message))
-				.finally(() => resetStates()),
-		{ immediate: false }
-	);
-
-	const onSendLetterBtnClick = () => {
-		isEmailLoading.value = true;
-		error.value = '';
-
-		sendCode();
-	};
-
-	const onFormSubmit = () => {
-		if (!validate()) return;
-
-		isSubmitLoading.value = true;
-		error.value = '';
-
-		changePassword();
-	};
 </script>
 
 <template>
@@ -100,8 +52,11 @@
 				type="submit"
 				class="text-outline text-md mx-auto mb-4 block w-full text-clip whitespace-nowrap rounded-lg bg-[#6aff67] px-4 py-2 uppercase tracking-[4px] text-white"
 			>
-				<div v-if="isSubmitLoading" class="flex justify-center p-[10px]">
-					<LoadingSpinner color="bg-white" />
+				<div
+					v-if="isSubmitLoading"
+					class="pointer-events-none flex justify-center p-[10px]"
+				>
+					<LoadingSpinner bg-color="bg-white" />
 				</div>
 
 				<p v-else>Change</p>
@@ -110,13 +65,12 @@
 			<button
 				type="button"
 				class="text-outline text-md mx-auto mb-4 block w-full text-clip whitespace-nowrap rounded-lg bg-[#e7dd54] px-4 py-2 uppercase tracking-[4px] text-white"
-				@click.stop="onSendLetterBtnClick()"
 			>
 				<div v-if="isEmailLoading" class="flex justify-center p-[10px]">
-					<LoadingSpinner color="bg-white" />
+					<LoadingSpinner bg-color="bg-white" />
 				</div>
 
-				<p v-else>Send letter</p>
+				<p v-else @click.stop="onSendLetterBtnClick()">Send letter</p>
 			</button>
 		</div>
 

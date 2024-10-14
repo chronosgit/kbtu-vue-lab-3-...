@@ -13,7 +13,7 @@
 
 <template>
 	<div
-		class="absolute left-1/2 top-1/2 mx-2 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg bg-gradient-to-b from-[#f8f7f7] to-[#c1bebe] pb-8"
+		class="absolute left-1/2 top-1/2 z-20 mx-2 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg bg-gradient-to-b from-[#f8f7f7] to-[#c1bebe] pb-8"
 		:class="{ block: props.isOpen, hidden: !props.isOpen }"
 	>
 		<div

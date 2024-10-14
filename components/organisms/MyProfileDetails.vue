@@ -1,8 +1,10 @@
 <script setup lang="ts">
+	import SquareTextInput from '~/components/atoms/SquareTextInput.vue';
+
 	const props = defineProps<{ username: string }>();
 
-	// const ageModel = defineModel<number>('age');
-	// const locationModel = defineModel<string>('location');
+	const ageModel = defineModel<string>('age');
+	const locationModel = defineModel<string>('location');
 </script>
 
 <template>
@@ -18,7 +20,7 @@
 				{{ props.username }}
 			</p>
 
-			<!-- <div class="flex items-center gap-4">
+			<div class="flex items-center gap-4">
 				<label
 					for="/users/me:input-age"
 					class="text-outline text-2xl text-yellow-300"
@@ -33,13 +35,13 @@
 					placeholder="?"
 					class="max-w-12 text-center text-xl"
 				/>
-			</div> -->
+			</div>
 
-			<!-- <SquareTextInput
+			<SquareTextInput
 				v-model="locationModel"
 				placeholder="Your location"
 				class="max-w-56 text-center text-xl"
-			/> -->
+			/>
 
 			<p class="text-xl font-bold text-[#00ffa3] drop-shadow-md">
 				Activity: for now

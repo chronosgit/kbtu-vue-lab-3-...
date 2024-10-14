@@ -22,7 +22,7 @@
 
 <template>
 	<div
-		class="absolute min-w-max transition-transform"
+		class="absolute z-10 min-w-max shadow-xl transition-transform"
 		:class="[xPosTw, yPosTw]"
 	>
 		<slot />

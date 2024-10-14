@@ -4,11 +4,11 @@ interface IUser extends Document {
 	email: string;
 	username: string;
 	password: string;
-	age?: number;
-	location?: string;
+	age: number;
+	location: string;
 	likes: number; // others liking the user
 	rating: number;
-	lastLoggedIn?: Date;
+	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
 
 	// followers
@@ -56,19 +56,21 @@ const UserSchema: Schema<IUser> = new Schema(
 			min: 0,
 			max: 5,
 		},
-
 		age: {
 			type: Number,
 			min: 0,
 			max: 120, // old ah
+			default: 0,
 		},
 		location: {
 			type: String,
 			trim: true,
+			default: '',
 		},
 
 		lastLoggedIn: {
 			type: Date,
+			default: new Date(),
 		},
 	},
 	{ timestamps: true }

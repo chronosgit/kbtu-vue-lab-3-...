@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import IAccessToken from '~/interfaces/IAccessToken';
 import User from '~/server/models/User';
+import IAccessToken from '~/interfaces/IAccessToken';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -22,7 +22,26 @@ export default defineEventHandler(async (e) => {
 
 		const user = await User.findOne({ email });
 
-		return getSuccessResponse(200, 'Authenticated', { user });
+		if (!user) {
+			throw createError({
+				statusCode: 404,
+				statusMessage: 'Such user doesn\t exist',
+			});
+		}
+
+		const userToReturn = {
+			id: user._id,
+			username: user.username,
+			email: user.email,
+			age: user.age,
+			location: user.location,
+			likes: user.likes,
+			rating: user.rating,
+			lastLoggedIn: user.lastLoggedIn,
+			isEmailConfirmed: user.isEmailConfirmed,
+		};
+
+		return getSuccessResponse(200, 'Authenticated', { user: userToReturn });
 	} catch (err) {
 		console.error(err);
 

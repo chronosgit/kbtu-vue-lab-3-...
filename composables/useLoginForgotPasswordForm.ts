@@ -1,3 +1,5 @@
+import AuthService from '~/services/AuthService';
+
 export default function () {
 	const form = ref({
 		email: '',
@@ -29,13 +31,59 @@ export default function () {
 		isEmailLoading.value = false;
 	};
 
+	const { execute: sendCode } = useLazyAsyncData(
+		'sendLetterToEmail',
+		() =>
+			AuthService.sendPasswordChangeLetter(form.value.email)
+				.then((res) => {
+					console.log(res);
+					feedback.value = 'Letter with code is sent!';
+				})
+				.catch((err) => (error.value = err.message))
+				.finally(() => (isEmailLoading.value = false)),
+		{ immediate: false }
+	);
+
+	const { execute: changePassword } = useLazyAsyncData(
+		'changePassword',
+		() =>
+			AuthService.changePassword(
+				form.value.email,
+				form.value.newPassword,
+				'123'
+			)
+				.then((res) => {
+					feedback.value = res.statusMessage ||= '';
+				})
+				.catch((err) => (error.value = err.message))
+				.finally(() => resetStates()),
+		{ immediate: false }
+	);
+
+	const onSendLetterBtnClick = () => {
+		isEmailLoading.value = true;
+		error.value = '';
+
+		sendCode();
+	};
+
+	const onFormSubmit = () => {
+		if (!validate()) return;
+
+		isSubmitLoading.value = true;
+		error.value = '';
+
+		console.log(form.value);
+		changePassword();
+	};
+
 	return {
 		form,
 		feedback,
 		error,
 		isSubmitLoading,
 		isEmailLoading,
-		validate,
-		resetStates,
+		onSendLetterBtnClick,
+		onFormSubmit,
 	};
 }

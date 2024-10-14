@@ -1,6 +1,14 @@
 class UsersService {
-	static async getMe() {
-		return $fetch('/api/users/me');
+	static async getMe(age: string, location: string) {
+		return $fetch('/api/users/me', { method: 'PUT', body: { age, location } });
+	}
+
+	static getUser(userId: string) {
+		return $fetch(`/api/users/${userId}`);
+	}
+
+	static followUser(userId: string) {
+		return $fetch(`/api/users/follow`, { method: 'PUT', body: { userId } });
 	}
 }
 

@@ -1,8 +1,14 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import MyProfileDetails from '~/components/organisms/MyProfileDetails.vue';
+	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
+	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
-	definePageMeta({ middleware: '4-protect-route' });
+	definePageMeta({ middleware: '3-protect-route' });
 	useHead({ title: 'My profile' });
+
+	const { username, age, location, feedback, error, isLoading, updateProfile } =
+		useMyProfile();
 </script>
 
 <template>
@@ -17,35 +23,35 @@
 			<h1 class="mb-5 text-right font-tnr text-5xl text-white">My Profile</h1>
 
 			<div class="flex items-start justify-between">
-				<!-- <MyProfileDetails
-					v-model:age="profile.age"
-					v-model:location="profile.location"
-					:username="profile.username"
-				/> -->
+				<MyProfileDetails
+					:username="username"
+					v-model:age="age"
+					v-model:location="location"
+				/>
 
-				<div class="grid grid-rows-2 gap-5 overflow-clip font-tnr">
-					<button
-						class="text-outline text-clip bg-[#6bebfc] px-4 py-1 text-3xl font-bold text-white drop-shadow-md"
-						@click="console.log('Stats be like')"
-					>
+				<div class="grid grid-rows-4 gap-4 font-tnr">
+					<SquareBigButton @click="console.log('Stats be like:')">
 						Statistic
-					</button>
+					</SquareBigButton>
 
-					<!-- <button
-						class="text-outline text-clip bg-[#6bebfc] px-4 py-1 text-3xl font-bold uppercase text-white drop-shadow-md"
-						@click="onSaveBtnClick"
-					>
-						Save
-					</button> -->
+					<SquareBigButton class="uppercase">
+						<LoadingSpinner
+							v-show="isLoading"
+							bg-color="bg-white"
+							class="justify-center"
+						/>
 
-					<!-- <div class="space-y-1 justify-self-end">
+						<p v-show="!isLoading" @click="updateProfile">Save</p>
+					</SquareBigButton>
+
+					<div class="space-y-1 justify-self-end">
 						<p v-show="error" class="text-lg font-bold text-error-solid">
 							{{ error }}
 						</p>
 						<p v-show="feedback" class="text-lg font-bold text-green-500">
 							{{ feedback }}
 						</p>
-					</div> -->
+					</div>
 				</div>
 			</div>
 		</main>
