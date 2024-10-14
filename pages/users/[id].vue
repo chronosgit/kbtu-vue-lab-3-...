@@ -13,7 +13,9 @@
 	const { isAuthenticated } = useCurrentUserStore();
 
 	const { user, activity } = useUserById(userId.value);
-	const { followUser } = useFollowUser(userId.value);
+	const { feedback, isLoading, error, followUser } = useFollowUser(
+		userId.value
+	);
 </script>
 
 <template>
@@ -36,13 +38,19 @@
 				/>
 
 				<template v-if="isAuthenticated">
-					<div class="mt-8 grid grid-rows-1">
+					<div class="mt-8 grid grid-rows-3 place-items-center">
 						<SquareBigButton
 							class="bg-[#77fc6b] font-tnr uppercase tracking-wider"
-							@click="followUser"
 						>
-							Follow
+							<p v-show="isLoading">Loading...</p>
+
+							<p v-show="!isLoading" @click="followUser">Follow</p>
 						</SquareBigButton>
+
+						<p v-show="feedback" class="font-bold text-green-800">
+							{{ feedback }}
+						</p>
+						<p v-show="error">{{ error }}</p>
 					</div>
 				</template>
 			</div>
