@@ -107,11 +107,12 @@
 					</div>
 
 					<button
-						class="max-w-max whitespace-nowrap rounded-lg bg-[#49f364] p-3 font-tnr font-semibold uppercase text-white sm:text-xl"
+						class="whitespace-nowrap rounded-lg bg-[#49f364] px-4 py-2 font-tnr font-semibold uppercase text-white sm:text-xl"
 					>
 						<LoadingSpinner
 							v-show="isRegistrationReqLoading"
-							color="bg-white"
+							bg-color="bg-white"
+							class="m-3 justify-center"
 						/>
 
 						<p v-show="!isRegistrationReqLoading">Create user</p>
