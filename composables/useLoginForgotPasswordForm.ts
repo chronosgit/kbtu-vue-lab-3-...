@@ -53,8 +53,6 @@ export default function () {
 				'123'
 			)
 				.then((res) => {
-					console.log(res);
-
 					feedback.value = res.statusMessage ||= '';
 				})
 				.catch((err) => (error.value = err.message))
