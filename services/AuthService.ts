@@ -32,6 +32,17 @@ class AuthService {
 		});
 	}
 
+	static async login(username: string, password: string) {
+		return $fetch('/api/auth/login', {
+			method: 'POST',
+			body: { username, password },
+		});
+	}
+
+	static async authSync() {
+		return $fetch('/api/auth/check');
+	}
+
 	static async sendPasswordChangeLetter(email: string) {
 		return $fetch('/api/auth/email/change-password', {
 			method: 'POST',
@@ -47,13 +58,6 @@ class AuthService {
 		return $fetch('/api/auth/me/forgot-password', {
 			method: 'PUT',
 			body: { email, newPassword, code },
-		});
-	}
-
-	static async login(username: string, password: string) {
-		return $fetch('/api/auth/login', {
-			method: 'POST',
-			body: { username, password },
 		});
 	}
 }
