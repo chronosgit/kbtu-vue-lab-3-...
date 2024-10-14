@@ -13,13 +13,6 @@ export default function () {
 
 	const { loginUser } = useCurrentUserStore();
 
-	const resetStates = () => {
-		form.value.username = '';
-		form.value.password = '';
-		isLoading.value = false;
-		error.value = '';
-	};
-
 	const { execute: login } = useLazyAsyncData(
 		'login',
 		() =>
@@ -30,8 +23,8 @@ export default function () {
 
 					await navigateTo('/users/me');
 				})
-				.catch((err) => (error.value = err.message))
-				.finally(() => resetStates()),
+				.catch(() => (error.value = 'Error'))
+				.finally(() => (isLoading.value = false)),
 		{ immediate: false }
 	);
 
@@ -42,5 +35,5 @@ export default function () {
 		login();
 	};
 
-	return { form, error, isLoading, resetStates, onFormSubmit };
+	return { form, error, isLoading, onFormSubmit };
 }
