@@ -1,10 +1,11 @@
-import useUserStore from '~/store/useCurrentUserStore';
+import useCurrentUserStore from '~/store/useCurrentUserStore';
 
-export default defineNuxtRouteMiddleware(async () => {
-	const { isAuthenticated } = useUserStore();
+export default defineNuxtRouteMiddleware((to) => {
+	const { isAuthenticated } = useCurrentUserStore();
 
-	// Authenticated, all good
 	if (isAuthenticated.value) return;
+
+	if (to.path === '/auth/registration') return;
 
 	return navigateTo('/auth/registration');
 });
