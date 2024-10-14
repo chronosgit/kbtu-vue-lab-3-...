@@ -53,7 +53,7 @@
 				class="text-outline text-md mx-auto mb-4 block w-full text-clip whitespace-nowrap rounded-lg bg-[#6aff67] px-4 py-2 uppercase tracking-[4px] text-white"
 			>
 				<div v-if="isSubmitLoading" class="flex justify-center p-[10px]">
-					<LoadingSpinner color="bg-white" />
+					<LoadingSpinner bg-color="bg-white" />
 				</div>
 
 				<p v-else>Change</p>
@@ -65,7 +65,7 @@
 				@click.stop="onSendLetterBtnClick()"
 			>
 				<div v-if="isEmailLoading" class="flex justify-center p-[10px]">
-					<LoadingSpinner color="bg-white" />
+					<LoadingSpinner bg-color="bg-white" />
 				</div>
 
 				<p v-else>Send letter</p>
