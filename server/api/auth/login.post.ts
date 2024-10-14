@@ -21,6 +21,13 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
+		if (!user.isEmailConfirmed) {
+			throw createError({
+				statusCode: 403,
+				statusMessage: "Account isn't activated",
+			});
+		}
+
 		user.lastLoggedIn = new Date();
 		await user.save();
 
