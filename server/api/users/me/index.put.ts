@@ -8,7 +8,7 @@ export default defineEventHandler(async (e) => {
 			throw createError({ statusCode: 400, statusMessage: 'No access token' });
 		}
 
-		const { email } = verifyAccessToken(accessToken);
+		const { email } = e.context.decodedToken;
 
 		const user = await User.findOne({ email });
 
