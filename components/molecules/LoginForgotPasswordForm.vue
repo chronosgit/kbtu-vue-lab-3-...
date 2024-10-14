@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import AuthService from '~/services/AuthService';
 	import LoginInput from '@/components/atoms/LoginInput.vue';
 	import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue';
 
@@ -9,56 +8,9 @@
 		error,
 		isSubmitLoading,
 		isEmailLoading,
-		validate,
-		resetStates,
+		onSendLetterBtnClick,
+		onFormSubmit,
 	} = useLoginForgotPasswordForm();
-
-	const { execute: sendCode } = useLazyAsyncData(
-		'sendLetterToEmail',
-		() =>
-			AuthService.sendPasswordChangeLetter(form.value.email)
-				.then((res) => {
-					console.log(res);
-					feedback.value = 'Letter with code is sent!';
-				})
-				.catch((err) => (error.value = err.message))
-				.finally(() => (isEmailLoading.value = false)),
-		{ immediate: false }
-	);
-
-	const { execute: changePassword } = useLazyAsyncData(
-		'changePassword',
-		() =>
-			AuthService.changePassword(
-				form.value.email,
-				form.value.newPassword,
-				'123'
-			)
-				.then((res) => {
-					console.log(res);
-
-					feedback.value = res.statusMessage ||= '';
-				})
-				.catch((err) => (error.value = err.message))
-				.finally(() => resetStates()),
-		{ immediate: false }
-	);
-
-	const onSendLetterBtnClick = () => {
-		isEmailLoading.value = true;
-		error.value = '';
-
-		sendCode();
-	};
-
-	const onFormSubmit = () => {
-		if (!validate()) return;
-
-		isSubmitLoading.value = true;
-		error.value = '';
-
-		changePassword();
-	};
 </script>
 
 <template>
