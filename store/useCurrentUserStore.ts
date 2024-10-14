@@ -9,14 +9,18 @@ export default function () {
 		id: '',
 		username: '',
 		email: '',
+		age: 0,
+		location: '',
+		likes: 0,
+		rating: 0,
+		lastLoggedIn: '',
+		isEmailConfirmed: false,
 	}));
 
 	const loginUser = (loggedUser: IMyUser) => {
 		isAuthenticated.value = true;
 		user.value = { ...loggedUser };
 	};
-
-	const updateUser = () => {};
 
 	const removeTokens = () => $fetch('/api/auth/logout', { method: 'PUT' });
 
@@ -26,6 +30,12 @@ export default function () {
 			id: '',
 			username: '',
 			email: '',
+			age: 0,
+			location: '',
+			likes: 0,
+			rating: 0,
+			lastLoggedIn: '',
+			isEmailConfirmed: false,
 		};
 
 		removeTokens();
@@ -33,5 +43,5 @@ export default function () {
 		await navigateTo('/');
 	};
 
-	return { isAuthenticated, user, loginUser, updateUser, logoutUser };
+	return { isAuthenticated, user, loginUser, logoutUser };
 }
