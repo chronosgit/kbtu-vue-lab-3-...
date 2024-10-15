@@ -21,7 +21,25 @@ export default defineEventHandler(async (e) => {
 		const targetUser = await User.findOne({ _id: new mongo.ObjectId(userId) });
 		const me = await User.findOne({ email: decoded.email });
 
-		return getSuccessResponse(200, 'User followed', { me, targetUser });
+		if (!targetUser) {
+			throw createError({
+				statusCode: 404,
+				statusMessage: 'Cannot follow an non-existing user',
+			});
+		}
+
+		if (!me) {
+			throw createError({
+				statusCode: 404,
+				statusMessage: "Such user doesn't exist",
+			});
+		}
+
+		await User.findByIdAndUpdate(me._id, {
+			$push: { following: targetUser._id },
+		});
+
+		return getSuccessResponse(200, 'User followed');
 	} catch (err) {
 		console.error(err);
 
