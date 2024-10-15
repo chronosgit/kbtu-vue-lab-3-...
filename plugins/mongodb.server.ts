@@ -18,7 +18,7 @@ const connectDb = async () => {
 };
 
 export default defineNuxtPlugin(async (nuxt) => {
-	nuxt.hooks.hook('app:rendered', async () => {
+	nuxt.hooks.hook('app:created', async () => {
 		await connectDb();
 	});
 });
