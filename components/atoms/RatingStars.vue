@@ -9,16 +9,14 @@
 		throw createError({ statusMessage: 'Invalid rating' });
 	}
 
-	const testRating = 3.5;
-
-	const solids = computed(() => Math.floor(testRating));
+	const solids = computed(() => Math.floor(props.rating));
 	const empties = computed(() => {
 		if (solids.value === 5) return 0;
 		if (solids.value % 1 === 0) return 4 - solids.value;
 
-		return Math.floor(5 - testRating);
+		return Math.floor(5 - props.rating);
 	});
-	const percent = computed(() => Math.round((testRating % 1) * 100));
+	const percent = computed(() => Math.round((props.rating % 1) * 100));
 
 	const isPartialStarVisible = computed(() => solids.value !== 5);
 </script>
