@@ -1,7 +1,8 @@
 <script setup lang="ts">
 	import SquareTextInput from '~/components/atoms/SquareTextInput.vue';
+	import RatingStars from '~/components/atoms/RatingStars.vue';
 
-	const props = defineProps<{ username: string }>();
+	const props = defineProps<{ username: string; rating: number }>();
 
 	const ageModel = defineModel<string>('age');
 	const locationModel = defineModel<string>('location');
@@ -46,6 +47,14 @@
 			<p class="text-xl font-bold text-[#00ffa3] drop-shadow-md">
 				Activity: for now
 			</p>
+
+			<div class="flex items-center">
+				<p class="text-outline text-xl font-bold text-white drop-shadow-md">
+					Current rating:
+				</p>
+
+				<RatingStars :rating="props.rating" />
+			</div>
 		</div>
 	</div>
 </template>
