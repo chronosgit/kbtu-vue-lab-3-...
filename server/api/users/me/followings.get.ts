@@ -27,7 +27,7 @@ export default defineEventHandler(async (e) => {
 		);
 
 		return getSuccessResponse(200, 'My followings received', {
-			followings: users,
+			users,
 		});
 	} catch (err) {
 		console.error(err);
