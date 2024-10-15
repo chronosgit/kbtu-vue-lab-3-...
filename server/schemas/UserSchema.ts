@@ -72,6 +72,7 @@ const UserSchema: Schema<IUser> = new Schema(
 		following: [
 			{
 				type: Schema.Types.ObjectId,
+				default: [],
 				ref: 'User',
 			},
 		],
