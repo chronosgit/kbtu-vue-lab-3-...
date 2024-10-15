@@ -14,8 +14,17 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const usersToReturn = { ...user, id: user._id };
-		return getSuccessResponse(200, 'User updated', { usersToReturn });
+		const userToReturn = {
+			id: user._id,
+			username: user.username,
+			email: user.email,
+			age: user.age,
+			location: user.location,
+			lastLoggedIn: user.lastLoggedIn,
+			rating: user.rating,
+			likes: user.likes,
+		};
+		return getSuccessResponse(200, 'User updated', { user: userToReturn });
 	} catch (err) {
 		console.error(err);
 

@@ -24,7 +24,16 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const userToReturn = { ...user, id: user._id };
+		const userToReturn = {
+			id: user._id,
+			username: user.username,
+			email: user.email,
+			age: user.age,
+			location: user.location,
+			lastLoggedIn: user.lastLoggedIn,
+			rating: user.rating,
+			likes: user.likes,
+		};
 		return getSuccessResponse(200, 'User received', { userToReturn });
 	} catch (err) {
 		console.error(err);
