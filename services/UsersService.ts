@@ -10,6 +10,10 @@ class UsersService {
 	static followUser(userId: string) {
 		return $fetch(`/api/users/follow`, { method: 'PUT', body: { userId } });
 	}
+
+	static getMyFollowings() {
+		return $fetch('/api/users/me/followings');
+	}
 }
 
 export default UsersService;
