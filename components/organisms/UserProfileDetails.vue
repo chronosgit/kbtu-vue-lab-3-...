@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import RatingStars from '~/components/atoms/RatingStars.vue';
+	import RatingStars from '~/components/molecules/RatingStars.vue';
 
 	const props = defineProps<{
 		username: string;

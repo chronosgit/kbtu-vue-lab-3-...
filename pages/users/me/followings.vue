@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import UserCard from '~/components/atoms/UserCard.vue';
+	import UserCard from '~/components/molecules/UserCard.vue';
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 
 	definePageMeta({
