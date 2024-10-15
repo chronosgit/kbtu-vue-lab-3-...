@@ -10,7 +10,7 @@ interface IUser extends Document {
 	rating: number;
 	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
-	following: Types.ObjectId[];
+	followings: Types.ObjectId[];
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -57,7 +57,7 @@ const UserSchema: Schema<IUser> = new Schema(
 		age: {
 			type: Number,
 			min: 0,
-			max: 120, // old ah
+			max: 150, // old ah
 			default: 0,
 		},
 		location: {
@@ -69,7 +69,7 @@ const UserSchema: Schema<IUser> = new Schema(
 			type: Date,
 			default: new Date(),
 		},
-		following: [
+		followings: [
 			{
 				type: [Schema.Types.ObjectId],
 				default: [],
