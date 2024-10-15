@@ -14,13 +14,7 @@ export default defineEventHandler(async (e) => {
 
 		const user = await User.findOne(
 			{ _id: new mongo.ObjectId(userId) },
-			{
-				username: true,
-				age: true,
-				location: true,
-				lastLoggedIn: true,
-				rating: true,
-			}
+			{ password: false }
 		);
 
 		if (!user) {
@@ -30,7 +24,8 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		return getSuccessResponse(200, 'User received', { user });
+		const userToReturn = { ...user, id: user._id };
+		return getSuccessResponse(200, 'User received', { userToReturn });
 	} catch (err) {
 		console.error(err);
 

@@ -26,9 +26,8 @@ export default defineEventHandler(async (e) => {
 			{ password: false }
 		);
 
-		return getSuccessResponse(200, 'My followings received', {
-			users,
-		});
+		const usersToReturn = users.map((u) => ({ ...u, id: u._id }));
+		return getSuccessResponse(200, 'My followings received', { usersToReturn });
 	} catch (err) {
 		console.error(err);
 
