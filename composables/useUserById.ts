@@ -6,8 +6,10 @@ export default function (userId: string) {
 		'getUser',
 		async () => {
 			try {
-				const res = await UsersService.getUser(userId);
-				const { user: receivedUser } = res.data as { user: IUser };
+				const res = (await UsersService.getUser(userId)) as {
+					data: { user: IUser };
+				};
+				const { user: receivedUser } = res.data;
 
 				return receivedUser;
 			} catch (err) {
@@ -17,7 +19,8 @@ export default function (userId: string) {
 
 				return null;
 			}
-		}
+		},
+		{ server: false }
 	);
 
 	const activity = computed(() => {

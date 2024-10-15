@@ -1,4 +1,4 @@
-import { Document, Schema } from 'mongoose';
+import { Document, Schema, Types } from 'mongoose';
 
 interface IUser extends Document {
 	email: string;
@@ -10,9 +10,7 @@ interface IUser extends Document {
 	rating: number;
 	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
-
-	// followers
-	// posts
+	followings: Types.ObjectId[];
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -59,7 +57,7 @@ const UserSchema: Schema<IUser> = new Schema(
 		age: {
 			type: Number,
 			min: 0,
-			max: 120, // old ah
+			max: 150, // old ah
 			default: 0,
 		},
 		location: {
@@ -67,11 +65,17 @@ const UserSchema: Schema<IUser> = new Schema(
 			trim: true,
 			default: '',
 		},
-
 		lastLoggedIn: {
 			type: Date,
 			default: new Date(),
 		},
+		followings: [
+			{
+				type: [Schema.Types.ObjectId],
+				default: [],
+				ref: 'User',
+			},
+		],
 	},
 	{ timestamps: true }
 );

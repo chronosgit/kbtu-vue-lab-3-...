@@ -18,7 +18,10 @@ export default defineNuxtConfig({
 		REFRESH_TOKEN_SECRET: import.meta.env?.REFRESH_TOKEN_SECRET,
 	},
 
-	plugins: ['./plugins/mongodb.server.ts'],
+	nitro: {
+		plugins: ['./plugins/mongoose.ts'],
+	},
+
 	modules: ['@nuxtjs/tailwindcss', '@nuxt/icon', '@nuxt/fonts'],
 
 	css: ['~/assets/css/tailwind.css'],

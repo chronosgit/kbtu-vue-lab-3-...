@@ -17,8 +17,6 @@ const connectDb = async () => {
 	}
 };
 
-export default defineNuxtPlugin(async (nuxt) => {
-	nuxt.hooks.hook('app:rendered', async () => {
-		await connectDb();
-	});
+export default defineNitroPlugin(async () => {
+	await connectDb();
 });

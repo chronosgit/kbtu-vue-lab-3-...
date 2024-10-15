@@ -35,6 +35,7 @@
 					:age="user?.age !== undefined ? String(user.age) : 'N/A'"
 					:location="user?.location || 'Unknown'"
 					:last-logged-in="activity || 'Unknown'"
+					:rating="user?.rating || 0"
 				/>
 
 				<template v-if="isAuthenticated">

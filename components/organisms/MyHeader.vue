@@ -77,7 +77,9 @@
 						</div>
 
 						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
-							<p class="text-outline">Favourites</p>
+							<NuxtLink to="/users/me/followings" class="text-outline">
+								Favourites
+							</NuxtLink>
 						</div>
 
 						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
