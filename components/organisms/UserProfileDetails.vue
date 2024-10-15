@@ -1,9 +1,12 @@
 <script setup lang="ts">
+	import RatingStars from '~/components/atoms/RatingStars.vue';
+
 	const props = defineProps<{
 		username: string;
 		age: string;
 		location: string;
 		lastLoggedIn: string;
+		rating: number;
 	}>();
 </script>
 
@@ -24,10 +27,17 @@
 
 			<p class="text-outline text-2xl text-yellow-300">{{ props.location }}</p>
 
-			<!-- Much more here -->
 			<p class="text-xl font-bold text-[#00ffa3] drop-shadow-md">
 				Activity: {{ props.lastLoggedIn }}
 			</p>
+
+			<div class="flex items-center gap-4">
+				<p class="text-outline text-xl font-bold text-white drop-shadow-md">
+					Rating:
+				</p>
+
+				<RatingStars :rating="props.rating" />
+			</div>
 		</div>
 	</div>
 </template>
