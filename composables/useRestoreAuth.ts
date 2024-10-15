@@ -5,7 +5,7 @@ import type IMyUser from '~/interfaces/IMyUser';
 export default function () {
 	const { loginUser } = useCurrentUserStore();
 
-	useAsyncData('restoreAuth', async () => {
+	useLazyAsyncData('restoreAuth', async () => {
 		try {
 			const res = await AuthService.restoreAuthentication();
 			const { user } = res.data as { user: IMyUser };
