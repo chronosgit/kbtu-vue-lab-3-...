@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 	import MyProfileDetails from '~/components/organisms/MyProfileDetails.vue';
+	import PostCard from '~/components/molecules/PostCard.vue';
 	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
@@ -17,6 +18,10 @@
 		isLoading,
 		updateProfile,
 	} = useMyProfile();
+
+	const { posts, fetchMyPosts, deletePost } = useMyPosts();
+
+	onMounted(() => fetchMyPosts());
 </script>
 
 <template>
@@ -62,6 +67,19 @@
 						</p>
 					</div>
 				</div>
+			</div>
+
+			<div class="flex flex-wrap items-center justify-center gap-4 bg-red-400">
+				<PostCard v-for="p in posts" :post="p">
+					<template #btn-action>
+						<button
+							class="rounded-lg bg-[#43ef27] px-3 py-1 text-lg font-medium uppercase text-white"
+							@click="deletePost(p._id)"
+						>
+							Like
+						</button>
+					</template>
+				</PostCard>
 			</div>
 		</main>
 	</div>
