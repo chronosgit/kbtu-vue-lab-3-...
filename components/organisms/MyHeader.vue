@@ -77,6 +77,12 @@
 						</div>
 
 						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
+							<NuxtLink to="/users/me/compose" class="text-outline">
+								Compose
+							</NuxtLink>
+						</div>
+
+						<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
 							<NuxtLink to="/users/me/followings" class="text-outline">
 								Favourites
 							</NuxtLink>
