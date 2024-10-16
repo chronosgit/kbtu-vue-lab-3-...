@@ -12,25 +12,35 @@
 </script>
 
 <template>
-	<div class="flex items-center justify-between bg-[#5bb9cd] p-2">
-		<div class="space-y-4 rounded-md bg-[#73c3d3] p-2">
-			<p class="text-lg font-medium text-white">
-				{{ props.post.authorUsername }}
-			</p>
+	<div class="rounded-md bg-[#5bb9cd] p-2">
+		<div class="mb-2 flex items-center justify-between gap-4">
+			<div class="space-y-4 rounded-md bg-[#73c3d3] p-2">
+				<p class="text-lg font-medium text-white">
+					{{ props.post.authorUsername }}
+				</p>
 
-			<p class="text-lg font-medium text-white">{{ ts }}</p>
+				<p class="text-lg font-medium text-white">{{ ts }}</p>
+			</div>
+
+			<div class="space-y-5">
+				<p class="text-center text-lg font-medium text-white">Rating</p>
+
+				<RatingStars :rating="props.post.rating" />
+			</div>
+
+			<img
+				class="max-h-24 max-w-24"
+				src="~/assets/images/avatar-placeholder.png"
+				alt="avatar"
+			/>
 		</div>
 
-		<div class="space-y-5">
-			<p class="text-center text-lg font-medium text-white">Rating</p>
+		<p class="mb-2 text-lg font-medium text-white">
+			{{ props.post.description }}
+		</p>
 
-			<RatingStars :rating="props.post.rating" />
+		<div class="text-right">
+			<slot name="btn-action"></slot>
 		</div>
-
-		<img
-			class="max-h-24 max-w-24"
-			src="~/assets/images/avatar-placeholder.png"
-			alt="avatar"
-		/>
 	</div>
 </template>
