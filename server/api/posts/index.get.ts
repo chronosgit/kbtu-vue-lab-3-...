@@ -67,8 +67,10 @@ export default defineEventHandler(async (e) => {
 			meta: {
 				totalPosts: allPosts.length,
 				totalPages,
-				curPage: page,
+				currentPage: page,
 				postsPerPage: pageSize,
+				hasPreviousPage: page - 1 > 0,
+				hasNextPage: page + 1 <= totalPages,
 			},
 		});
 	} catch (err) {
