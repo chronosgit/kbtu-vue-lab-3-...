@@ -14,6 +14,7 @@ export default function () {
 
 				loginUser(user);
 
+				await navigateTo('/users/me');
 				return res;
 			} catch (err) {
 				console.error(err);
