@@ -77,8 +77,9 @@ export default defineEventHandler(async (e: H3Event) => {
 			.limit(pageSize)
 			.lean();
 
+		const postsToReturn = posts.map((p) => ({ ...p, id: p._id }));
 		const response = {
-			posts,
+			posts: postsToReturn,
 			meta: {
 				totalPosts,
 				totalPages,
@@ -88,7 +89,6 @@ export default defineEventHandler(async (e: H3Event) => {
 				hasNextPage: page < totalPages,
 			},
 		};
-
 		return getSuccessResponse(200, 'Posts received', response);
 	} catch (err) {
 		console.error(err);

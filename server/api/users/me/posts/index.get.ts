@@ -16,7 +16,8 @@ export default defineEventHandler(async (e) => {
 
 		const myPosts = await Post.find({ authorId: decoded.id }).lean();
 
-		return getSuccessResponse(200, 'Posts received', { posts: myPosts });
+		const postsToReturn = myPosts.map((mp) => ({ ...mp, id: mp._id }));
+		return getSuccessResponse(200, 'Posts received', { posts: postsToReturn });
 	} catch (err) {
 		console.error(err);
 
