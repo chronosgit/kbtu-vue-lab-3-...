@@ -8,9 +8,10 @@ export default defineEventHandler(async (e) => {
 		const pageSize = Number(qPageSize);
 
 		if (Number.isNaN(page) || Number.isNaN(pageSize)) {
+			console.log(page, pageSize);
 			throw createError({
 				statusCode: 400,
-				statusMessage: 'Invallid query parameters',
+				statusMessage: 'Invalid query parameters',
 			});
 		}
 
@@ -50,10 +51,24 @@ export default defineEventHandler(async (e) => {
 		// Pagination
 		const totalPages = Math.floor(filteredPosts.length / pageSize);
 
-		if (page > totalPages || page <= 0) {
+		if (!totalPages) {
+			return getSuccessResponse(200, 'Posts received', {
+				posts: [],
+				meta: {
+					totalPosts: 0,
+					totalPages,
+					currentPage: page,
+					postsPerPage: pageSize,
+					hasPreviousPage: false,
+					hasNextPage: false,
+				},
+			});
+		}
+
+		if (page > totalPages) {
 			throw createError({
 				statusCode: 400,
-				statusMessage: 'Invallid query parameters',
+				statusMessage: 'Invalid query parameters',
 			});
 		}
 
