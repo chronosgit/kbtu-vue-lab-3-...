@@ -1,7 +1,3 @@
-<script setup lang="ts">
-	useRestoreAuth();
-</script>
-
 <template>
 	<div>
 		<NuxtLayout>

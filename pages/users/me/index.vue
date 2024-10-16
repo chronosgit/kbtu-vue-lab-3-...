@@ -4,7 +4,7 @@
 	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
-	definePageMeta({ middleware: '3-protect-route' });
+	definePageMeta({ middleware: '4-protect-route' });
 	useHead({ title: 'My profile' });
 
 	const {
