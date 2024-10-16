@@ -25,6 +25,7 @@ export default defineEventHandler(async (e) => {
 
 		const newPost = new Post({
 			authorId: me._id,
+			authorUsername: me.username,
 			description,
 		});
 		await newPost.save();
