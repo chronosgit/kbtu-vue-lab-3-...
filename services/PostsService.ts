@@ -3,6 +3,10 @@ class PostsService {
 		return $fetch('/api/posts', { params: { page, pageSize, filter } });
 	}
 
+	static getMyPosts() {
+		return $fetch('/api/users/me/posts');
+	}
+
 	static createPost(description: string) {
 		return $fetch('/api/posts', { method: 'POST', body: { description } });
 	}
