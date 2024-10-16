@@ -7,8 +7,16 @@
 	definePageMeta({ middleware: '3-protect-route' });
 	useHead({ title: 'My profile' });
 
-	const { username, age, location, feedback, error, isLoading, updateProfile } =
-		useMyProfile();
+	const {
+		username,
+		age,
+		location,
+		rating,
+		feedback,
+		error,
+		isLoading,
+		updateProfile,
+	} = useMyProfile();
 </script>
 
 <template>
@@ -24,7 +32,8 @@
 
 			<div class="flex items-start justify-between">
 				<MyProfileDetails
-					:username="username"
+					:username
+					:rating
 					v-model:age="age"
 					v-model:location="location"
 				/>
