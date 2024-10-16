@@ -13,10 +13,6 @@
 
 			<p class="my-4 text-lg">Sorry, that page doesn't exist.</p>
 
-			<button class="cursor-pointer text-blue-300" @click="execute()">
-				Fetch posts
-			</button>
-
 			<NuxtLink to="/" class="mt-6 cursor-pointer text-blue-500">
 				Go to root
 			</NuxtLink>
