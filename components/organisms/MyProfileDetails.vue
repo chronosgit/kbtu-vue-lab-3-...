@@ -48,7 +48,7 @@
 				Activity: for now
 			</p>
 
-			<div class="flex items-center">
+			<div class="flex items-center gap-2">
 				<p class="text-outline text-xl font-bold text-white drop-shadow-md">
 					Current rating:
 				</p>
