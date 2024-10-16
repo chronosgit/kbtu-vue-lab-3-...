@@ -2,24 +2,6 @@
 	import PostsService from '~/services/PostsService';
 
 	useHead({ title: 'Page not found' });
-
-	const { execute } = useLazyAsyncData(
-		'a',
-		async () => {
-			try {
-				const res = await PostsService.getPosts(1, 6, '+TIME,+RATING');
-
-				console.log(res);
-
-				return res;
-			} catch (err) {
-				console.error(err);
-
-				return null;
-			}
-		},
-		{ immediate: false }
-	);
 </script>
 
 <template>
