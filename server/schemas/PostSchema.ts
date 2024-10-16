@@ -4,6 +4,7 @@ interface IPost extends Document {
 	authorId: Types.ObjectId;
 	rating: number;
 	description: string;
+	createdAt: Date;
 }
 
 const PostSchema: Schema<IPost> = new Schema({
@@ -20,6 +21,10 @@ const PostSchema: Schema<IPost> = new Schema({
 		type: String,
 		default: '',
 		required: true,
+	},
+	createdAt: {
+		type: Date,
+		default: new Date(),
 	},
 });
 
