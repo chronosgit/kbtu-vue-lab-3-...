@@ -73,10 +73,10 @@
 				<PostCard v-for="p in posts" :post="p">
 					<template #btn-action>
 						<button
-							class="rounded-lg bg-[#43ef27] px-3 py-1 text-lg font-medium uppercase text-white"
+							class="rounded-lg bg-[#ef2757] px-3 py-1 text-lg font-medium uppercase text-white"
 							@click="deletePost(p._id)"
 						>
-							Like
+							Delete
 						</button>
 					</template>
 				</PostCard>
