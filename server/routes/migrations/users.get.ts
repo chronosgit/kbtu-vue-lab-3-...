@@ -1,6 +1,6 @@
 import User from '~/server/models/User';
 
-const createUser = (username: string) => {
+const createUser = async (username: string) => {
 	const user = new User({
 		username: username,
 		email: username + '@gmail.com',
@@ -8,6 +8,8 @@ const createUser = (username: string) => {
 		isEmailConfirmed: true,
 		lastLoggedIn: new Date(),
 	});
+
+	await user.save();
 };
 
 export default function () {
