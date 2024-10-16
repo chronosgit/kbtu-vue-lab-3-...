@@ -24,5 +24,14 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
+	plugins: [
+		function ({ addUtilities }) {
+			addUtilities({
+				'.clip-path-chevron': {
+					clipPath:
+						'polygon(50% 0%, 100% 20%, 100% 100%, 50% 80%, 0% 100%, 0% 20%)',
+				},
+			});
+		},
+	],
 };
