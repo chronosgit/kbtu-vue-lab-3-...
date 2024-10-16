@@ -1,14 +1,27 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 	import MyProfileDetails from '~/components/organisms/MyProfileDetails.vue';
+	import PostCard from '~/components/molecules/PostCard.vue';
 	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
 
-	definePageMeta({ middleware: '3-protect-route' });
+	definePageMeta({ middleware: '4-protect-route' });
 	useHead({ title: 'My profile' });
 
-	const { username, age, location, feedback, error, isLoading, updateProfile } =
-		useMyProfile();
+	const {
+		username,
+		age,
+		location,
+		rating,
+		feedback,
+		error,
+		isLoading,
+		updateProfile,
+	} = useMyProfile();
+
+	const { posts, fetchMyPosts, deletePost } = useMyPosts();
+
+	onMounted(() => fetchMyPosts());
 </script>
 
 <template>
@@ -24,7 +37,8 @@
 
 			<div class="flex items-start justify-between">
 				<MyProfileDetails
-					:username="username"
+					:username
+					:rating
 					v-model:age="age"
 					v-model:location="location"
 				/>
@@ -53,6 +67,19 @@
 						</p>
 					</div>
 				</div>
+			</div>
+
+			<div class="flex flex-wrap items-center justify-center gap-4 bg-red-400">
+				<PostCard v-for="p in posts" :post="p">
+					<template #btn-action>
+						<button
+							class="rounded-lg bg-[#ef2757] px-3 py-1 text-lg font-medium uppercase text-white"
+							@click="deletePost(p._id)"
+						>
+							Delete
+						</button>
+					</template>
+				</PostCard>
 			</div>
 		</main>
 	</div>

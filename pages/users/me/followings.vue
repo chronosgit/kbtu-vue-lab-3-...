@@ -3,7 +3,7 @@
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 
 	definePageMeta({
-		middleware: '3-protect-route',
+		middleware: '4-protect-route',
 	});
 	useHead({
 		title: 'My followings',

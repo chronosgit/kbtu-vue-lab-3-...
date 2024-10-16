@@ -2,16 +2,16 @@ import useCurrentUserStore from '~/store/useCurrentUserStore';
 import AuthService from '~/services/AuthService';
 import type IMyUser from '~/interfaces/IMyUser';
 
-export default function () {
+export default defineNuxtRouteMiddleware(() => {
 	const { loginUser } = useCurrentUserStore();
 
-	useLazyAsyncData(
-		'restoreAuth',
+	useAsyncData(
+		'restoreAuthentication',
 		async () => {
 			try {
 				const res = await AuthService.restoreAuthentication();
-				const { user } = res.data as { user: IMyUser };
 
+				const { user } = res.data as { user: IMyUser };
 				loginUser(user);
 
 				return res;
@@ -23,4 +23,4 @@ export default function () {
 		},
 		{ server: false }
 	);
-}
+});

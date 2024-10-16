@@ -1,20 +1,42 @@
 import UsersService from '~/services/UsersService';
-import useCurrentUserStore from '~/store/useCurrentUserStore';
+import type IMyUser from '~/interfaces/IMyUser';
 
 export default function () {
-	const { user } = useCurrentUserStore();
-
-	const age = ref(user.value.age ? String(user.value.age) : '');
-	const location = ref(user.value.location ? String(user.value.location) : '');
+	const username = ref('Unknown');
+	const rating = ref(0);
+	const inputAge = ref('Unknown');
+	const inputLocation = ref('Unknown');
 
 	const feedback = ref('');
 	const error = ref('');
 	const isLoading = ref(false);
 
+	useLazyAsyncData(
+		'getMyProfile',
+		async () => {
+			try {
+				const res = await UsersService.getMe();
+				const { user } = res.data as { user: IMyUser };
+
+				username.value = user.username;
+				rating.value = user.rating;
+				inputAge.value = user.age.toString();
+				inputLocation.value = user.location;
+
+				return res;
+			} catch (err) {
+				console.error(err);
+
+				return null;
+			}
+		},
+		{ server: false }
+	);
+
 	const { execute: fetchUpdate } = useLazyAsyncData(
 		'updateMyProfile',
 		() =>
-			UsersService.getMe(age.value, location.value)
+			UsersService.updateMe(inputAge.value, inputLocation.value)
 				.then(() => (feedback.value = 'Success!'))
 				.catch(() => (error.value = 'Error'))
 				.finally(() => (isLoading.value = false)),
@@ -22,8 +44,8 @@ export default function () {
 	);
 
 	const validate = () => {
-		const isAgeInputted = age.value.length > 0;
-		const convertedAge = Number(age.value);
+		const isAgeInputted = inputAge.value.length > 0;
+		const convertedAge = Number(inputAge.value);
 
 		if (isAgeInputted && (Number.isNaN(convertedAge) || convertedAge <= 0)) {
 			error.value = 'Invalid age';
@@ -45,9 +67,10 @@ export default function () {
 	};
 
 	return {
-		username: user.value.username,
-		age,
-		location,
+		username,
+		age: inputAge,
+		location: inputLocation,
+		rating,
 		feedback,
 		error,
 		isLoading,

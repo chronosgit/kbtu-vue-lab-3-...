@@ -1,5 +1,10 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
+	import ArrowRight from '~/components/atoms/ArrowRight.vue';
+	import CaretDown from '~/components/atoms/CaretDown.vue';
+	import ChevronShapeTemplate from '~/components/atoms/ChevronShapeTemplate.vue';
+	import Dropdown from '~/components/molecules/Dropdown.vue';
 
 	const {
 		params: { topic },
@@ -13,15 +18,85 @@
 		});
 	}
 
+	const filtersRef = useTemplateRef('filters-ref');
+	const { isActive: isFiltersActive, activate: openFilters } =
+		useClickawayClient(filtersRef);
+
 	watchEffect(() => {
 		useHead({ title: capitalize(topic) + ' blog' });
 	});
 </script>
 
 <template>
-	<div class="h-screen w-screen bg-trees bg-cover bg-center">
+	<div class="h-screen w-screen bg-trees bg-cover bg-center font-poppins">
 		<div class="pt-2">
 			<MyHeader />
 		</div>
+
+		<main class="mx-auto my-0 max-w-screen-lg px-4">
+			<ChevronShapeTemplate
+				class="w-full bg-white bg-opacity-80 px-4 pb-32 pt-14 text-2xl font-bold uppercase text-white shadow-lg"
+			>
+				<div class="mb-4 max-w-max rounded-lg bg-[#5ab8cd] p-4">
+					<p>{{ getReadableDate(new Date()) }}</p>
+				</div>
+
+				<div class="flex items-center justify-between gap-4">
+					<div
+						class="max-w-max rounded-lg bg-[#5ab8cd] px-4 py-2 text-2xl font-bold"
+					>
+						<p>{{ topic }}</p>
+					</div>
+
+					<div class="flex items-center gap-4">
+						<div class="relative">
+							<div
+								ref="filters-ref"
+								class="flex cursor-pointer items-center gap-2 bg-[#eefcf7] p-2 capitalize text-[#1de390] shadow-lg"
+								@click="openFilters()"
+							>
+								<p>Rating</p>
+
+								<CaretDown class="scale-150 text-gray-500" />
+							</div>
+
+							<Dropdown :is-open="isFiltersActive" class="left-0 right-0">
+								<div
+									class="space-y-2 bg-[#eefcf7] px-2 capitalize text-[#1de390]"
+								>
+									<p
+										class="cursor-pointer"
+										@click="console.log('Filter rating')"
+									>
+										Rating
+									</p>
+
+									<p
+										class="cursor-pointer"
+										@click.="console.log('Filter time')"
+									>
+										Time
+									</p>
+								</div>
+							</Dropdown>
+						</div>
+
+						<div class="flex items-center gap-4 text-[#73c2d2]">
+							<ArrowLeft
+								class="scale-125 cursor-pointer"
+								@click="console.log('Left pag')"
+							/>
+
+							<p class="select-none font-tnr text-3xl font-bold">1/5</p>
+
+							<ArrowRight
+								class="scale-125 cursor-pointer"
+								@click="console.log('Right pag')"
+							/>
+						</div>
+					</div>
+				</div>
+			</ChevronShapeTemplate>
+		</main>
 	</div>
 </template>
