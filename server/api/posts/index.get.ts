@@ -1,25 +1,27 @@
 import Post from '~/server/models/Post';
+import { H3Event } from 'h3';
 
-export default defineEventHandler(async (e) => {
+export default defineEventHandler(async (e: H3Event) => {
 	try {
-		const { page: qPage = 1, pageSize: qPageSize = 1, filter } = getQuery(e);
+		const { page: qPage = 1, pageSize: qPageSize = 10, filter } = getQuery(e);
 
 		const page = Number(qPage);
 		const pageSize = Number(qPageSize);
 
-		if (Number.isNaN(page) || Number.isNaN(pageSize)) {
-			console.log(page, pageSize);
+		if (
+			Number.isNaN(page) ||
+			Number.isNaN(pageSize) ||
+			page < 1 ||
+			pageSize < 1
+		) {
 			throw createError({
 				statusCode: 400,
 				statusMessage: 'Invalid query parameters',
 			});
 		}
 
-		const allPosts = await Post.find();
+		const sortOptions: Record<string, 1 | -1> = {};
 
-		let filteredPosts = allPosts;
-
-		// Filters
 		if (typeof filter === 'string') {
 			const filters = filter
 				.split(',')
@@ -27,42 +29,39 @@ export default defineEventHandler(async (e) => {
 				.slice(0, 2);
 			const flags = ['+', '-'];
 
-			filters.forEach(async (f) => {
+			filters.forEach((f) => {
 				const flag = f.slice(0, 1);
-				const filter = f.slice(1);
+				const filterField = f.slice(1);
 
 				if (!flags.includes(flag)) return;
 
-				switch (filter) {
+				switch (filterField) {
 					case 'TIME':
-						filteredPosts = await Post.find().sort({
-							createdAt: flag === '+' ? 1 : -1,
-						});
+						sortOptions.createdAt = flag === '+' ? 1 : -1;
 						break;
 					case 'RATING':
-						filteredPosts = await Post.find().sort({
-							rating: flag === '+' ? 1 : -1,
-						});
+						sortOptions.rating = flag === '+' ? 1 : -1;
 						break;
 				}
 			});
 		}
 
-		// Pagination
-		const totalPages = Math.floor(filteredPosts.length / pageSize);
+		const totalPosts = await Post.countDocuments();
+		const totalPages = Math.ceil(totalPosts / pageSize);
 
-		if (!totalPages) {
-			return getSuccessResponse(200, 'Posts received', {
+		if (totalPosts === 0) {
+			const response = {
 				posts: [],
 				meta: {
 					totalPosts: 0,
-					totalPages,
+					totalPages: 0,
 					currentPage: page,
 					postsPerPage: pageSize,
 					hasPreviousPage: false,
 					hasNextPage: false,
 				},
-			});
+			};
+			return getSuccessResponse(200, 'No posts found', response);
 		}
 
 		if (page > totalPages) {
@@ -72,22 +71,25 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const paginatedPosts = filteredPosts.slice(
-			(page - 1) * pageSize,
-			page * pageSize
-		);
+		const posts = await Post.find()
+			.sort(sortOptions)
+			.skip((page - 1) * pageSize)
+			.limit(pageSize)
+			.lean();
 
-		return getSuccessResponse(200, 'Posts received', {
-			posts: paginatedPosts,
+		const response = {
+			posts,
 			meta: {
-				totalPosts: allPosts.length,
+				totalPosts,
 				totalPages,
 				currentPage: page,
 				postsPerPage: pageSize,
-				hasPreviousPage: page - 1 > 0,
-				hasNextPage: page + 1 <= totalPages,
+				hasPreviousPage: page > 1,
+				hasNextPage: page < totalPages,
 			},
-		});
+		};
+
+		return getSuccessResponse(200, 'Posts received', response);
 	} catch (err) {
 		console.error(err);
 
