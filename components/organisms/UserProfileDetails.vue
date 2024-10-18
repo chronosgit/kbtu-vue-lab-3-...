@@ -27,7 +27,7 @@
 
 			<p class="text-outline text-2xl text-yellow-300">{{ props.location }}</p>
 
-			<p class="text-xl font-bold text-[#00ffa3] drop-shadow-md">
+			<p class="text-xl font-bold text-[#ff0000] drop-shadow-md">
 				Activity: {{ props.lastLoggedIn }}
 			</p>
 
