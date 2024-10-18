@@ -26,7 +26,11 @@ export default defineEventHandler(async (e) => {
 
 		const topics = getPostTopics();
 
-		if (!topics.includes(topic)) {
+		if (
+			!topic ||
+			typeof topic !== 'string' ||
+			!topics.includes(topic.toUpperCase())
+		) {
 			throw createError({
 				name: 'TopicError',
 				statusCode: 400,
