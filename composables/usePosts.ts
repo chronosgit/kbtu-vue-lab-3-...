@@ -66,7 +66,10 @@ export default function (topic: string) {
 
 	onMounted(() => fetchPosts());
 
+	watch(filters, () => fetchPosts());
+
 	return {
+		filters,
 		posts,
 		curPage,
 		totalPages,
