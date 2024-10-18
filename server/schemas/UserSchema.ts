@@ -11,6 +11,7 @@ interface IUser extends Document {
 	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
 	followings: Types.ObjectId[];
+	likedPosts: Types.ObjectId[];
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -68,6 +69,13 @@ const UserSchema: Schema<IUser> = new Schema(
 				type: [Schema.Types.ObjectId],
 				default: [],
 				ref: 'User',
+			},
+		],
+		likedPosts: [
+			{
+				type: [Schema.Types.ObjectId],
+				default: [],
+				ref: 'Post',
 			},
 		],
 	},
