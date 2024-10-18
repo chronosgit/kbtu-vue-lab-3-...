@@ -1,6 +1,7 @@
 import { Document, Schema, Types } from 'mongoose';
 
 interface IPost extends Document {
+	_id: Types.ObjectId;
 	authorId: Types.ObjectId;
 	authorUsername: string;
 	likes: number;
