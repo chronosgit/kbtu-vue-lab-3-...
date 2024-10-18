@@ -35,7 +35,7 @@
 		hasPrevPage,
 		toPrevPage,
 		toNextPage,
-		likeButton,
+		likePost,
 	} = usePosts(topic);
 
 	const filtersRef = useTemplateRef('filters-ref');
@@ -133,7 +133,7 @@
 						<template #btn-action v-if="isAuthenticated">
 							<button
 								class="rounded-lg bg-[#43ef27] px-5 py-1 font-poppins font-bold uppercase text-white"
-								@click="likeButton(p._id)"
+								@click="likePost(p._id)"
 							>
 								Like
 							</button>
