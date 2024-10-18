@@ -60,8 +60,17 @@ export default function (topic: string) {
 		fetchPosts();
 	};
 
-	const likeButton = (postId: string) => {
-		console.log(postId);
+	const likePost = async (postId: string) => {
+		try {
+			await $fetch('/api/posts/like', {
+				method: 'PUT',
+				body: { postId },
+			});
+
+			fetchPosts();
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	onMounted(() => fetchPosts());
@@ -77,6 +86,6 @@ export default function (topic: string) {
 		hasPrevPage,
 		toNextPage,
 		toPrevPage,
-		likeButton,
+		likePost,
 	};
 }
