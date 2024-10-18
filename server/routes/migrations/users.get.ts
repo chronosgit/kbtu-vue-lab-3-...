@@ -15,10 +15,10 @@ const createUser = async (username: string) => {
 export default function () {
 	try {
 		createUser('john');
-		createUser('bumi');
+		createUser('daniel');
 		createUser('aang');
-		createUser('gojo');
-		createUser('vanya');
+		createUser('maxim');
+		createUser('vasiliy');
 	} catch (err) {
 		console.error(err);
 

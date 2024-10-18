@@ -1,11 +1,11 @@
 import Post from '~/server/models/Post';
 import User from '~/server/models/User';
 
-const createPostsForUserWithEmail = async (email: string, topic: string) => {
+const createPostsForUserWithEmail = async (email: string, topics: string[]) => {
 	const user = await User.findOne({ email });
 
 	if (!user) {
-		console.error(`User with email: ${email} doesn\'t exist`);
+		console.error(`User with email: ${email} doesn't exist`);
 		return;
 	}
 
@@ -22,48 +22,59 @@ const createPostsForUserWithEmail = async (email: string, topic: string) => {
 		'Pure perfection! 😍',
 	];
 
-	const postPromises = descriptions.map(async (description) => {
-		const post = new Post({
-			authorId: user.id,
-			authorUsername: user.username,
-			topic,
-			rating: Math.random() * 5,
-			description,
-		});
+	const postPromises = topics.flatMap((topic) =>
+		descriptions.map((description) => {
+			const likes = Math.floor(Math.random() * 100);
+			const rating = likes / 10;
 
-		return await post.save();
-	});
+			const post = new Post({
+				authorId: user.id,
+				authorUsername: user.username,
+				topic,
+				likes,
+				rating,
+				description,
+			});
 
-	// Await all post promises
+			return post.save();
+		})
+	);
+
 	await Promise.all(postPromises);
+};
+
+const calculateRatings = async (email: string) => {
+	const user = await User.findOne({ email });
+
+	if (!user) {
+		console.error('calculateRatingsUser');
+		return;
+	}
+
+	const userPosts = await Post.find({ authorId: user?._id });
+
+	const allUserPostsRating = userPosts.reduce((acc, p) => {
+		return acc + p.rating;
+	}, 0);
+
+	user.rating = Math.min(allUserPostsRating / userPosts.length, 5);
+
+	await user.save();
 };
 
 export default defineEventHandler(async () => {
 	try {
-		const migratedUsers = ['john', 'vanya', 'gojo', 'bumi', 'aang'];
+		const migratedUsers = ['john', 'daniel', 'aang', 'maxim', 'vasiliy'];
+		const topics = ['ADVENTURE', 'NATURE', 'FASHION', 'MODERN'];
 
 		await Promise.all(
 			migratedUsers.map((u) =>
-				createPostsForUserWithEmail(u + '@gmail.com', 'ADVENTURE')
+				createPostsForUserWithEmail(u + '@gmail.com', topics)
 			)
 		);
 
 		await Promise.all(
-			migratedUsers.map((u) =>
-				createPostsForUserWithEmail(u + '@gmail.com', 'NATURE')
-			)
-		);
-
-		await Promise.all(
-			migratedUsers.map((u) =>
-				createPostsForUserWithEmail(u + '@gmail.com', 'FASHION')
-			)
-		);
-
-		await Promise.all(
-			migratedUsers.map((u) =>
-				createPostsForUserWithEmail(u + '@gmail.com', 'MODERN')
-			)
+			migratedUsers.map((u) => calculateRatings(`${u}@gmail.com`))
 		);
 	} catch (err) {
 		console.error(err);
