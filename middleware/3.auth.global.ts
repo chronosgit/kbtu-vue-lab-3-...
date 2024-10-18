@@ -20,7 +20,7 @@ export default defineNuxtRouteMiddleware(() => {
 
 				return null;
 			}
-		},
-		{ server: false }
+		}
+		// { server: false }
 	);
 });

@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
 		const topic = Array.isArray(t) ? t[0] : t;
 
-		const topics = ['ADVENTURE', 'NATURE', 'FASHION', 'MODERN'];
+		const topics = getPostTopics();
 
 		if (!topics.includes(topic.toUpperCase())) return navigateTo('/not-found');
 	} catch (err) {
