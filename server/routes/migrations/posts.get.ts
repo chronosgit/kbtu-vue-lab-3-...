@@ -25,6 +25,7 @@ const createPostsForUserWithEmail = async (email: string) => {
 	const postPromises = descriptions.map(async (description) => {
 		const post = new Post({
 			authorId: user.id,
+			authorUsername: user.username,
 			rating: Math.random() * 5,
 			description: description,
 		});
