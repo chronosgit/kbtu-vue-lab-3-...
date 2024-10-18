@@ -9,15 +9,17 @@
 	const ts = computed(() =>
 		convertDateTimeToPostHistoryString(props.post.createdAt)
 	);
+
+	const userLink = computed(() => `/users/${props.post.authorId}`);
 </script>
 
 <template>
 	<div class="rounded-md bg-[#5bb9cd] p-2">
 		<div class="mb-2 flex flex-wrap items-center justify-between gap-4">
 			<div class="space-y-4 rounded-md bg-[#73c3d3] p-2">
-				<p class="text-lg font-medium text-white">
+				<NuxtLink :to="userLink" class="text-lg font-medium text-white">
 					{{ props.post.authorUsername }}
-				</p>
+				</NuxtLink>
 
 				<p class="text-lg font-medium text-white">{{ ts }}</p>
 			</div>
