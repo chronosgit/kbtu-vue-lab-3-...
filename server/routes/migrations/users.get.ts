@@ -4,7 +4,7 @@ const createUser = async (username: string) => {
 	const user = new User({
 		username: username,
 		email: username + '@gmail.com',
-		password: '123',
+		password: await getHashedPassword('123'),
 		isEmailConfirmed: true,
 		lastLoggedIn: new Date(),
 	});
@@ -14,11 +14,9 @@ const createUser = async (username: string) => {
 
 export default function () {
 	try {
-		createUser('john');
-		createUser('daniel');
 		createUser('aang');
-		createUser('maxim');
-		createUser('vasiliy');
+		createUser('foo');
+		createUser('bar');
 	} catch (err) {
 		console.error(err);
 
