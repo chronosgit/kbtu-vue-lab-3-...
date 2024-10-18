@@ -1,12 +1,14 @@
 export default defineNuxtRouteMiddleware(async (to) => {
 	try {
-		const topic = to.params.topic[0];
+		const t = to.params.topic;
 
-		if (!topic) return navigateTo('/not-found');
+		if (!t) return navigateTo('/not-found');
+
+		const topic = Array.isArray(t) ? t[0] : t;
 
 		const topics = ['ADVENTURE', 'NATURE', 'FASHION', 'MODERN'];
 
-		if (!topics.includes(topic)) return navigateTo('/not-found');
+		if (!topics.includes(topic.toUpperCase())) return navigateTo('/not-found');
 	} catch (err) {
 		console.error(err);
 	}
