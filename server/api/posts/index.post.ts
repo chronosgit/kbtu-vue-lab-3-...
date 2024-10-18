@@ -1,5 +1,6 @@
 import Post from '~/server/models/Post';
 import User from '~/server/models/User';
+import getPostTopics from '~/server/utils/getPostTopics';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -12,7 +13,7 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const { description } = await readBody(e);
+		const { description, topic } = await readBody(e);
 
 		const me = await User.findOne({ email: decoded.email });
 
@@ -23,9 +24,25 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
+		const topics = getPostTopics();
+
+		if (
+			!topic ||
+			typeof topic !== 'string' ||
+			!topics.includes(topic.toUpperCase())
+		) {
+			throw createError({
+				name: 'TopicError',
+				statusCode: 400,
+				statusMessage: 'Bad request',
+				message: 'Invalid topic',
+			});
+		}
+
 		const newPost = new Post({
 			authorId: me._id,
 			authorUsername: me.username,
+			topic,
 			description,
 		});
 		await newPost.save();

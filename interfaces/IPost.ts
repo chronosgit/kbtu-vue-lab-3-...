@@ -3,6 +3,7 @@ export default interface IPost {
 	authorId: string;
 	authorUsername: string;
 	rating: number;
+	likes: number;
 	description: string;
 	createdAt: string;
 }

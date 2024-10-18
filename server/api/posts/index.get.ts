@@ -3,7 +3,12 @@ import { H3Event } from 'h3';
 
 export default defineEventHandler(async (e: H3Event) => {
 	try {
-		const { page: qPage = 1, pageSize: qPageSize = 4, filter } = getQuery(e);
+		const {
+			page: qPage = 1,
+			pageSize: qPageSize = 4,
+			filter,
+			topic,
+		} = getQuery(e);
 
 		const page = Number(qPage);
 		const pageSize = Number(qPageSize);
@@ -46,10 +51,11 @@ export default defineEventHandler(async (e: H3Event) => {
 			});
 		}
 
-		const totalPosts = await Post.countDocuments();
-		const totalPages = Math.ceil(totalPosts / pageSize);
+		const filteredPosts = await Post.find({
+			topic: { $regex: topic, $options: 'i' },
+		}).sort(sortOptions);
 
-		if (totalPosts === 0) {
+		if (filteredPosts.length === 0) {
 			const response = {
 				posts: [],
 				meta: {
@@ -61,27 +67,32 @@ export default defineEventHandler(async (e: H3Event) => {
 					hasNextPage: false,
 				},
 			};
-			return getSuccessResponse(200, 'No posts found', response);
+
+			return getSuccessResponse(200, 'Posts received', response);
 		}
 
-		if (page > totalPages) {
+		if (page > Math.ceil(filteredPosts.length / pageSize)) {
 			throw createError({
 				statusCode: 400,
 				statusMessage: 'Invalid query parameters',
 			});
 		}
 
-		const posts = await Post.find()
+		const posts = await Post.find({
+			topic: { $regex: topic, $options: 'i' },
+		})
 			.sort(sortOptions)
 			.skip((page - 1) * pageSize)
 			.limit(pageSize)
 			.lean();
 
+		const totalPages = Math.ceil(posts.length / pageSize);
+
 		const postsToReturn = posts.map((p) => ({ ...p, id: p._id }));
 		const response = {
 			posts: postsToReturn,
 			meta: {
-				totalPosts,
+				totalPosts: posts.length,
 				totalPages,
 				currentPage: page,
 				postsPerPage: pageSize,
@@ -89,8 +100,6 @@ export default defineEventHandler(async (e: H3Event) => {
 				hasNextPage: page < totalPages,
 			},
 		};
-
-		console.log(response.meta);
 
 		return getSuccessResponse(200, 'Posts received', response);
 	} catch (err) {

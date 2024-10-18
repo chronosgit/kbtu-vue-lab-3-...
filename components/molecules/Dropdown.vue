@@ -7,9 +7,7 @@
 	}>();
 
 	const yPosTw = computed(() => {
-		return props.isOpen
-			? 'scale-y-1 translate-y-0'
-			: 'scale-y-0 -translate-y-8';
+		return props.isOpen ? 'scale-y-1' : 'scale-y-0';
 	});
 
 	const xPosTw = computed(() => {

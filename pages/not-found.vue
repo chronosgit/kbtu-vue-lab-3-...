@@ -1,6 +1,4 @@
 <script setup lang="ts">
-	import PostsService from '~/services/PostsService';
-
 	useHead({ title: 'Page not found' });
 </script>
 

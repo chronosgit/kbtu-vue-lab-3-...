@@ -2,39 +2,33 @@ import PostsService from '~/services/PostsService';
 import type IPost from '~/interfaces/IPost';
 import type IPostsMeta from '~/interfaces/IPostsMeta';
 
-export default function (topic: string) {
-	const filters = ref<string>('');
-
-	const curPage = ref(1);
-	const pageSize = 4;
-	const totalPages = ref<number | null>(null);
-	const hasNextPage = ref(false);
-	const hasPrevPage = ref(false);
-
+export default function (userId: string) {
 	const posts = ref<IPost[]>([]);
 
-	const { execute: fetchPosts } = useAsyncData(
-		'getPosts',
+	const pageSize = 2;
+	const curPage = ref(1);
+	const totalPages = ref<number | null>(null);
+	const hasPrevPage = ref(false);
+	const hasNextPage = ref(false);
+
+	const { execute } = useAsyncData(
+		'getUserPosts',
 		async () => {
 			try {
-				const res = await PostsService.getPosts(
+				const res = await PostsService.getUserPosts(
+					userId,
 					curPage.value,
-					pageSize,
-					filters.value,
-					topic
+					pageSize
 				);
 				const { posts: fetchedPosts, meta } = res.data as {
 					posts: IPost[];
 					meta: IPostsMeta;
 				};
 
-				totalPages.value = meta.totalPages;
-				hasNextPage.value = meta.hasNextPage;
-				hasPrevPage.value = meta.hasPreviousPage;
-
 				posts.value = fetchedPosts;
-
-				if (meta.totalPages === 0) curPage.value = 0;
+				totalPages.value = meta.totalPages;
+				hasPrevPage.value = meta.hasPreviousPage;
+				hasNextPage.value = meta.hasNextPage;
 
 				return res;
 			} catch (err) {
@@ -50,42 +44,23 @@ export default function (topic: string) {
 		if (!hasPrevPage.value) return;
 
 		curPage.value--;
-		fetchPosts();
+		execute();
 	};
 
 	const toNextPage = () => {
 		if (!hasNextPage.value) return;
 
 		curPage.value++;
-		fetchPosts();
+		execute();
 	};
 
-	const likePost = async (postId: string) => {
-		try {
-			await $fetch('/api/posts/like', {
-				method: 'PUT',
-				body: { postId },
-			});
-
-			fetchPosts();
-		} catch (err) {
-			console.error(err);
-		}
-	};
-
-	onMounted(() => fetchPosts());
-
-	watch(filters, () => fetchPosts());
+	onMounted(() => execute());
 
 	return {
-		filters,
 		posts,
 		curPage,
 		totalPages,
-		hasNextPage,
-		hasPrevPage,
-		toNextPage,
 		toPrevPage,
-		likePost,
+		toNextPage,
 	};
 }

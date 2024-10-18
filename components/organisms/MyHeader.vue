@@ -4,9 +4,9 @@
 	import Dropdown from '@/components/molecules/Dropdown.vue';
 	import IconBurger from '@/components/atoms/IconBurger.vue';
 	import IconUser from '@/components/atoms/IconUser.vue';
-	import useUserStore from '~/store/useCurrentUserStore';
+	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
-	const { isAuthenticated, logoutUser } = useUserStore();
+	const { isAuthenticated, logoutUser } = useCurrentUserStore();
 
 	const dropdownRef = useTemplateRef('dropdown');
 	const {
@@ -44,24 +44,23 @@
 	<LoginPopup ref="login-popup-ref" :is-open="isLoginPopup" />
 
 	<!-- Actual header -->
-	<ClientOnly>
-		<header
-			class="mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
+	<header
+		class="mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
+	>
+		<div class="cursor-pointer" @click.stop="openSidebar">
+			<IconBurger />
+		</div>
+
+		<div
+			class="rounded-xl bg-gradient-to-r from-[#e5f67c] via-[#dfe84d] to-[#eaed39] p-2 text-center"
 		>
-			<div class="cursor-pointer" @click.stop="openSidebar">
-				<IconBurger />
-			</div>
-
-			<div
-				class="rounded-xl bg-gradient-to-r from-[#e5f67c] via-[#dfe84d] to-[#eaed39] p-2 text-center"
+			<span
+				class="bg-gradient-to-r from-[#f9bf9d] via-[#ff9480] to-[#ff794f] bg-clip-text font-tnr text-lg text-transparent"
+				>New trips on Fall season! Full details on our Instagram accounts</span
 			>
-				<span
-					class="bg-gradient-to-r from-[#f9bf9d] via-[#ff9480] to-[#ff794f] bg-clip-text font-tnr text-lg text-transparent"
-					>New trips on Fall season! Full details on our Instagram
-					accounts</span
-				>
-			</div>
+		</div>
 
+		<ClientOnly>
 			<div class="relative cursor-pointer">
 				<div @click.stop="onUserIconClick">
 					<IconUser />
@@ -120,6 +119,6 @@
 					</div>
 				</Dropdown>
 			</div>
-		</header>
-	</ClientOnly>
+		</ClientOnly>
+	</header>
 </template>

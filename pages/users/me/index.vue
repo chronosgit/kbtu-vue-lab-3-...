@@ -4,6 +4,8 @@
 	import PostCard from '~/components/molecules/PostCard.vue';
 	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
 	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
+	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
+	import ArrowRight from '~/components/atoms/ArrowRight.vue';
 
 	definePageMeta({ middleware: '4-protect-route' });
 	useHead({ title: 'My profile' });
@@ -19,16 +21,15 @@
 		updateProfile,
 	} = useMyProfile();
 
-	const { posts, fetchMyPosts, deletePost } = useMyPosts();
-
-	onMounted(() => fetchMyPosts());
+	const { posts, curPage, totalPages, deletePost, toPrevPage, toNextPage } =
+		useMyPosts();
 </script>
 
 <template>
 	<div
-		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="min-h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="mb-2">
+		<div class="pt-2">
 			<MyHeader />
 		</div>
 
@@ -69,7 +70,7 @@
 				</div>
 			</div>
 
-			<div class="flex flex-wrap items-center justify-center gap-4 bg-red-400">
+			<div class="mt-8 grid grid-cols-2 gap-4">
 				<PostCard v-for="p in posts" :post="p">
 					<template #btn-action>
 						<button
@@ -80,6 +81,21 @@
 						</button>
 					</template>
 				</PostCard>
+			</div>
+
+			<div
+				v-show="totalPages"
+				class="ml-auto mt-8 flex max-w-32 -translate-x-12 items-center justify-evenly bg-[#5bb9cd] px-4 py-2 text-white"
+			>
+				<div class="scale-150 cursor-pointer" @click="toPrevPage()">
+					<ArrowLeft />
+				</div>
+
+				<p class="text-xl font-bold">{{ curPage }}/{{ totalPages }}</p>
+
+				<div class="scale-150 cursor-pointer" @click="toNextPage()">
+					<ArrowRight />
+				</div>
 			</div>
 		</main>
 	</div>

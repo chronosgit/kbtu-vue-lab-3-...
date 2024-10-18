@@ -1,7 +1,10 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
 	import UserProfileDetails from '~/components/organisms/UserProfileDetails.vue';
+	import PostCard from '~/components/molecules/PostCard.vue';
 	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
+	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
+	import ArrowRight from '~/components/atoms/ArrowRight.vue';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	const userId = computed(() => {
@@ -13,6 +16,11 @@
 	const { isAuthenticated } = useCurrentUserStore();
 
 	const { user, activity } = useUserById(userId.value);
+
+	const { posts, curPage, totalPages, toPrevPage, toNextPage } = useUserPosts(
+		userId.value
+	);
+
 	const { feedback, isLoading, error, followUser } = useFollowUser(
 		userId.value
 	);
@@ -56,5 +64,24 @@
 				</template>
 			</div>
 		</main>
+
+		<div class="mt-8 grid grid-cols-2 gap-4 px-4">
+			<PostCard v-for="p in posts" :post="p" />
+		</div>
+
+		<div
+			v-show="totalPages"
+			class="ml-auto mt-8 flex max-w-32 -translate-x-12 items-center justify-evenly bg-[#5bb9cd] px-4 py-2 text-white"
+		>
+			<div class="scale-150 cursor-pointer" @click="toPrevPage()">
+				<ArrowLeft />
+			</div>
+
+			<p class="text-xl font-bold">{{ curPage }}/{{ totalPages }}</p>
+
+			<div class="scale-150 cursor-pointer" @click="toNextPage()">
+				<ArrowRight />
+			</div>
+		</div>
 	</div>
 </template>

@@ -1,16 +1,17 @@
 import { Document, Schema, Types } from 'mongoose';
 
 interface IUser extends Document {
+	_id: Types.ObjectId;
 	email: string;
 	username: string;
 	password: string;
 	age: number;
 	location: string;
-	likes: number; // others liking the user
 	rating: number;
 	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
 	followings: Types.ObjectId[];
+	likedPosts: Types.ObjectId[];
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -38,15 +39,9 @@ const UserSchema: Schema<IUser> = new Schema(
 			required: true,
 			trim: true,
 		},
-
 		isEmailConfirmed: {
 			type: Boolean,
 			default: false,
-		},
-
-		likes: {
-			type: Number,
-			default: 0,
 		},
 		rating: {
 			type: Number,
@@ -74,6 +69,13 @@ const UserSchema: Schema<IUser> = new Schema(
 				type: [Schema.Types.ObjectId],
 				default: [],
 				ref: 'User',
+			},
+		],
+		likedPosts: [
+			{
+				type: [Schema.Types.ObjectId],
+				default: [],
+				ref: 'Post',
 			},
 		],
 	},

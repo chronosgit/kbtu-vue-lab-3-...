@@ -1,20 +1,9 @@
-import IAccessToken from '~/interfaces/IAccessToken';
+import { Types } from 'mongoose';
 import Post from '~/server/models/Post';
 
 export default defineEventHandler(async (e) => {
 	try {
-		const decoded = e.context.decodedToken as IAccessToken;
-
-		if (!decoded) {
-			throw createError({
-				name: 'TokenError',
-				statusCode: 401,
-				statusMessage: 'Unauthorized',
-				message: "Access token wasn't provided",
-			});
-		}
-
-		const { page: qPage, pageSize: qPageSize } = getQuery(e);
+		const { userId, page: qPage, pageSize: qPageSize } = getQuery(e);
 
 		const page = Number(qPage);
 		const pageSize = Number(qPageSize);
@@ -31,9 +20,18 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const totalPosts = await Post.countDocuments({ authorId: decoded.id });
+		const allPosts = await Post.find({
+			authorId: new Types.ObjectId(String(userId)),
+		});
 
-		if (totalPosts === 0) {
+		const paginatedPosts = await Post.find({
+			authorId: new Types.ObjectId(String(userId)),
+		})
+			.skip((page - 1) * pageSize)
+			.limit(pageSize)
+			.lean();
+
+		if (allPosts.length === 0) {
 			const response = {
 				posts: [],
 				meta: {
@@ -49,23 +47,25 @@ export default defineEventHandler(async (e) => {
 			return getSuccessResponse(200, 'Posts received', response);
 		}
 
-		const myPosts = await Post.find({ authorId: decoded.id })
-			.skip((page - 1) * pageSize)
-			.limit(pageSize)
-			.lean();
+		if (page > Math.ceil(allPosts.length / pageSize)) {
+			throw createError({
+				statusCode: 400,
+				statusMessage: 'Invalid query parameters',
+			});
+		}
 
+		console.log();
 		const response = {
-			posts: myPosts,
+			posts: paginatedPosts,
 			meta: {
-				totalPosts,
-				totalPages: Math.ceil(totalPosts / pageSize),
+				totalPosts: allPosts.length,
+				totalPages: Math.ceil(allPosts.length / pageSize),
 				currentPage: page,
 				postsPerPage: pageSize,
 				hasPreviousPage: page > 1,
-				hasNextPage: page < Math.ceil(totalPosts / pageSize),
+				hasNextPage: page < Math.ceil(allPosts.length / pageSize),
 			},
 		};
-
 		return getSuccessResponse(200, 'Posts received', response);
 	} catch (err) {
 		console.error(err);
