@@ -8,6 +8,12 @@ class PostsService {
 		return $fetch('/api/posts', { params: { page, pageSize, filter, topic } });
 	}
 
+	static getUserPosts(userId: string, page: number, pageSize: number) {
+		return $fetch(`/api/users/${userId}/posts`, {
+			params: { userId, page, pageSize },
+		});
+	}
+
 	static getMyPosts(page: number, pageSize: number) {
 		return $fetch('/api/users/me/posts', {
 			method: 'GET',
