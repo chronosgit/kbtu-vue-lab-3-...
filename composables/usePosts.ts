@@ -46,17 +46,21 @@ export default function () {
 	);
 
 	const toPrevPage = () => {
-		if (!hasPrevPage) return;
+		if (!hasPrevPage.value) return;
 
 		curPage.value--;
 		fetchPosts();
 	};
 
 	const toNextPage = () => {
-		if (!hasNextPage) return;
+		if (!hasNextPage.value) return;
 
 		curPage.value++;
 		fetchPosts();
+	};
+
+	const likeButton = (postId: string) => {
+		console.log(postId);
 	};
 
 	onMounted(() => fetchPosts());
@@ -69,5 +73,6 @@ export default function () {
 		hasPrevPage,
 		toNextPage,
 		toPrevPage,
+		likeButton,
 	};
 }

@@ -31,6 +31,7 @@
 		hasPrevPage,
 		toPrevPage,
 		toNextPage,
+		likeButton,
 	} = usePosts();
 
 	const filtersRef = useTemplateRef('filters-ref');
@@ -46,7 +47,7 @@
 
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<ChevronShapeTemplate
-				class="w-full bg-white bg-opacity-80 px-4 py-24 text-2xl font-bold uppercase text-white shadow-lg"
+				class="w-full bg-white bg-opacity-80 px-4 py-32 text-2xl font-bold uppercase text-white shadow-lg"
 			>
 				<div class="mb-4 max-w-max rounded-lg bg-[#5ab8cd] p-4">
 					<p>{{ getReadableDate(new Date()) }}</p>
@@ -122,7 +123,16 @@
 				</div>
 
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-					<PostCard v-for="p in posts" :post="p" />
+					<PostCard v-for="p in posts" :post="p">
+						<template #btn-action>
+							<button
+								class="rounded-lg bg-[#43ef27] px-5 py-1 font-poppins font-bold uppercase text-white"
+								@click="likeButton(p._id)"
+							>
+								Like
+							</button>
+						</template>
+					</PostCard>
 				</div>
 			</ChevronShapeTemplate>
 		</main>
