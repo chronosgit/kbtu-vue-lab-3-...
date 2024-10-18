@@ -7,9 +7,12 @@
 	import Dropdown from '~/components/molecules/Dropdown.vue';
 	import PostCard from '~/components/molecules/PostCard.vue';
 
+	definePageMeta({ middleware: '5-topic-check' });
+
 	const {
 		params: { topic },
 	} = useRoute() as { params: { topic?: string } };
+
 	useHead({ title: topic ? `${capitalize(topic)} blog` : 'Blog' });
 
 	if (!topic) {
