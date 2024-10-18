@@ -89,13 +89,9 @@
 							</Dropdown>
 						</div>
 
-						<div v-show="totalPages == null" class="bg-[#eefcf7]">
-							<p class="px-4 py-2 text-[#1de390]">No posts</p>
-						</div>
-
 						<ClientOnly>
 							<div
-								v-show="totalPages != null"
+								v-show="totalPages"
 								class="flex items-center gap-4 text-[#73c2d2]"
 							>
 								<ArrowLeft
@@ -115,6 +111,10 @@
 								/>
 							</div>
 						</ClientOnly>
+
+						<div v-show="!totalPages" class="bg-[#eefcf7]">
+							<p class="px-4 py-2 text-[#1de390]">No posts</p>
+						</div>
 					</div>
 				</div>
 
