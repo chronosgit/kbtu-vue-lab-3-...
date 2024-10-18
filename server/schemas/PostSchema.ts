@@ -3,6 +3,7 @@ import { Document, Schema, Types } from 'mongoose';
 interface IPost extends Document {
 	authorId: Types.ObjectId;
 	authorUsername: string;
+	likes: number;
 	rating: number;
 	topic: string;
 	description: string;
@@ -21,6 +22,10 @@ const PostSchema: Schema<IPost> = new Schema({
 	},
 	topic: {
 		type: String,
+		required: true,
+	},
+	likes: {
+		type: Number,
 		required: true,
 	},
 	rating: {

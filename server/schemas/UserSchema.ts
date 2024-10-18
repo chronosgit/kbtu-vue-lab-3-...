@@ -38,15 +38,9 @@ const UserSchema: Schema<IUser> = new Schema(
 			required: true,
 			trim: true,
 		},
-
 		isEmailConfirmed: {
 			type: Boolean,
 			default: false,
-		},
-
-		likes: {
-			type: Number,
-			default: 0,
 		},
 		rating: {
 			type: Number,
