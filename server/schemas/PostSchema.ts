@@ -26,7 +26,7 @@ const PostSchema: Schema<IPost> = new Schema({
 	},
 	likes: {
 		type: Number,
-		required: true,
+		default: 0,
 	},
 	rating: {
 		type: Number,
