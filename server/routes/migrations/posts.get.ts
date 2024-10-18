@@ -24,8 +24,8 @@ const createPostsForUserWithEmail = async (email: string, topics: string[]) => {
 
 	const postPromises = topics.flatMap((topic) =>
 		descriptions.map((description) => {
-			const likes = Math.floor(Math.random() * 100);
-			const rating = likes / 10;
+			const likes = Math.floor(Math.random() * 15);
+			const rating = Math.min(likes / 4, 5);
 
 			const post = new Post({
 				authorId: user.id,
