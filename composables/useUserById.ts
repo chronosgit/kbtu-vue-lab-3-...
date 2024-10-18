@@ -11,6 +11,8 @@ export default function (userId: string) {
 				};
 				const { user: receivedUser } = res.data;
 
+				useHead({ title: `${receivedUser.username}\'s profile` });
+
 				return receivedUser;
 			} catch (err) {
 				console.error(err);
