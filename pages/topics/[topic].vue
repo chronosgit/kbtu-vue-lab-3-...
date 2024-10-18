@@ -5,10 +5,12 @@
 	import CaretDown from '~/components/atoms/CaretDown.vue';
 	import ChevronShapeTemplate from '~/components/atoms/ChevronShapeTemplate.vue';
 	import Dropdown from '~/components/molecules/Dropdown.vue';
+	import PostCard from '~/components/molecules/PostCard.vue';
 
 	const {
 		params: { topic },
 	} = useRoute() as { params: { topic?: string } };
+	useHead({ title: topic ? `${capitalize(topic)} blog` : 'Blog' });
 
 	if (!topic) {
 		throw createError({
@@ -18,30 +20,36 @@
 		});
 	}
 
+	const {
+		posts,
+		curPage,
+		totalPages,
+		hasNextPage,
+		hasPrevPage,
+		toPrevPage,
+		toNextPage,
+	} = usePosts();
+
 	const filtersRef = useTemplateRef('filters-ref');
 	const { isActive: isFiltersActive, activate: openFilters } =
 		useClickawayClient(filtersRef);
-
-	watchEffect(() => {
-		useHead({ title: capitalize(topic) + ' blog' });
-	});
 </script>
 
 <template>
-	<div class="h-screen w-screen bg-trees bg-cover bg-center font-poppins">
+	<div class="min-h-screen w-screen bg-trees bg-cover bg-center font-poppins">
 		<div class="pt-2">
 			<MyHeader />
 		</div>
 
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<ChevronShapeTemplate
-				class="w-full bg-white bg-opacity-80 px-4 pb-32 pt-14 text-2xl font-bold uppercase text-white shadow-lg"
+				class="w-full bg-white bg-opacity-80 px-4 py-24 text-2xl font-bold uppercase text-white shadow-lg"
 			>
 				<div class="mb-4 max-w-max rounded-lg bg-[#5ab8cd] p-4">
 					<p>{{ getReadableDate(new Date()) }}</p>
 				</div>
 
-				<div class="flex items-center justify-between gap-4">
+				<div class="mb-8 flex items-center justify-between gap-4">
 					<div
 						class="max-w-max rounded-lg bg-[#5ab8cd] px-4 py-2 text-2xl font-bold"
 					>
@@ -81,20 +89,37 @@
 							</Dropdown>
 						</div>
 
-						<div class="flex items-center gap-4 text-[#73c2d2]">
-							<ArrowLeft
-								class="scale-125 cursor-pointer"
-								@click="console.log('Left pag')"
-							/>
-
-							<p class="select-none font-tnr text-3xl font-bold">1/5</p>
-
-							<ArrowRight
-								class="scale-125 cursor-pointer"
-								@click="console.log('Right pag')"
-							/>
+						<div v-show="totalPages == null" class="bg-[#eefcf7]">
+							<p class="px-4 py-2 text-[#1de390]">No posts</p>
 						</div>
+
+						<ClientOnly>
+							<div
+								v-show="totalPages != null"
+								class="flex items-center gap-4 text-[#73c2d2]"
+							>
+								<ArrowLeft
+									class="scale-125 cursor-pointer"
+									:class="{ 'cursor-not-allowed': !hasPrevPage }"
+									@click="toPrevPage()"
+								/>
+
+								<p class="select-none font-tnr text-3xl font-bold">
+									{{ `${curPage}/${totalPages}` }}
+								</p>
+
+								<ArrowRight
+									class="scale-125 cursor-pointer"
+									:class="{ 'cursor-not-allowed': !hasNextPage }"
+									@click="toNextPage()"
+								/>
+							</div>
+						</ClientOnly>
 					</div>
+				</div>
+
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<PostCard v-for="p in posts" :post="p" />
 				</div>
 			</ChevronShapeTemplate>
 		</main>

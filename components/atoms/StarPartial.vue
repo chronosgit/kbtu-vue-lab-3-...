@@ -15,13 +15,13 @@
 	<div class="relative flex items-center">
 		<div
 			id="solid"
-			class="absolute top-0 z-10 translate-y-1 scale-150"
+			class="absolute top-0 z-10 scale-150 md:scale-100"
 			:style="clipStyle"
 		>
 			<StarSolid />
 		</div>
 
-		<div id="outline" class="absolute top-0 translate-y-1 scale-150">
+		<div id="outline" class="absolute top-0 scale-150 md:scale-100">
 			<StarOutline />
 		</div>
 	</div>
