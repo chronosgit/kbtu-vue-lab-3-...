@@ -22,14 +22,14 @@
 </script>
 
 <template>
-	<div class="flex items-center gap-2.5">
+	<div class="flex items-center gap-3">
 		<div v-for="_ in solids" class="scale-150 text-yellow-400 md:scale-100">
 			<StarSolid />
 		</div>
 
 		<div
 			v-if="isPartialStarVisible"
-			class="h-5 w-5 translate-y-[2px] text-yellow-400"
+			class="h-5 w-5 -translate-x-[1px] -translate-y-[2px] text-yellow-400"
 		>
 			<StarPartial :percent="percent" />
 		</div>
