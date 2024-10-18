@@ -6,7 +6,6 @@ interface IUser extends Document {
 	password: string;
 	age: number;
 	location: string;
-	likes: number; // others liking the user
 	rating: number;
 	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
