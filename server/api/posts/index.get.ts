@@ -90,8 +90,6 @@ export default defineEventHandler(async (e: H3Event) => {
 			},
 		};
 
-		console.log(response.meta);
-
 		return getSuccessResponse(200, 'Posts received', response);
 	} catch (err) {
 		console.error(err);
