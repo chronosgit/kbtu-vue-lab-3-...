@@ -45,7 +45,7 @@
 
 	<!-- Actual header -->
 	<header
-		class="flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
+		class="mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
 	>
 		<div class="cursor-pointer" @click.stop="openSidebar">
 			<IconBurger />
