@@ -12,8 +12,11 @@ class PostsService {
 		return $fetch('/api/users/me/posts');
 	}
 
-	static createPost(description: string) {
-		return $fetch('/api/posts', { method: 'POST', body: { description } });
+	static createPost(description: string, topic: string) {
+		return $fetch('/api/posts', {
+			method: 'POST',
+			body: { description, topic },
+		});
 	}
 
 	static deleteMyPost(postId: string) {
