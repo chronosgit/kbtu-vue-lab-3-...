@@ -13,6 +13,7 @@
 	const { isAuthenticated } = useCurrentUserStore();
 
 	const { user, activity } = useUserById(userId.value);
+
 	const { feedback, isLoading, error, followUser } = useFollowUser(
 		userId.value
 	);
