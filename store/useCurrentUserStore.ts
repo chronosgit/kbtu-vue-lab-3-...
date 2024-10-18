@@ -22,7 +22,8 @@ export default function () {
 		user.value = { ...loggedUser };
 	};
 
-	const removeTokens = () => $fetch('/api/auth/logout', { method: 'PUT' });
+	const removeTokens = async () =>
+		$fetch('/api/auth/logout', { method: 'PUT' });
 
 	const logoutUser = async () => {
 		isAuthenticated.value = false;
@@ -38,7 +39,7 @@ export default function () {
 			isEmailConfirmed: false,
 		};
 
-		removeTokens();
+		await removeTokens();
 
 		await navigateTo('/');
 	};

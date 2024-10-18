@@ -26,7 +26,7 @@
 
 <template>
 	<div
-		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="max-w-screen h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
 		<div class="mb-2">
 			<MyHeader />
