@@ -10,16 +10,9 @@ const createPostsForUserWithEmail = async (email: string, topics: string[]) => {
 	}
 
 	const descriptions = [
-		'Love this! 😍',
-		'Amazing shot! 🔥',
-		'So beautiful! ✨',
-		'Incredible view! 🌄',
-		'This is goals! 🙌',
-		'Absolutely stunning! 😍',
-		"Can't get enough of this! 😍",
-		"You're killing it! 💯",
-		'Wow, just wow! 😮',
-		'Pure perfection! 😍',
+		'1_LoremIpsumDescription',
+		'2_LoremIpsumDescription',
+		'3_LoremIpsumDescription',
 	];
 
 	const postPromises = topics.flatMap((topic) =>
@@ -64,7 +57,7 @@ const calculateRatings = async (email: string) => {
 
 export default defineEventHandler(async () => {
 	try {
-		const migratedUsers = ['john', 'daniel', 'aang', 'maxim', 'vasiliy'];
+		const migratedUsers = ['foo', 'bar', 'aang'];
 		const topics = ['ADVENTURE', 'NATURE', 'FASHION', 'MODERN'];
 
 		await Promise.all(
