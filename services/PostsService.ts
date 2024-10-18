@@ -8,8 +8,11 @@ class PostsService {
 		return $fetch('/api/posts', { params: { page, pageSize, filter, topic } });
 	}
 
-	static getMyPosts() {
-		return $fetch('/api/users/me/posts');
+	static getMyPosts(page: number, pageSize: number) {
+		return $fetch('/api/users/me/posts', {
+			method: 'GET',
+			params: { page, pageSize },
+		});
 	}
 
 	static createPost(description: string, topic: string) {
