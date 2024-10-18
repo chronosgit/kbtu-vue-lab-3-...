@@ -1,11 +1,12 @@
 <script setup lang="ts">
 	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import Dropdown from '~/components/molecules/Dropdown.vue';
+	import PostCard from '~/components/molecules/PostCard.vue';
 	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
 	import ArrowRight from '~/components/atoms/ArrowRight.vue';
 	import CaretDown from '~/components/atoms/CaretDown.vue';
 	import ChevronShapeTemplate from '~/components/atoms/ChevronShapeTemplate.vue';
-	import Dropdown from '~/components/molecules/Dropdown.vue';
-	import PostCard from '~/components/molecules/PostCard.vue';
+	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	definePageMeta({ middleware: '5-topic-check' });
 
@@ -22,6 +23,8 @@
 			fatal: true,
 		});
 	}
+
+	const { isAuthenticated } = useCurrentUserStore();
 
 	const {
 		posts,
@@ -126,7 +129,7 @@
 
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<PostCard v-for="p in posts" :post="p">
-						<template #btn-action>
+						<template #btn-action v-if="isAuthenticated">
 							<button
 								class="rounded-lg bg-[#43ef27] px-5 py-1 font-poppins font-bold uppercase text-white"
 								@click="likeButton(p._id)"
