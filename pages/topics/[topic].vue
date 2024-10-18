@@ -40,14 +40,16 @@
 </script>
 
 <template>
-	<div class="min-h-screen w-screen bg-trees bg-cover bg-center font-poppins">
+	<div
+		class="max-w-screen min-h-screen bg-trees bg-cover bg-center font-poppins"
+	>
 		<div class="pt-2">
 			<MyHeader />
 		</div>
 
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<ChevronShapeTemplate
-				class="w-full bg-white bg-opacity-80 px-4 py-32 text-2xl font-bold uppercase text-white shadow-lg"
+				class="bg-white bg-opacity-80 px-4 py-32 text-2xl font-bold uppercase text-white shadow-lg"
 			>
 				<div class="mb-4 max-w-max rounded-lg bg-[#5ab8cd] p-4">
 					<p>{{ getReadableDate(new Date()) }}</p>
