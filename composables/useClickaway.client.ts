@@ -7,6 +7,8 @@ export default function (
 
 	const disactivate = () => (isActive.value = false);
 
+	const toggle = () => (isActive.value = !isActive.value);
+
 	const onDocumentClick = (e: MouseEvent) => {
 		const clickedTarget = e.target as Element;
 
@@ -28,5 +30,5 @@ export default function (
 	onMounted(() => document.addEventListener('mousedown', onDocumentClick));
 	onUnmounted(() => document.removeEventListener('mousedown', onDocumentClick));
 
-	return { activate, disactivate, isActive };
+	return { isActive, activate, disactivate, toggle };
 }
