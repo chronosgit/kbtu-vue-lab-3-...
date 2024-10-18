@@ -1,16 +1,25 @@
 <script setup lang="ts">
-	import type IPost from '~/interfaces/IPost';
 	import RatingStars from './RatingStars.vue';
+	import useCurrentUserStore from '~/store/useCurrentUserStore';
+	import type IPost from '~/interfaces/IPost';
 
 	const props = defineProps<{
 		post: IPost;
 	}>();
 
+	const { user } = useCurrentUserStore();
+
 	const ts = computed(() =>
 		convertDateTimeToPostHistoryString(props.post.createdAt)
 	);
 
-	const userLink = computed(() => `/users/${props.post.authorId}`);
+	const userLink = computed(() => {
+		if (user.value.id !== props.post.authorId) {
+			return `/users/${props.post.authorId}`;
+		}
+
+		return '/users/me';
+	});
 </script>
 
 <template>
