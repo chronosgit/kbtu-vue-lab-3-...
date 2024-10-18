@@ -27,7 +27,10 @@
 			<StarSolid />
 		</div>
 
-		<div v-if="isPartialStarVisible" class="h-5 w-5 text-yellow-400">
+		<div
+			v-if="isPartialStarVisible"
+			class="h-5 w-5 -translate-y-[1px] text-yellow-400"
+		>
 			<StarPartial :percent="percent" />
 		</div>
 
