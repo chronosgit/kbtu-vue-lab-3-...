@@ -80,7 +80,7 @@ export default defineEventHandler(async (e) => {
 
 		await me.save();
 
-		return getSuccessResponse(200, 'Post liked');
+		return getSuccessResponse(200, 'Post liked', { postRating: post.rating });
 	} catch (err) {
 		console.error(err);
 
