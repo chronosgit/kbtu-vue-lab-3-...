@@ -7,7 +7,7 @@ export default function () {
 
 	const curPage = ref<number>(1);
 	const totalPages = ref<number | null>(null);
-	const postsPerPage = 4;
+	const postsPerPage = 2;
 	const hasNextPage = ref(false);
 	const hasPrevPage = ref(false);
 

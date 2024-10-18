@@ -26,7 +26,9 @@
 </script>
 
 <template>
-	<div class="bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]">
+	<div
+		class="min-h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+	>
 		<div class="pt-2">
 			<MyHeader />
 		</div>
