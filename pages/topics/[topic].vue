@@ -16,6 +16,8 @@
 
 	useHead({ title: topic ? `${capitalize(topic)} blog` : 'Blog' });
 
+	const { isAuthenticated } = useCurrentUserStore();
+
 	if (!topic) {
 		throw createError({
 			statusCode: 400,
@@ -24,9 +26,8 @@
 		});
 	}
 
-	const { isAuthenticated } = useCurrentUserStore();
-
 	const {
+		filters,
 		posts,
 		curPage,
 		totalPages,
@@ -38,7 +39,7 @@
 	} = usePosts(topic);
 
 	const filtersRef = useTemplateRef('filters-ref');
-	const { isActive: isFiltersActive, activate: openFilters } =
+	const { isActive: isFiltersActive, toggle: toggleFilters } =
 		useClickawayClient(filtersRef);
 </script>
 
@@ -69,33 +70,33 @@
 						<div class="relative">
 							<div
 								ref="filters-ref"
-								class="flex cursor-pointer items-center gap-2 bg-[#eefcf7] p-2 capitalize text-[#1de390] shadow-lg"
-								@click="openFilters()"
+								class="flex cursor-pointer items-center gap-2 bg-[#eefcf7] p-2 shadow-lg"
+								@click="toggleFilters()"
 							>
-								<p>Rating</p>
+								<p class="capitalize text-[#1de390]">
+									{{ filters.slice(1).toLowerCase() || 'No filter' }}
+								</p>
 
 								<CaretDown class="scale-150 text-gray-500" />
-							</div>
 
-							<Dropdown :is-open="isFiltersActive" class="left-0 right-0">
-								<div
-									class="space-y-2 bg-[#eefcf7] px-2 capitalize text-[#1de390]"
+								<Dropdown
+									:is-open="isFiltersActive"
+									class="left-0 right-0 top-0"
+									:class="{ 'translate-y-12': isFiltersActive }"
 								>
-									<p
-										class="cursor-pointer"
-										@click="console.log('Filter rating')"
+									<div
+										class="space-y-2 bg-[#eefcf7] px-2 capitalize text-[#1de390]"
 									>
-										Rating
-									</p>
+										<p class="cursor-pointer" @click="filters = '-RATING'">
+											Rating
+										</p>
 
-									<p
-										class="cursor-pointer"
-										@click.="console.log('Filter time')"
-									>
-										Time
-									</p>
-								</div>
-							</Dropdown>
+										<p class="cursor-pointer" @click.="filters = '-TIME'">
+											Time
+										</p>
+									</div>
+								</Dropdown>
+							</div>
 						</div>
 
 						<ClientOnly>
