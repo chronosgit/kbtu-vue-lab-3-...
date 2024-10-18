@@ -1,6 +1,11 @@
 class PostsService {
-	static getPosts(page: number, pageSize: number, filter: string) {
-		return $fetch('/api/posts', { params: { page, pageSize, filter } });
+	static getPosts(
+		page: number,
+		pageSize: number,
+		filter: string,
+		topic: string
+	) {
+		return $fetch('/api/posts', { params: { page, pageSize, filter, topic } });
 	}
 
 	static getMyPosts() {

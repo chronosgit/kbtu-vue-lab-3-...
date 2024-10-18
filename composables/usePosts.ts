@@ -2,7 +2,7 @@ import PostsService from '~/services/PostsService';
 import type IPost from '~/interfaces/IPost';
 import type IPostsMeta from '~/interfaces/IPostsMeta';
 
-export default function () {
+export default function (topic: string) {
 	const filters = ref<string>('');
 
 	const curPage = ref(1);
@@ -20,7 +20,8 @@ export default function () {
 				const res = await PostsService.getPosts(
 					curPage.value,
 					pageSize,
-					filters.value
+					filters.value,
+					topic
 				);
 				const { posts: fetchedPosts, meta } = res.data as {
 					posts: IPost[];

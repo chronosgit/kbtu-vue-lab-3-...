@@ -3,7 +3,12 @@ import { H3Event } from 'h3';
 
 export default defineEventHandler(async (e: H3Event) => {
 	try {
-		const { page: qPage = 1, pageSize: qPageSize = 4, filter } = getQuery(e);
+		const {
+			page: qPage = 1,
+			pageSize: qPageSize = 4,
+			filter,
+			topic,
+		} = getQuery(e);
 
 		const page = Number(qPage);
 		const pageSize = Number(qPageSize);
@@ -71,7 +76,7 @@ export default defineEventHandler(async (e: H3Event) => {
 			});
 		}
 
-		const posts = await Post.find()
+		const posts = await Post.find({ topic: { $regex: topic, $options: 'i' } })
 			.sort(sortOptions)
 			.skip((page - 1) * pageSize)
 			.limit(pageSize)
@@ -89,6 +94,8 @@ export default defineEventHandler(async (e: H3Event) => {
 				hasNextPage: page < totalPages,
 			},
 		};
+
+		console.log(response.posts);
 
 		return getSuccessResponse(200, 'Posts received', response);
 	} catch (err) {

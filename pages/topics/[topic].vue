@@ -32,7 +32,7 @@
 		toPrevPage,
 		toNextPage,
 		likeButton,
-	} = usePosts();
+	} = usePosts(topic);
 
 	const filtersRef = useTemplateRef('filters-ref');
 	const { isActive: isFiltersActive, activate: openFilters } =
