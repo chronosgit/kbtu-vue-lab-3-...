@@ -86,13 +86,12 @@ export default defineEventHandler(async (e: H3Event) => {
 			.limit(pageSize)
 			.lean();
 
-		const totalPages = Math.ceil(posts.length / pageSize);
+		const totalPages = Math.ceil(filteredPosts.length / pageSize);
 
-		const postsToReturn = posts.map((p) => ({ ...p, id: p._id }));
 		const response = {
-			posts: postsToReturn,
+			posts,
 			meta: {
-				totalPosts: posts.length,
+				totalPosts: filteredPosts.length,
 				totalPages,
 				currentPage: page,
 				postsPerPage: pageSize,

@@ -28,6 +28,8 @@ export default function (topic: string) {
 					meta: IPostsMeta;
 				};
 
+				console.log(fetchedPosts, meta);
+
 				totalPages.value = meta.totalPages;
 				hasNextPage.value = meta.hasNextPage;
 				hasPrevPage.value = meta.hasPreviousPage;
@@ -75,7 +77,10 @@ export default function (topic: string) {
 
 	onMounted(() => fetchPosts());
 
-	watch(filters, () => fetchPosts());
+	watch(filters, () => {
+		curPage.value = 1;
+		fetchPosts();
+	});
 
 	return {
 		filters,

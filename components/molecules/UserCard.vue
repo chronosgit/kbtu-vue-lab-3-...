@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import type IUser from '~/interfaces/IUser';
+	import RatingStars from './RatingStars.vue';
 
 	const props = defineProps<{ user: IUser }>();
 
@@ -21,9 +22,7 @@
 				{{ props.user.username }}
 			</p>
 
-			<p class="text-yellow-300">
-				{{ props.user.rating }}
-			</p>
+			<RatingStars :rating="props.user.rating" />
 
 			<NuxtLink :to="visitLinkUrl" class="font-bold uppercase text-blue-600">
 				Visit profile

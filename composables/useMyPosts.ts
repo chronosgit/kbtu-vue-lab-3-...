@@ -41,7 +41,9 @@ export default function () {
 			const res = await PostsService.deleteMyPost(postId);
 
 			const deletedPostIndex = posts.value.findIndex((f) => f._id === postId);
-			posts.value?.splice(deletedPostIndex, 1);
+			// posts.value?.splice(deletedPostIndex, 1);
+
+			fetchMyPosts();
 
 			return res;
 		} catch (err) {
