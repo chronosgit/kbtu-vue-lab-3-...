@@ -97,6 +97,13 @@
 					<ArrowRight />
 				</div>
 			</div>
+
+			<div
+				v-show="!totalPages"
+				class="text-lg font-bold uppercase text-white drop-shadow-md"
+			>
+				No posts
+			</div>
 		</main>
 	</div>
 </template>
