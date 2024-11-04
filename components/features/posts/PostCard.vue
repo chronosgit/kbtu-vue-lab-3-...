@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import RatingStars from './RatingStars.vue';
+	import RatingStars from '~/components/shared/RatingStars.vue';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 	import type IPost from '~/interfaces/IPost';
 

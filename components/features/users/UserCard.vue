@@ -1,6 +1,6 @@
 <script setup lang="ts">
+	import RatingStars from '~/components/shared/RatingStars.vue';
 	import type IUser from '~/interfaces/IUser';
-	import RatingStars from './RatingStars.vue';
 
 	const props = defineProps<{ user: IUser }>();
 

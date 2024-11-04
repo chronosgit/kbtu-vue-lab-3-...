@@ -1,9 +1,9 @@
 <script setup lang="ts">
 	const props = defineProps<{
-		isOpen: Boolean;
-		snapToLeft?: Boolean;
-		snapToCenter?: Boolean;
-		snapToRight?: Boolean;
+		isOpen: boolean;
+		snapToLeft?: boolean;
+		snapToCenter?: boolean;
+		snapToRight?: boolean;
 	}>();
 
 	const yPosTw = computed(() => {

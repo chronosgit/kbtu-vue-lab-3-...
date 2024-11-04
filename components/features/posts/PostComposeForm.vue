@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import SquareTextInput from '../atoms/SquareTextInput.vue';
+	import SquareTextInput from '~/components/ui/SquareTextInput.vue';
 
 	const { postDescr, topic, onFormSubmit } = usePostComposeForm();
 </script>
@@ -24,6 +24,7 @@
 				class="text-outline text-lg font-bold text-blue-300"
 				>Description:
 			</label>
+
 			<SquareTextInput
 				v-model="postDescr"
 				placeholder="What a wonderful day!"

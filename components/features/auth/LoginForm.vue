@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import LoginInput from '@/components/atoms/LoginInput.vue';
-	import LoadingSpinner from '@/components/atoms/LoadingSpinner.vue';
+	import LoginInput from '~/components/features/auth/LoginInput.vue';
+	import LoadingSpinner from '~/components/ui/LoadingSpinner.vue';
 
 	const { form, error, isLoading, onFormSubmit } = useLoginForm();
 </script>

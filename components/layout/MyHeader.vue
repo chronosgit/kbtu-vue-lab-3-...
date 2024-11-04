@@ -1,30 +1,26 @@
 <script setup lang="ts">
-	import SidebarMenu from '@/components/organisms/SidebarMenu.vue';
-	import LoginPopup from '@/components/organisms/LoginPopup.vue';
-	import Dropdown from '@/components/molecules/Dropdown.vue';
-	import IconBurger from '@/components/atoms/IconBurger.vue';
-	import IconUser from '@/components/atoms/IconUser.vue';
+	import LoginPopup from '~/components/features/auth/LoginPopup.vue';
+	import SidebarMenu from '~/components/layout/SidebarMenu.vue';
+	import Dropdown from '~/components/shared/Dropdown.vue';
+	import { IconBurger, IconUser } from '~/components/ui/icons';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	const { isAuthenticated, logoutUser } = useCurrentUserStore();
 
-	const dropdownRef = useTemplateRef('dropdown');
 	const {
 		isActive: isDropdown,
 		activate: openDropdown,
 		disactivate: closeDropdown,
-	} = useClickawayClient(dropdownRef);
+	} = useClickawayClient('dropdown');
 
-	const sidebarMenuRef = useTemplateRef('sidebar-menu-ref');
 	const {
 		isActive: isSidebar,
 		activate: openSidebar,
 		disactivate: closeSidebar,
-	} = useClickawayClient(sidebarMenuRef);
+	} = useClickawayClient('sidebar-menu-ref');
 
-	const loginPopupRef = useTemplateRef('login-popup-ref');
 	const { isActive: isLoginPopup, activate: openLoginPopup } =
-		useClickawayClient(loginPopupRef);
+		useClickawayClient('login-popup-ref');
 
 	const onUserIconClick = () => {
 		if (isDropdown.value) closeDropdown();

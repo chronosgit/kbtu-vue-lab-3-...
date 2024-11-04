@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import LoginForgotPasswordForm from '@/components/molecules/LoginForgotPasswordForm.vue';
-	import LoginForm from '@/components/molecules/LoginForm.vue';
+	import LoginForgotPasswordForm from '~/components/features/auth/LoginForgotPasswordForm.vue';
+	import LoginForm from '~/components/features/auth/LoginForm.vue';
 
 	const props = defineProps<{
-		isOpen: Boolean;
+		isOpen: boolean;
 	}>();
 
 	const isForgotForm = ref(false);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import SquareTextInput from '~/components/atoms/SquareTextInput.vue';
-	import RatingStars from '~/components/molecules/RatingStars.vue';
+	import RatingStars from '~/components/shared/RatingStars.vue';
+	import SquareTextInput from '~/components/ui/SquareTextInput.vue';
 
 	const props = defineProps<{ username: string; rating: number }>();
 

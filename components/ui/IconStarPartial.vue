@@ -1,6 +1,5 @@
 <script setup lang="ts">
-	import StarOutline from './StarOutline.vue';
-	import StarSolid from './StarSolid.vue';
+	import { IconStarOutline, IconStarSolid } from '~/components/ui/icons';
 
 	const props = defineProps<{
 		percent: number;
@@ -18,11 +17,11 @@
 			class="absolute top-0 z-10 scale-150 md:scale-100"
 			:style="clipStyle"
 		>
-			<StarSolid />
+			<IconStarSolid />
 		</div>
 
 		<div id="outline" class="absolute top-0 scale-150 md:scale-100">
-			<StarOutline />
+			<IconStarOutline />
 		</div>
 	</div>
 </template>
