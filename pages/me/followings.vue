@@ -25,7 +25,7 @@
 				class="mb-5 text-right font-tnr text-5xl text-white"
 				@click="fetchMyFollowings()"
 			>
-				My followings
+				My friends
 			</h1>
 
 			<div class="flex flex-wrap items-center justify-center gap-4">

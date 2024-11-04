@@ -4,7 +4,10 @@
 	import MyHeader from '~/components/layout/MyHeader.vue';
 	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
 	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
+	import UsersService from '~/services/UsersService';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
+
+	const { isAuthenticated } = useCurrentUserStore();
 
 	const userId = computed(() => {
 		const id = useRoute().params['id'];
@@ -12,7 +15,6 @@
 	});
 
 	useHead({ title: `User ${userId.value}` });
-	const { isAuthenticated } = useCurrentUserStore();
 
 	const { user, activity } = useUserById(userId.value);
 
@@ -20,9 +22,34 @@
 		userId.value
 	);
 
-	const { feedback, isLoading, error, followUser } = useFollowUser(
-		userId.value
-	);
+	const {
+		data: isAlreadyFollowed,
+		isLoading: isCheckLoading,
+		check,
+	} = useCheckIfFollowUser(userId.value);
+
+	// TODO: convert to function
+	const {
+		feedback,
+		isLoading: isFollowLoading,
+		error,
+		followUser,
+	} = useFollowUser(userId.value);
+
+	const handleFollowAndUnfollow = () => {
+		if (isAlreadyFollowed.value) unfollowUser();
+		else followUser().then(() => check()); // locally better?
+	};
+
+	const unfollowUser = async () => {
+		try {
+			await UsersService.unfollowUser(userId.value);
+
+			check();
+		} catch (err) {
+			console.error(err);
+		}
+	};
 </script>
 
 <template>
@@ -48,11 +75,20 @@
 				<template v-if="isAuthenticated">
 					<div class="mt-8 grid grid-rows-3 place-items-center">
 						<SquareBigButton
-							class="bg-[#77fc6b] font-tnr uppercase tracking-wider"
+							class="font-tnr uppercase tracking-wider"
+							:class="{
+								'bg-red-400': isAlreadyFollowed,
+								'bg-[#77fc6b]': !isAlreadyFollowed,
+							}"
 						>
-							<p v-show="isLoading">Loading...</p>
+							<p v-show="isFollowLoading || isCheckLoading">Loading...</p>
 
-							<p v-show="!isLoading" @click="followUser">Follow</p>
+							<p
+								v-show="!isFollowLoading || !isCheckLoading"
+								@click="handleFollowAndUnfollow"
+							>
+								{{ isAlreadyFollowed ? 'Unfollow' : 'Follow' }}
+							</p>
 						</SquareBigButton>
 
 						<p v-show="feedback" class="font-bold text-green-800">

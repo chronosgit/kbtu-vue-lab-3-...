@@ -5,14 +5,13 @@ import User from '~/server/models/User';
 export default defineEventHandler(async (e) => {
 	try {
 		const decoded = e.context.decodedToken as IAccessToken;
+		const { userId: targetId } = await readBody(e);
 
-		if (!decoded || !decoded.email) {
+		if (!decoded) {
 			throw createError({ statusCode: 401, statusMessage: 'No access token' });
 		}
 
-		const { userId } = await readBody(e);
-
-		if (!isValidObjectId(userId)) {
+		if (!isValidObjectId(targetId)) {
 			throw createError({
 				statusCode: 400,
 				statusMessage: 'Invalid user ID',
@@ -22,18 +21,11 @@ export default defineEventHandler(async (e) => {
 		const me = await User.findOne({
 			_id: decoded.id,
 		});
-
-		if (!me) {
-			throw createError({
-				statusCode: 404,
-				statusMessage: "Such user doesn't exist",
-			});
-		}
+		if (!me) throw createError({ statusCode: 400 });
 
 		const isAlreadyFollowed = me.followings.findIndex(
-			(f) => f.toString() === userId
+			(f) => f.toString() === targetId
 		);
-
 		if (isAlreadyFollowed !== -1) {
 			throw createError({
 				statusCode: 400,
@@ -41,12 +33,9 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		await User.findOneAndUpdate(
-			{ email: decoded.email },
-			{
-				$push: { followings: new mongoose.Types.ObjectId(userId) },
-			}
-		);
+		me.followings.push(targetId);
+
+		await me.save();
 
 		return getSuccessResponse(200, 'User followed');
 	} catch (err) {

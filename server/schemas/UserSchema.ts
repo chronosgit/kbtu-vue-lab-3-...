@@ -66,15 +66,13 @@ const UserSchema: Schema<IUser> = new Schema(
 		},
 		followings: [
 			{
-				type: [Schema.Types.ObjectId],
-				default: [],
+				type: Schema.Types.ObjectId,
 				ref: 'User',
 			},
 		],
 		likedPosts: [
 			{
-				type: [Schema.Types.ObjectId],
-				default: [],
+				type: Schema.Types.ObjectId,
 				ref: 'Post',
 			},
 		],

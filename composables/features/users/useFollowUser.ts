@@ -10,14 +10,15 @@ export default function (userId: string) {
 		async () => {
 			try {
 				const res = await UsersService.followUser(userId);
-				console.log(res);
 
 				feedback.value = 'Success!';
+
 				return res;
 			} catch (err) {
 				console.error(err);
 
 				error.value = 'Error during follow';
+
 				return null;
 			} finally {
 				isLoading.value = false;
