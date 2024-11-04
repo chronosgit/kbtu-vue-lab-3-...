@@ -12,30 +12,33 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const my = await User.findOne({ email: decoded.email });
+		const my = await User.findById(decoded.id);
+		if (!my) throw createError({ statusCode: 404 });
 
-		if (!my) {
-			throw createError({
-				statusCode: 404,
-				statusMessage: "Such user doesn't exist",
-			});
-		}
+		const myFollowingsIds = my.followings.map((following) => following.userId);
+		const users = await User.find({ _id: { $in: myFollowingsIds } });
 
-		const users = await User.find(
-			{ _id: { $in: my.followings } },
-			{ password: false }
-		);
+		const usersToReturn = users.map((u) => {
+			const nickname =
+				my.followings.find((f) => f.userId.toString() === u.id.toString())
+					?.nickname || null;
 
-		const usersToReturn = users.map((u) => ({
-			id: u._id,
-			username: u.username,
-			email: u.email,
-			age: u.age,
-			location: u.location,
-			lastLoggedIn: u.lastLoggedIn,
-			rating: u.rating,
-			likes: u.likes,
-		}));
+			console.log(my.followings);
+
+			return {
+				id: u._id,
+				username: u.username,
+				nickname,
+
+				email: u.email,
+				age: u.age,
+				location: u.location,
+				lastLoggedIn: u.lastLoggedIn,
+				rating: u.rating,
+				likes: u.likedPosts,
+			};
+		});
+
 		return getSuccessResponse(200, 'My followings received', {
 			users: usersToReturn,
 		});

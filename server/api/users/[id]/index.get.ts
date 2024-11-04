@@ -32,8 +32,9 @@ export default defineEventHandler(async (e) => {
 			location: user.location,
 			lastLoggedIn: user.lastLoggedIn,
 			rating: user.rating,
-			likes: user.likes,
+			likedPosts: user.likedPosts,
 		};
+
 		return getSuccessResponse(200, 'User received', { user: userToReturn });
 	} catch (err) {
 		console.error(err);

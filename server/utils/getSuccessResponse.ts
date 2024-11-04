@@ -1,8 +1,8 @@
-export default function (code: number, message?: string, data?: object) {
+export default function (code: number, message?: string, data?: any) {
 	return {
 		success: true,
 		statusCode: code,
 		statusMessage: message,
-		data: data || {},
+		data: data == null ? {} : data,
 	};
 }

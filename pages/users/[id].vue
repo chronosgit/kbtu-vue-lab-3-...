@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import UserProfileDetails from '~/components/organisms/UserProfileDetails.vue';
-	import PostCard from '~/components/molecules/PostCard.vue';
-	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
-	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
-	import ArrowRight from '~/components/atoms/ArrowRight.vue';
+	import PostCard from '~/components/features/posts/PostCard.vue';
+	import UserProfileDetails from '~/components/features/users/UserProfileDetails.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
+	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
+	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
+	import UsersService from '~/services/UsersService';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
+
+	const { isAuthenticated } = useCurrentUserStore();
 
 	const userId = computed(() => {
 		const id = useRoute().params['id'];
@@ -13,7 +15,6 @@
 	});
 
 	useHead({ title: `User ${userId.value}` });
-	const { isAuthenticated } = useCurrentUserStore();
 
 	const { user, activity } = useUserById(userId.value);
 
@@ -21,9 +22,34 @@
 		userId.value
 	);
 
-	const { feedback, isLoading, error, followUser } = useFollowUser(
-		userId.value
-	);
+	const {
+		data: isAlreadyFollowed,
+		isLoading: isCheckLoading,
+		check,
+	} = useCheckIfFollowUser(userId.value);
+
+	// TODO: convert to function
+	const {
+		feedback,
+		isLoading: isFollowLoading,
+		error,
+		followUser,
+	} = useFollowUser(userId.value);
+
+	const handleFollowAndUnfollow = () => {
+		if (isAlreadyFollowed.value) unfollowUser();
+		else followUser().then(() => check()); // locally better?
+	};
+
+	const unfollowUser = async () => {
+		try {
+			await UsersService.unfollowUser(userId.value);
+
+			check();
+		} catch (err) {
+			console.error(err);
+		}
+	};
 </script>
 
 <template>
@@ -49,11 +75,20 @@
 				<template v-if="isAuthenticated">
 					<div class="mt-8 grid grid-rows-3 place-items-center">
 						<SquareBigButton
-							class="bg-[#77fc6b] font-tnr uppercase tracking-wider"
+							class="font-tnr uppercase tracking-wider"
+							:class="{
+								'bg-red-400': isAlreadyFollowed,
+								'bg-[#77fc6b]': !isAlreadyFollowed,
+							}"
 						>
-							<p v-show="isLoading">Loading...</p>
+							<p v-show="isFollowLoading || isCheckLoading">Loading...</p>
 
-							<p v-show="!isLoading" @click="followUser">Follow</p>
+							<p
+								v-show="!isFollowLoading || !isCheckLoading"
+								@click="handleFollowAndUnfollow"
+							>
+								{{ isAlreadyFollowed ? 'Unfollow' : 'Follow' }}
+							</p>
 						</SquareBigButton>
 
 						<p v-show="feedback" class="font-bold text-green-800">
@@ -74,13 +109,13 @@
 			class="ml-auto mt-8 flex max-w-32 -translate-x-12 items-center justify-evenly bg-[#5bb9cd] px-4 py-2 text-white"
 		>
 			<div class="scale-150 cursor-pointer" @click="toPrevPage()">
-				<ArrowLeft />
+				<IconArrowLeft />
 			</div>
 
 			<p class="text-xl font-bold">{{ curPage }}/{{ totalPages }}</p>
 
 			<div class="scale-150 cursor-pointer" @click="toNextPage()">
-				<ArrowRight />
+				<IconArrowRight />
 			</div>
 		</div>
 	</div>

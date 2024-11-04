@@ -1,12 +1,12 @@
-export default function (
-	templateRef: Ref<HTMLElement | ComponentPublicInstance | null>
-) {
+export default function (anchorRefKey: string) {
+	const templateRef = useTemplateRef<
+		HTMLElement | ComponentPublicInstance | null
+	>(anchorRefKey);
+
 	const isActive = ref(false);
 
 	const activate = () => (isActive.value = true);
-
 	const disactivate = () => (isActive.value = false);
-
 	const toggle = () => (isActive.value = !isActive.value);
 
 	const onDocumentClick = (e: MouseEvent) => {

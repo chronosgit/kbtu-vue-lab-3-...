@@ -12,6 +12,10 @@ export default defineNuxtConfig({
 		store: './store',
 	},
 
+	imports: {
+		dirs: ['composables', 'composables/**'],
+	},
+
 	runtimeConfig: {
 		MONGO_URI: import.meta.env?.MONGO_URI,
 		ACCESS_TOKEN_SECRET: import.meta.env?.ACCESS_TOKEN_SECRET,

@@ -5,6 +5,7 @@ export default function () {
 		'isAuthenticated',
 		() => null
 	);
+
 	const user = useState<IMyUser>('user', () => ({
 		id: '',
 		username: '',

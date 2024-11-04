@@ -1,0 +1,43 @@
+<script setup lang="ts">
+	import type IMyFriend from '~/interfaces/IMyFriend';
+	import type IUser from '~/interfaces/IUser';
+
+	const props = defineProps<{ user: IUser | IMyFriend }>();
+	const visitLinkUrl = computed(() => `/users/${props.user.id}`);
+</script>
+
+<template>
+	<article class="flex gap-5">
+		<!-- User details -->
+		<div class="flex items-center gap-4">
+			<img
+				src="~/assets/images/avatar-placeholder.png"
+				alt="avatar"
+				class="max-h-24 rounded-full bg-cyan-300"
+			/>
+
+			<div class="space-y-2">
+				<NuxtLink
+					v-if="(props.user as IMyFriend).nickname"
+					:to="visitLinkUrl"
+					class="text-outline text-2xl font-bold text-blue-500"
+				>
+					{{ (props.user as IMyFriend).nickname }} ({{ props.user.username }})
+				</NuxtLink>
+
+				<NuxtLink
+					v-else
+					:to="visitLinkUrl"
+					class="text-outline text-2xl font-bold text-blue-500"
+				>
+					{{ props.user.username }}
+				</NuxtLink>
+
+				<p class="text-outline font-bold text-emerald-300">
+					Activity:
+					{{ convertDateTimeToActivityString(props.user.lastLoggedIn) }}
+				</p>
+			</div>
+		</div>
+	</article>
+</template>
