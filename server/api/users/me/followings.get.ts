@@ -13,15 +13,10 @@ export default defineEventHandler(async (e) => {
 		}
 
 		const my = await User.findById(decoded.id);
+		if (!my) throw createError({ statusCode: 404 });
 
-		if (!my) {
-			throw createError({
-				statusCode: 404,
-				statusMessage: "Such user doesn't exist",
-			});
-		}
-
-		const users = await User.find({ _id: { $in: my.followings } });
+		const myFollowingsIds = my.followings.map((following) => following.userId);
+		const users = await User.find({ _id: { $in: myFollowingsIds } });
 
 		const usersToReturn = users.map((u) => ({
 			id: u._id,
