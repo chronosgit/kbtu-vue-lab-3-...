@@ -6,11 +6,13 @@ export default function () {
 		data: users,
 		status,
 		execute: fetchMyFollowings,
-	} = useAsyncData<IMyFriend[] | null>('getMyFollowing', async () => {
+	} = useAsyncData<IMyFriend[] | null>('useMyFollowing', async () => {
 		try {
 			const {
 				data: { users },
 			} = await UsersService.getMyFollowings();
+
+			console.log(users);
 
 			return users;
 		} catch (err) {
