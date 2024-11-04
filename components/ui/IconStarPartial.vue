@@ -11,7 +11,7 @@
 </script>
 
 <template>
-	<div class="relative flex items-center">
+	<div class="relative h-4 w-4">
 		<div
 			id="solid"
 			class="absolute top-0 z-10 scale-150 md:scale-100"
