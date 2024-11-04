@@ -21,7 +21,7 @@ export default function () {
 					const { user } = res.data as { user: IMyUser };
 					loginUser(user);
 
-					await navigateTo('/users/me');
+					await navigateTo('/me');
 				})
 				.catch(() => (error.value = 'Error'))
 				.finally(() => (isLoading.value = false)),

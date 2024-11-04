@@ -18,7 +18,7 @@
 			return `/users/${props.post.authorId}`;
 		}
 
-		return '/users/me';
+		return '/me';
 	});
 </script>
 

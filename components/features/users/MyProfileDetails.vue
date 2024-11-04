@@ -23,7 +23,7 @@
 
 			<div class="flex items-center gap-4">
 				<label
-					for="/users/me:input-age"
+					for="/me:input-age"
 					class="text-outline text-2xl text-yellow-300"
 				>
 					Age:
@@ -31,7 +31,7 @@
 
 				<SquareTextInput
 					v-model="ageModel"
-					id="/users/me/:input-age"
+					id="/me/:input-age"
 					name="age"
 					placeholder="?"
 					class="max-w-12 text-center text-xl"

@@ -68,19 +68,17 @@
 					>
 						<template v-if="isAuthenticated">
 							<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
-								<NuxtLink to="/users/me" class="text-outline">
-									My Profile
-								</NuxtLink>
+								<NuxtLink to="/me" class="text-outline"> My Profile </NuxtLink>
 							</div>
 
 							<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
-								<NuxtLink to="/users/me/compose" class="text-outline">
+								<NuxtLink to="/me/compose" class="text-outline">
 									Compose
 								</NuxtLink>
 							</div>
 
 							<div class="border-[1px] border-black bg-cyan-300 p-2 text-white">
-								<NuxtLink to="/users/me/followings" class="text-outline">
+								<NuxtLink to="/me/followings" class="text-outline">
 									Favourites
 								</NuxtLink>
 							</div>
