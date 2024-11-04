@@ -9,7 +9,7 @@
 		title: 'My followings',
 	});
 
-	const { users, fetchMyFollowings, unfollowUser } = useMyFollowings();
+	const { users, unfollowUser } = useMyFollowings();
 </script>
 
 <template>
@@ -21,14 +21,13 @@
 		</div>
 
 		<main class="mx-auto my-0 px-4">
-			<h1
-				class="mb-5 text-right font-tnr text-5xl text-white"
-				@click="fetchMyFollowings()"
-			>
-				My friends
-			</h1>
+			<h1 class="mb-5 text-right font-tnr text-5xl text-white">My friends</h1>
 
-			<div class="grid justify-center gap-4">
+			<!-- Users -->
+			<div
+				v-if="Array.isArray(users) && users.length > 0"
+				class="grid justify-center gap-4"
+			>
 				<UserCard v-for="u in users" :user="u">
 					<template #buttons>
 						<div class="flex items-center gap-4">
@@ -55,6 +54,10 @@
 					</template>
 				</UserCard>
 			</div>
+
+			<p v-else class="text-outline text-2xl font-bold text-white">
+				No friends lol
+			</p>
 		</main>
 	</div>
 </template>
