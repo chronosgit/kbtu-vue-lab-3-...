@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import UserCard from '~/components/features/users/UserCard.vue';
 	import MyHeader from '~/components/layout/MyHeader.vue';
+	import ChatsService from '~/services/ChatsService';
 
 	const UpdateFriendNicknameForm = defineAsyncComponent(
 		() => import('~/components/features/users/UpdateFriendNicknameForm.vue')
@@ -24,6 +25,12 @@
 	const onFriendNicknameUpdateSuccess = () => {
 		fetchMyFollowings();
 		closeForm();
+	};
+
+	const openChat = async (partnerId: string) => {
+		const { data: chat } = await ChatsService.accessChatBlindly(partnerId);
+
+		navigateTo(`/chats/${chat._id}`);
 	};
 </script>
 
@@ -64,7 +71,7 @@
 
 						<button
 							class="rounded-full bg-green-300 px-4 py-1 font-medium uppercase text-white"
-							@click="console.log('just chatting')"
+							@click="openChat(u.id)"
 						>
 							Chat
 						</button>
