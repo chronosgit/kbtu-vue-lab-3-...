@@ -4,18 +4,17 @@ import User from '~/server/models/User';
 export default defineEventHandler(async (e) => {
 	try {
 		const { id: myId } = e.context.decodedToken as IAccessToken;
-
 		if (!e.context.decodedToken) throw createError({ statusCode: 401 });
 
 		const userId = getRouterParam(e, 'id');
 
-		const updatedUser = await User.findByIdAndUpdate(
+		const me = await User.findByIdAndUpdate(
 			myId,
-			{ $pull: { followings: userId } },
+			{ $pull: { followings: { userId } } },
 			{ new: true }
 		);
 
-		if (!updatedUser) {
+		if (!me) {
 			throw createError({
 				statusCode: 400,
 				statusMessage: "Me doesn't exist",

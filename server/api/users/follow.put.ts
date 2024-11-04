@@ -1,6 +1,6 @@
-import mongoose, { isValidObjectId } from 'mongoose';
-import IAccessToken from '~/interfaces/IAccessToken';
+import { isValidObjectId } from 'mongoose';
 import User from '~/server/models/User';
+import IAccessToken from '~/interfaces/IAccessToken';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -23,17 +23,7 @@ export default defineEventHandler(async (e) => {
 		});
 		if (!me) throw createError({ statusCode: 400 });
 
-		const isAlreadyFollowed = me.followings.findIndex(
-			(f) => f.toString() === targetId
-		);
-		if (isAlreadyFollowed !== -1) {
-			throw createError({
-				statusCode: 400,
-				statusMessage: 'Already followed',
-			});
-		}
-
-		me.followings.push(targetId);
+		me.followings.push({ userId: targetId });
 
 		await me.save();
 
