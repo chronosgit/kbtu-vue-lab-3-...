@@ -1,4 +1,5 @@
 import type IServerApiResponse from '~/interfaces/IServerApiResponse';
+import type IUser from '~/interfaces/IUser';
 
 class UsersService {
 	static async updateMe(age: string, location: string) {
@@ -28,7 +29,9 @@ class UsersService {
 	}
 
 	static getMyFollowings() {
-		return $fetch('/api/users/me/followings');
+		return $fetch<IServerApiResponse<{ users: IUser[] }>>(
+			'/api/users/me/followings'
+		);
 	}
 }
 

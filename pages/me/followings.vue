@@ -9,7 +9,7 @@
 		title: 'My followings',
 	});
 
-	const { users, fetchMyFollowings } = useMyFollowings();
+	const { users, fetchMyFollowings, unfollowUser } = useMyFollowings();
 </script>
 
 <template>
@@ -20,7 +20,7 @@
 			<MyHeader />
 		</div>
 
-		<main class="mx-auto my-0 max-w-screen-lg px-4">
+		<main class="mx-auto my-0 px-4">
 			<h1
 				class="mb-5 text-right font-tnr text-5xl text-white"
 				@click="fetchMyFollowings()"
@@ -28,12 +28,32 @@
 				My friends
 			</h1>
 
-			<div class="flex flex-wrap items-center justify-center gap-4">
-				<template v-for="u in users">
-					<div class="max-w-72 flex-shrink flex-grow">
-						<UserCard :user="u" />
-					</div>
-				</template>
+			<div class="grid justify-center gap-4">
+				<UserCard v-for="u in users" :user="u">
+					<template #buttons>
+						<div class="flex items-center gap-4">
+							<button
+								class="rounded-full bg-red-500 px-4 py-1 font-medium uppercase text-white"
+								@click="unfollowUser(u.id)"
+							>
+								Unfollow
+							</button>
+
+							<button
+								class="rounded-full bg-cyan-500 px-4 py-1 font-medium uppercase text-white"
+							>
+								Rename
+							</button>
+
+							<button
+								class="rounded-full bg-green-300 px-4 py-1 font-medium uppercase text-white"
+								@click="console.log('just chatting')"
+							>
+								Chat
+							</button>
+						</div>
+					</template>
+				</UserCard>
 			</div>
 		</main>
 	</div>

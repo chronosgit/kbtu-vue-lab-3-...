@@ -12,7 +12,7 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const my = await User.findOne({ email: decoded.email });
+		const my = await User.findById(decoded.id);
 
 		if (!my) {
 			throw createError({
@@ -21,10 +21,7 @@ export default defineEventHandler(async (e) => {
 			});
 		}
 
-		const users = await User.find(
-			{ _id: { $in: my.followings } },
-			{ password: false }
-		);
+		const users = await User.find({ _id: { $in: my.followings } });
 
 		const usersToReturn = users.map((u) => ({
 			id: u._id,
@@ -34,8 +31,9 @@ export default defineEventHandler(async (e) => {
 			location: u.location,
 			lastLoggedIn: u.lastLoggedIn,
 			rating: u.rating,
-			likes: u.likes,
+			likes: u.likedPosts,
 		}));
+
 		return getSuccessResponse(200, 'My followings received', {
 			users: usersToReturn,
 		});

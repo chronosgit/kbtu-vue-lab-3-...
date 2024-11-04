@@ -1,32 +1,44 @@
 <script setup lang="ts">
-	import RatingStars from '~/components/shared/RatingStars.vue';
 	import type IUser from '~/interfaces/IUser';
+	import UsersService from '~/services/UsersService';
 
 	const props = defineProps<{ user: IUser }>();
-
 	const visitLinkUrl = computed(() => `/users/${props.user.id}`);
+
+	const { data, isLoading, check } = useCheckIfFollowUser(props.user.id);
+
+	const unfollow = async () => {
+		await UsersService.unfollowUser(props.user.id);
+
+		check();
+	};
 </script>
 
 <template>
-	<div
-		class="flex items-center justify-between gap-8 rounded-lg bg-cyan-300 px-4 py-2"
-	>
-		<img
-			src="~/assets/images/avatar-placeholder.png"
-			alt="avatar"
-			class="max-h-24"
-		/>
+	<article class="flex gap-5">
+		<!-- User details -->
+		<div class="flex items-center gap-4">
+			<img
+				src="~/assets/images/avatar-placeholder.png"
+				alt="avatar"
+				class="max-h-24 rounded-full bg-cyan-300"
+			/>
 
-		<div class="space-y-2">
-			<p class="text-outline font-bold text-blue-500">
-				{{ props.user.username }}
-			</p>
+			<div class="space-y-2">
+				<NuxtLink
+					:to="visitLinkUrl"
+					class="text-outline text-2xl font-bold text-blue-500"
+				>
+					{{ props.user.username }}
+				</NuxtLink>
 
-			<RatingStars :rating="props.user.rating" />
-
-			<NuxtLink :to="visitLinkUrl" class="font-bold uppercase text-blue-600">
-				Visit profile
-			</NuxtLink>
+				<p class="text-outline font-bold text-emerald-300">
+					Activity:
+					{{ convertDateTimeToActivityString(props.user.lastLoggedIn) }}
+				</p>
+			</div>
 		</div>
-	</div>
+
+		<slot name="buttons"></slot>
+	</article>
 </template>
