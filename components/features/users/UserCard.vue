@@ -1,17 +1,9 @@
 <script setup lang="ts">
+	import type IMyFriend from '~/interfaces/IMyFriend';
 	import type IUser from '~/interfaces/IUser';
-	import UsersService from '~/services/UsersService';
 
-	const props = defineProps<{ user: IUser }>();
+	const props = defineProps<{ user: IUser | IMyFriend }>();
 	const visitLinkUrl = computed(() => `/users/${props.user.id}`);
-
-	const { data, isLoading, check } = useCheckIfFollowUser(props.user.id);
-
-	const unfollow = async () => {
-		await UsersService.unfollowUser(props.user.id);
-
-		check();
-	};
 </script>
 
 <template>
@@ -26,6 +18,15 @@
 
 			<div class="space-y-2">
 				<NuxtLink
+					v-if="(props.user as IMyFriend).nickname"
+					:to="visitLinkUrl"
+					class="text-outline text-2xl font-bold text-blue-500"
+				>
+					{{ (props.user as IMyFriend).nickname }} ({{ props.user.username }})
+				</NuxtLink>
+
+				<NuxtLink
+					v-else
 					:to="visitLinkUrl"
 					class="text-outline text-2xl font-bold text-blue-500"
 				>

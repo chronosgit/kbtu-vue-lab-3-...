@@ -33,6 +33,17 @@ class UsersService {
 			'/api/users/me/followings'
 		);
 	}
+
+	static updateMyFriendNickname(friendId: string, nickname: string) {
+		if (typeof nickname !== 'string' || !nickname.length) {
+			throw createError('Invalid nickname');
+		}
+
+		return $fetch(`/api/users/${friendId}/nickname`, {
+			method: 'PUT',
+			body: { nickname },
+		});
+	}
 }
 
 export default UsersService;

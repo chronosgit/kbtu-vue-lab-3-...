@@ -2,6 +2,10 @@
 	import UserCard from '~/components/features/users/UserCard.vue';
 	import MyHeader from '~/components/layout/MyHeader.vue';
 
+	const UpdateFriendNicknameForm = defineAsyncComponent(
+		() => import('~/components/features/users/UpdateFriendNicknameForm.vue')
+	);
+
 	definePageMeta({
 		middleware: '4-protect-route',
 	});
@@ -9,7 +13,18 @@
 		title: 'My followings',
 	});
 
-	const { users, unfollowUser } = useMyFollowings();
+	const { users, fetchMyFollowings, unfollowUser } = useMyFollowings();
+
+	const {
+		isActive: isForm,
+		activate: openForm,
+		disactivate: closeForm,
+	} = useClickawayClient('update-friend-nickname-form');
+
+	const onFriendNicknameUpdateSuccess = () => {
+		fetchMyFollowings();
+		closeForm();
+	};
 </script>
 
 <template>
@@ -42,6 +57,7 @@
 
 						<button
 							class="rounded-full bg-cyan-500 px-4 py-1 font-medium uppercase text-white"
+							@click="openForm"
 						>
 							Rename
 						</button>
@@ -53,6 +69,23 @@
 							Chat
 						</button>
 					</div>
+
+					<!-- Absolute -->
+					<Teleport to="body">
+						<div
+							ref="update-friend-nickname-form"
+							class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60"
+							:class="{ flex: isForm, hidden: !isForm }"
+						>
+							<UpdateFriendNicknameForm
+								:friend-id="u.id"
+								:existing-nickname="u.nickname"
+								class="w-1/2"
+								@close-this-form="closeForm"
+								@on-update-success="onFriendNicknameUpdateSuccess"
+							/>
+						</div>
+					</Teleport>
 				</div>
 			</section>
 

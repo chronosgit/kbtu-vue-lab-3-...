@@ -5,3 +5,4 @@ export { default as IconCaretDown } from './CaretDown.vue';
 export { default as IconStarOutline } from './StarOutline.vue';
 export { default as IconStarSolid } from './StarSolid.vue';
 export { default as IconUser } from './User.vue';
+export { default as IconClose } from './Close.vue';

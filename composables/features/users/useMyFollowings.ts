@@ -1,16 +1,18 @@
 import UsersService from '~/services/UsersService';
-import type IUser from '~/interfaces/IUser';
+import type IMyFriend from '~/interfaces/IMyFriend';
 
 export default function () {
 	const {
 		data: users,
 		status,
 		execute: fetchMyFollowings,
-	} = useAsyncData<IUser[] | null>('getMyFollowing', async () => {
+	} = useAsyncData<IMyFriend[] | null>('getMyFollowing', async () => {
 		try {
-			const res = await UsersService.getMyFollowings();
+			const {
+				data: { users },
+			} = await UsersService.getMyFollowings();
 
-			return res.data?.users;
+			return users;
 		} catch (err) {
 			console.error(err);
 
