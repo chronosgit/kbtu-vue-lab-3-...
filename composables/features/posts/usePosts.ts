@@ -28,8 +28,6 @@ export default function (topic: string) {
 					meta: IPostsMeta;
 				};
 
-				console.log(fetchedPosts, meta);
-
 				totalPages.value = meta.totalPages;
 				hasNextPage.value = meta.hasNextPage;
 				hasPrevPage.value = meta.hasPreviousPage;
