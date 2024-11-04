@@ -38,7 +38,5 @@
 				</p>
 			</div>
 		</div>
-
-		<slot name="buttons"></slot>
 	</article>
 </template>
