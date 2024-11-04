@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import PostComposeForm from '~/components/molecules/PostComposeForm.vue';
-	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import PostComposeForm from '~/components/features/posts/PostComposeForm.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
 
 	definePageMeta({ middleware: '4-protect-route' });
 </script>

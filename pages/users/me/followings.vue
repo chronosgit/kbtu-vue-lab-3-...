@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import UserCard from '~/components/molecules/UserCard.vue';
-	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import UserCard from '~/components/features/users/UserCard.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
 
 	definePageMeta({
 		middleware: '4-protect-route',

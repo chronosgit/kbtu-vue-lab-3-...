@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/organisms/MyHeader.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
 
 	useHead({ title: 'Confirmation' });
 

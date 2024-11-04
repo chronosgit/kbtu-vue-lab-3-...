@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import Dropdown from '~/components/molecules/Dropdown.vue';
-	import PostCard from '~/components/molecules/PostCard.vue';
-	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
-	import ArrowRight from '~/components/atoms/ArrowRight.vue';
-	import CaretDown from '~/components/atoms/CaretDown.vue';
-	import ChevronShapeTemplate from '~/components/atoms/ChevronShapeTemplate.vue';
+	import PostCard from '~/components/features/posts/PostCard.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
+	import ChevronShapeTemplate from '~/components/shared/ChevronShapeTemplate.vue';
+	import Dropdown from '~/components/shared/Dropdown.vue';
+	import {
+		IconArrowLeft,
+		IconArrowRight,
+		IconCaretDown,
+	} from '~/components/ui/icons';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	definePageMeta({ middleware: '5-topic-check' });
@@ -38,9 +40,8 @@
 		likePost,
 	} = usePosts(topic);
 
-	const filtersRef = useTemplateRef('filters-ref');
 	const { isActive: isFiltersActive, toggle: toggleFilters } =
-		useClickawayClient(filtersRef);
+		useClickawayClient('filters-ref');
 </script>
 
 <template>
@@ -77,7 +78,7 @@
 									{{ filters.slice(1).toLowerCase() || 'No filter' }}
 								</p>
 
-								<CaretDown class="scale-150 text-gray-500" />
+								<IconCaretDown class="scale-150 text-gray-500" />
 
 								<Dropdown
 									:is-open="isFiltersActive"
@@ -104,7 +105,7 @@
 								v-show="totalPages"
 								class="flex items-center gap-4 text-[#73c2d2]"
 							>
-								<ArrowLeft
+								<IconArrowLeft
 									class="scale-125 cursor-pointer"
 									:class="{ 'cursor-not-allowed': !hasPrevPage }"
 									@click="toPrevPage()"
@@ -114,7 +115,7 @@
 									{{ `${curPage}/${totalPages}` }}
 								</p>
 
-								<ArrowRight
+								<IconArrowRight
 									class="scale-125 cursor-pointer"
 									:class="{ 'cursor-not-allowed': !hasNextPage }"
 									@click="toNextPage()"

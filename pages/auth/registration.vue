@@ -1,6 +1,6 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
+	import LoadingSpinner from '~/components/ui/LoadingSpinner.vue';
 
 	useHead({ title: 'Authentication' });
 

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import UserProfileDetails from '~/components/organisms/UserProfileDetails.vue';
-	import PostCard from '~/components/molecules/PostCard.vue';
-	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
-	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
-	import ArrowRight from '~/components/atoms/ArrowRight.vue';
+	import PostCard from '~/components/features/posts/PostCard.vue';
+	import UserProfileDetails from '~/components/features/users/UserProfileDetails.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
+	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
+	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	const userId = computed(() => {
@@ -74,13 +73,13 @@
 			class="ml-auto mt-8 flex max-w-32 -translate-x-12 items-center justify-evenly bg-[#5bb9cd] px-4 py-2 text-white"
 		>
 			<div class="scale-150 cursor-pointer" @click="toPrevPage()">
-				<ArrowLeft />
+				<IconArrowLeft />
 			</div>
 
 			<p class="text-xl font-bold">{{ curPage }}/{{ totalPages }}</p>
 
 			<div class="scale-150 cursor-pointer" @click="toNextPage()">
-				<ArrowRight />
+				<IconArrowRight />
 			</div>
 		</div>
 	</div>

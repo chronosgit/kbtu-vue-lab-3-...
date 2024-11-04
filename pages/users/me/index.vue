@@ -1,11 +1,10 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/organisms/MyHeader.vue';
-	import MyProfileDetails from '~/components/organisms/MyProfileDetails.vue';
-	import PostCard from '~/components/molecules/PostCard.vue';
-	import SquareBigButton from '~/components/atoms/SquareBigButton.vue';
-	import LoadingSpinner from '~/components/atoms/LoadingSpinner.vue';
-	import ArrowLeft from '~/components/atoms/ArrowLeft.vue';
-	import ArrowRight from '~/components/atoms/ArrowRight.vue';
+	import PostCard from '~/components/features/posts/PostCard.vue';
+	import MyProfileDetails from '~/components/features/users/MyProfileDetails.vue';
+	import MyHeader from '~/components/layout/MyHeader.vue';
+	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
+	import LoadingSpinner from '~/components/ui/LoadingSpinner.vue';
+	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
 
 	definePageMeta({ middleware: '4-protect-route' });
 	useHead({ title: 'My profile' });
@@ -88,13 +87,13 @@
 				class="ml-auto mt-8 flex max-w-32 -translate-x-12 items-center justify-evenly bg-[#5bb9cd] px-4 py-2 text-white"
 			>
 				<div class="scale-150 cursor-pointer" @click="toPrevPage()">
-					<ArrowLeft />
+					<IconArrowLeft />
 				</div>
 
 				<p class="text-xl font-bold">{{ curPage }}/{{ totalPages }}</p>
 
 				<div class="scale-150 cursor-pointer" @click="toNextPage()">
-					<ArrowRight />
+					<IconArrowRight />
 				</div>
 			</div>
 
