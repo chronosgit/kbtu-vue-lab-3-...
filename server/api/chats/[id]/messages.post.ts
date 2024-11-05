@@ -1,5 +1,6 @@
 import mongoose, { isValidObjectId } from 'mongoose';
 import Chat from '~/server/models/Chat';
+import { IChatMessage } from '~/server/schemas/ChatSchema';
 import IAccessToken from '~/interfaces/IAccessToken';
 
 export default defineEventHandler(async (e) => {
@@ -10,14 +11,24 @@ export default defineEventHandler(async (e) => {
 		const chatId = getRouterParam(e, 'id');
 		if (!isValidObjectId(chatId)) throw createError({ statusCode: 400 });
 
+		const { content } = await readBody<{ content: string }>(e);
+		if (typeof content !== 'string' || !content.length) {
+			throw createError({ statusCode: 404 });
+		}
+
 		const chat = await Chat.findById(chatId);
 		if (!chat) throw createError({ statusCode: 404 });
 
-		if (!chat.userIds.includes(new mongoose.Types.ObjectId(decodedToken.id))) {
-			throw createError({ statusCode: 403 });
-		}
+		const newMessage = <IChatMessage>{
+			authorId: new mongoose.Types.ObjectId(decodedToken.id),
+			timestamp: new Date(),
+			content,
+		};
+		chat.messages.push(newMessage);
 
-		return getSuccessResponse(200, 'Chat received', chat);
+		await chat.save();
+
+		return getSuccessResponse(201, 'Message created');
 	} catch (err) {
 		console.error(err);
 

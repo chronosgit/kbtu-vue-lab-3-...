@@ -12,8 +12,6 @@ export default function () {
 				data: { users },
 			} = await UsersService.getMyFollowings();
 
-			console.log(users);
-
 			return users;
 		} catch (err) {
 			console.error(err);

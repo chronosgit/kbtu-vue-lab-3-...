@@ -12,6 +12,15 @@ class ChatsService {
 	static async getChat(chatId: string) {
 		return $fetch<IServerApiResponse<IChat>>(`/api/chats/${chatId}`);
 	}
+
+	static async sendMessage(chatId: string, content: string) {
+		if (!content) return;
+
+		return $fetch(`/api/chats/${chatId}/messages`, {
+			method: 'POST',
+			body: { content },
+		});
+	}
 }
 
 export default ChatsService;
