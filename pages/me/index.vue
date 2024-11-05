@@ -44,7 +44,7 @@
 				/>
 
 				<div class="grid grid-rows-4 gap-4 font-tnr">
-					<SquareBigButton @click="console.log('Stats be like:')">
+					<SquareBigButton @click="navigateTo('/me/stats')">
 						Statistic
 					</SquareBigButton>
 

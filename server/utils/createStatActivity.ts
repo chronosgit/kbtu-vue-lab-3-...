@@ -4,7 +4,9 @@ import Statistics from '../models/Statistics';
 export default async function (userId: string) {
 	if (!isValidObjectId(userId)) return;
 
-	const userStats = await Statistics.findById(userId);
+	const userStats = await Statistics.findOne({ userId });
+
+	console.log(userStats);
 
 	// Add current timestamp
 	if (userStats) {

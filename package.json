@@ -14,10 +14,12 @@
 		"@nuxt/icon": "^1.5.3",
 		"@nuxtjs/tailwindcss": "^6.12.1",
 		"bcryptjs": "^2.4.3",
+		"chart.js": "^3.9.1",
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.7.0",
 		"nuxt": "^3.13.0",
 		"vue": "latest",
+		"vue-chart-3": "^3.1.8",
 		"vue-router": "latest"
 	},
 	"devDependencies": {
