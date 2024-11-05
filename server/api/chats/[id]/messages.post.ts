@@ -2,6 +2,7 @@ import mongoose, { isValidObjectId } from 'mongoose';
 import Chat from '~/server/models/Chat';
 import { IChatMessage } from '~/server/schemas/ChatSchema';
 import IAccessToken from '~/interfaces/IAccessToken';
+import User from '~/server/models/User';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -10,6 +11,9 @@ export default defineEventHandler(async (e) => {
 
 		const chatId = getRouterParam(e, 'id');
 		if (!isValidObjectId(chatId)) throw createError({ statusCode: 400 });
+
+		const me = await User.findById(decodedToken.id);
+		if (!me) throw createError({ statusCode: 404 });
 
 		const { content } = await readBody<{ content: string }>(e);
 		if (typeof content !== 'string' || !content.length) {
@@ -21,6 +25,7 @@ export default defineEventHandler(async (e) => {
 
 		const newMessage = <IChatMessage>{
 			authorId: new mongoose.Types.ObjectId(decodedToken.id),
+			authorUsername: me.username,
 			timestamp: new Date(),
 			content,
 		};
