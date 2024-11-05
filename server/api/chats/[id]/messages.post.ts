@@ -3,6 +3,7 @@ import Chat from '~/server/models/Chat';
 import { IChatMessage } from '~/server/schemas/ChatSchema';
 import IAccessToken from '~/interfaces/IAccessToken';
 import User from '~/server/models/User';
+import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -32,6 +33,8 @@ export default defineEventHandler(async (e) => {
 		chat.messages.push(newMessage);
 
 		await chat.save();
+
+		createStatActivity(me._id.toString());
 
 		return getSuccessResponse(201, 'Message created');
 	} catch (err) {

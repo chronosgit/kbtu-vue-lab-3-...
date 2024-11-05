@@ -1,6 +1,7 @@
 import { isValidObjectId } from 'mongoose';
 import IAccessToken from '~/interfaces/IAccessToken';
 import User from '~/server/models/User';
+import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -23,6 +24,8 @@ export default defineEventHandler(async (e) => {
 
 		friend.nickname = nickname;
 		await me.save();
+
+		createStatActivity(me._id.toString());
 
 		return getSuccessResponse(200, 'Updated nickname');
 	} catch (err) {

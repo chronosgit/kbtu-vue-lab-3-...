@@ -1,5 +1,6 @@
 import Post from '~/server/models/Post';
 import User from '~/server/models/User';
+import createStatActivity from '~/server/utils/createStatActivity';
 import getPostTopics from '~/server/utils/getPostTopics';
 
 export default defineEventHandler(async (e) => {
@@ -46,6 +47,8 @@ export default defineEventHandler(async (e) => {
 			description,
 		});
 		await newPost.save();
+
+		createStatActivity(me._id.toString());
 
 		return getSuccessResponse(201, 'Post created', { post: newPost });
 	} catch (err) {

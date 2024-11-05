@@ -1,4 +1,5 @@
 import Post from '~/server/models/Post';
+import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -16,6 +17,8 @@ export default defineEventHandler(async (e) => {
 		const { postId } = await readBody(e);
 
 		await Post.findByIdAndDelete(postId);
+
+		createStatActivity(decoded.id);
 
 		return getSuccessResponse(204, 'Post deleted');
 	} catch (err) {

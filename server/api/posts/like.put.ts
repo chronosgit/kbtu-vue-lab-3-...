@@ -1,6 +1,7 @@
 import Post from '~/server/models/Post';
 import User from '~/server/models/User';
 import IAccessToken from '~/interfaces/IAccessToken';
+import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -79,6 +80,8 @@ export default defineEventHandler(async (e) => {
 		me.likedPosts.push(post._id);
 
 		await me.save();
+
+		createStatActivity(me._id.toString());
 
 		return getSuccessResponse(200, 'Post liked', { postRating: post.rating });
 	} catch (err) {

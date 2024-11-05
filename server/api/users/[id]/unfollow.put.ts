@@ -1,5 +1,6 @@
 import IAccessToken from '~/interfaces/IAccessToken';
 import User from '~/server/models/User';
+import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -20,6 +21,8 @@ export default defineEventHandler(async (e) => {
 				statusMessage: "Me doesn't exist",
 			});
 		}
+
+		createStatActivity(me._id.toString());
 
 		return getSuccessResponse(200, 'Unfollowed user', true);
 	} catch (err) {
