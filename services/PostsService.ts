@@ -1,3 +1,7 @@
+import type IPost from '~/interfaces/IPost';
+import type IPostsMeta from '~/interfaces/IPostsMeta';
+import type IServerApiResponse from '~/interfaces/IServerApiResponse';
+
 class PostsService {
 	static getPosts(
 		page: number,
@@ -5,7 +9,12 @@ class PostsService {
 		filter: string,
 		topic: string
 	) {
-		return $fetch('/api/posts', { params: { page, pageSize, filter, topic } });
+		return $fetch<
+			IServerApiResponse<{
+				posts: IPost[];
+				meta: IPostsMeta;
+			}>
+		>('/api/posts', { params: { page, pageSize, filter, topic } });
 	}
 
 	static getUserPosts(userId: string, page: number, pageSize: number) {

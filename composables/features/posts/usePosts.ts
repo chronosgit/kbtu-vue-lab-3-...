@@ -1,6 +1,5 @@
 import PostsService from '~/services/PostsService';
 import type IPost from '~/interfaces/IPost';
-import type IPostsMeta from '~/interfaces/IPostsMeta';
 
 export default function (topic: string) {
 	const filters = ref<string>('');
@@ -23,10 +22,7 @@ export default function (topic: string) {
 					filters.value,
 					topic
 				);
-				const { posts: fetchedPosts, meta } = res.data as {
-					posts: IPost[];
-					meta: IPostsMeta;
-				};
+				const { posts: fetchedPosts, meta } = res.data;
 
 				totalPages.value = meta.totalPages;
 				hasNextPage.value = meta.hasNextPage;
