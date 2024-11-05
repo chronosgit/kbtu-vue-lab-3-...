@@ -27,9 +27,20 @@
 			/>
 
 			<div class="space-4 grid">
-				<p class="text-outline text-lg font-bold text-violet-600">
-					{{ isMsgMine ? 'You' : props.message.authorUsername }}
+				<p
+					v-if="isMsgMine"
+					class="text-outline text-lg font-bold text-violet-600"
+				>
+					You
 				</p>
+
+				<NuxtLink
+					v-else
+					:to="`/users/${props.message.authorId}`"
+					class="text-outline text-lg font-bold text-violet-600"
+				>
+					{{ props.message.authorUsername }}
+				</NuxtLink>
 
 				<p class="text-outline font-medium text-green-500">
 					{{ convertDateTimeToPostHistoryString(props.message.timestamp) }}
