@@ -100,10 +100,18 @@
 
 						<SquareBigButton
 							v-if="isAuthenticated"
-							class="bg-cyan-400 font-tnr uppercase tracking-wider"
+							class="bg-white font-tnr uppercase tracking-wider"
 							@click="openChat(userId)"
 						>
 							Chat
+						</SquareBigButton>
+
+						<SquareBigButton
+							v-if="isAuthenticated"
+							class="bg-cyan-200 font-tnr uppercase tracking-wider"
+							@click="navigateTo(`/users/${userId}/friends`)"
+						>
+							Friends
 						</SquareBigButton>
 
 						<p v-show="feedback" class="font-bold text-green-800">

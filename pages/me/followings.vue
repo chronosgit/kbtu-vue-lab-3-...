@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import UserCard from '~/components/features/users/UserCard.vue';
+	import MyFriendCard from '~/components/features/users/MyFriendCard.vue';
 	import MyHeader from '~/components/layout/MyHeader.vue';
 	import ChatsService from '~/services/ChatsService';
 
@@ -51,7 +51,7 @@
 				class="grid justify-center gap-4"
 			>
 				<div v-for="u in users" class="flex gap-4">
-					<UserCard :user="u" />
+					<MyFriendCard :user="u" />
 
 					<!-- Buttons -->
 					<div class="flex items-center gap-4">
