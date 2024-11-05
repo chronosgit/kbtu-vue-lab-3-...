@@ -1,6 +1,7 @@
 import { isValidObjectId } from 'mongoose';
 import User from '~/server/models/User';
 import IAccessToken from '~/interfaces/IAccessToken';
+import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -26,6 +27,8 @@ export default defineEventHandler(async (e) => {
 		me.followings.push({ userId: targetId });
 
 		await me.save();
+
+		createStatActivity(me._id.toString());
 
 		return getSuccessResponse(200, 'User followed');
 	} catch (err) {

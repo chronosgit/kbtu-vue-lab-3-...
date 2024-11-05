@@ -129,7 +129,10 @@
 					</div>
 				</div>
 
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div
+					v-if="Array.isArray(posts) && posts.length"
+					class="grid grid-cols-1 gap-4 md:grid-cols-2"
+				>
 					<PostCard v-for="p in posts" :post="p">
 						<template #btn-action v-if="isAuthenticated">
 							<button
@@ -141,6 +144,8 @@
 						</template>
 					</PostCard>
 				</div>
+
+				<p v-else class="text-black">No posts</p>
 			</ChevronShapeTemplate>
 		</main>
 	</div>

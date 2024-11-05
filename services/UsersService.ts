@@ -1,3 +1,4 @@
+import type IUserFriend from '~/interfaces/features/users/IUserFriend';
 import type IServerApiResponse from '~/interfaces/IServerApiResponse';
 import type IUser from '~/interfaces/IUser';
 
@@ -43,6 +44,14 @@ class UsersService {
 			method: 'PUT',
 			body: { nickname },
 		});
+	}
+
+	static getUserFollowings(userId: string) {
+		if (!userId) return;
+
+		return $fetch<IServerApiResponse<IUserFriend[]>>(
+			`/api/users/${userId}/friends`
+		);
 	}
 }
 

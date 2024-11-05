@@ -1,9 +1,16 @@
 <script setup lang="ts">
 	import type IMyFriend from '~/interfaces/IMyFriend';
 	import type IUser from '~/interfaces/IUser';
+	import useCurrentUserStore from '~/store/useCurrentUserStore';
+
+	const curUserStore = useCurrentUserStore();
 
 	const props = defineProps<{ user: IUser | IMyFriend }>();
-	const visitLinkUrl = computed(() => `/users/${props.user.id}`);
+	const visitLinkUrl = computed(() => {
+		if (props.user.id === curUserStore.user.value?.id) return '/me';
+
+		return `/users/${props.user.id}`;
+	});
 </script>
 
 <template>

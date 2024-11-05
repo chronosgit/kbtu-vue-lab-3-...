@@ -1,5 +1,6 @@
-import IAccessToken from '~/interfaces/IAccessToken';
+import mongoose, { isValidObjectId } from 'mongoose';
 import Chat from '~/server/models/Chat';
+import IAccessToken from '~/interfaces/IAccessToken';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -7,10 +8,14 @@ export default defineEventHandler(async (e) => {
 		if (!decodedToken) throw createError({ statusCode: 401 });
 
 		const chatId = getRouterParam(e, 'id');
+		if (!isValidObjectId(chatId)) throw createError({ statusCode: 400 });
 
 		const chat = await Chat.findById(chatId);
-
 		if (!chat) throw createError({ statusCode: 404 });
+
+		if (!chat.userIds.includes(new mongoose.Types.ObjectId(decodedToken.id))) {
+			throw createError({ statusCode: 403 });
+		}
 
 		return getSuccessResponse(200, 'Chat received', chat);
 	} catch (err) {

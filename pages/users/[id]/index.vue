@@ -4,6 +4,7 @@
 	import MyHeader from '~/components/layout/MyHeader.vue';
 	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
 	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
+	import ChatsService from '~/services/ChatsService';
 	import UsersService from '~/services/UsersService';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
@@ -50,6 +51,12 @@
 			console.error(err);
 		}
 	};
+
+	const openChat = async (partnerId: string) => {
+		const { data: chat } = await ChatsService.accessChatBlindly(partnerId);
+
+		navigateTo(`/chats/${chat._id}`);
+	};
 </script>
 
 <template>
@@ -73,7 +80,7 @@
 				/>
 
 				<template v-if="isAuthenticated">
-					<div class="mt-8 grid grid-rows-3 place-items-center">
+					<div class="mt-8 grid grid-rows-3 gap-2">
 						<SquareBigButton
 							class="font-tnr uppercase tracking-wider"
 							:class="{
@@ -89,6 +96,22 @@
 							>
 								{{ isAlreadyFollowed ? 'Unfollow' : 'Follow' }}
 							</p>
+						</SquareBigButton>
+
+						<SquareBigButton
+							v-if="isAuthenticated"
+							class="bg-white font-tnr uppercase tracking-wider"
+							@click="openChat(userId)"
+						>
+							Chat
+						</SquareBigButton>
+
+						<SquareBigButton
+							v-if="isAuthenticated"
+							class="bg-cyan-200 font-tnr uppercase tracking-wider"
+							@click="navigateTo(`/users/${userId}/friends`)"
+						>
+							Friends
 						</SquareBigButton>
 
 						<p v-show="feedback" class="font-bold text-green-800">
