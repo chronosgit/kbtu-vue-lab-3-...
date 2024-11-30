@@ -25,7 +25,7 @@
 
 <template>
 	<div
-		class="min-h-screen overflow-hidden bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="min-h-screen overflow-hidden bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] pb-36"
 	>
 		<div class="mb-2">
 			<MyHeader />
