@@ -14,7 +14,7 @@
 		title: 'My followings',
 	});
 
-	const { users, fetchMyFollowings, unfollowUser } = useMyFollowings();
+	const { users, fetchMyFollowings, unfollowUser } = useMyFriendships();
 
 	const {
 		isActive: isForm,
@@ -57,7 +57,7 @@
 					<div class="flex items-center gap-4">
 						<button
 							class="rounded-full bg-red-500 px-4 py-1 font-medium uppercase text-white"
-							@click="unfollowUser(u.id)"
+							@click="unfollowUser(u._id)"
 						>
 							Unfollow
 						</button>
@@ -71,7 +71,7 @@
 
 						<button
 							class="rounded-full bg-green-300 px-4 py-1 font-medium uppercase text-white"
-							@click="openChat(u.id)"
+							@click="openChat(u._id)"
 						>
 							Chat
 						</button>
@@ -85,7 +85,7 @@
 							:class="{ flex: isForm, hidden: !isForm }"
 						>
 							<UpdateFriendNicknameForm
-								:friend-id="u.id"
+								:friend-id="u._id"
 								:existing-nickname="u.nickname"
 								class="w-1/2"
 								@close-this-form="closeForm"

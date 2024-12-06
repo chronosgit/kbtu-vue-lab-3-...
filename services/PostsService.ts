@@ -1,4 +1,4 @@
-import type IPost from '~/interfaces/IPost';
+import type IPost from '~/interfaces/features/posts/IPost';
 import type IPostsMeta from '~/interfaces/IPostsMeta';
 import type IServerApiResponse from '~/interfaces/IServerApiResponse';
 

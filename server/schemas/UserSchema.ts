@@ -64,15 +64,6 @@ const UserSchema: Schema<IUser> = new Schema(
 			type: Date,
 			default: new Date(),
 		},
-		followings: {
-			type: [
-				{
-					type: Schema.Types.ObjectId,
-					required: true,
-				},
-			],
-			default: [],
-		},
 		likedPosts: [
 			{
 				type: Schema.Types.ObjectId,

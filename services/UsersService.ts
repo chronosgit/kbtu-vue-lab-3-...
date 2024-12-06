@@ -1,6 +1,6 @@
+import type IUser from '~/interfaces/features/users/IUser';
 import type IUserFriend from '~/interfaces/features/users/IUserFriend';
 import type IServerApiResponse from '~/interfaces/IServerApiResponse';
-import type IUser from '~/interfaces/IUser';
 
 class UsersService {
 	static async updateMe(age: string, location: string) {
@@ -29,10 +29,8 @@ class UsersService {
 		);
 	}
 
-	static getMyFollowings() {
-		return $fetch<IServerApiResponse<{ users: IUser[] }>>(
-			'/api/users/me/followings'
-		);
+	static getMyFriendships() {
+		return $fetch<IServerApiResponse<IUser[]>>('/api/users/me/friendships');
 	}
 
 	static updateMyFriendNickname(friendId: string, nickname: string) {

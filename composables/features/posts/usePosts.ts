@@ -1,5 +1,5 @@
 import PostsService from '~/services/PostsService';
-import type IPost from '~/interfaces/IPost';
+import type IPost from '~/interfaces/features/posts/IPost';
 
 export default function (topic: string) {
 	const filters = ref<string>('');
@@ -22,15 +22,19 @@ export default function (topic: string) {
 					filters.value,
 					topic
 				);
+				if (res == null) return null;
+
 				const { posts: fetchedPosts, meta } = res.data;
 
+				if (meta.totalPages === 0) curPage.value = 0;
 				totalPages.value = meta.totalPages;
+
 				hasNextPage.value = meta.hasNextPage;
 				hasPrevPage.value = meta.hasPreviousPage;
 
 				posts.value = fetchedPosts;
 
-				if (meta.totalPages === 0) curPage.value = 0;
+				console.log(posts.value);
 
 				return res;
 			} catch (err) {

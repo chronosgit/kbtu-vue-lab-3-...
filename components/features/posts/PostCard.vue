@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import RatingStars from '~/components/shared/RatingStars.vue';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
-	import type IPost from '~/interfaces/IPost';
+	import type IPost from '~/interfaces/features/posts/IPost';
 
 	const props = defineProps<{
 		post: IPost;
@@ -20,6 +20,12 @@
 
 		return '/me';
 	});
+
+	const displayedUsername = computed(() => {
+		if (!props.post.authorNickname) return props.post.authorUsername;
+
+		return `${props.post.authorNickname} (${props.post.authorUsername})`;
+	});
 </script>
 
 <template>
@@ -27,7 +33,7 @@
 		<div class="mb-2 flex flex-wrap items-center justify-between gap-4">
 			<div class="space-y-4 rounded-md bg-[#73c3d3] p-2">
 				<NuxtLink :to="userLink" class="text-lg font-medium text-white">
-					{{ props.post.authorUsername }}
+					{{ displayedUsername }}
 				</NuxtLink>
 
 				<p class="text-lg font-medium text-white">{{ ts }}</p>

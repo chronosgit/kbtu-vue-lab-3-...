@@ -1,29 +1,32 @@
+import { isValidObjectId } from 'mongoose';
 import IAccessToken from '~/interfaces/IAccessToken';
+import Friendship from '~/server/models/Friendship';
 import User from '~/server/models/User';
 import createStatActivity from '~/server/utils/createStatActivity';
 
 export default defineEventHandler(async (e) => {
 	try {
-		const { id: myId } = e.context.decodedToken as IAccessToken;
-		if (!e.context.decodedToken) throw createError({ statusCode: 401 });
+		const decodedToken = e.context.decodedToken as IAccessToken;
+		if (!decodedToken) {
+			throw createError({ statusCode: 401, message: 'No access token' });
+		}
 
-		const userId = getRouterParam(e, 'id');
+		const targetId = getRouterParam(e, 'id');
+		if (!isValidObjectId(targetId)) {
+			throw createError({ statusCode: 400, message: 'Invalid userId param' });
+		}
 
-		const me = await User.findByIdAndUpdate(
-			myId,
-			{ $pull: { followings: { userId } } },
-			{ new: true }
-		);
-
-		if (!me) {
+		const deletedFriendship = await Friendship.deleteOne({
+			friends: { $all: [targetId, decodedToken.id] },
+		});
+		if (deletedFriendship.deletedCount === 0) {
 			throw createError({
-				statusCode: 400,
-				statusMessage: "Me doesn't exist",
+				statusCode: 404,
+				statusMessage: 'No friendship found to delete between these users',
 			});
 		}
 
-		createStatActivity(me._id.toString());
-
+		createStatActivity(decodedToken.toString());
 		return getSuccessResponse(200, 'Unfollowed user', true);
 	} catch (err) {
 		console.error(err);
