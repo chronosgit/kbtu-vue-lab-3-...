@@ -34,8 +34,6 @@ export default function (topic: string) {
 
 				posts.value = fetchedPosts;
 
-				console.log(posts.value);
-
 				return res;
 			} catch (err) {
 				console.error(err);

@@ -42,11 +42,9 @@
 
 	<!-- Actual header -->
 	<header
-		class="mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2 pt-2"
+		class="fixed left-0 right-0 top-0 z-40 mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2 pt-2"
 	>
-		<div class="cursor-pointer" @click.stop="openSidebar">
-			<IconBurger />
-		</div>
+		<IconBurger class="cursor-pointer" @click.stop="openSidebar" />
 
 		<div
 			class="rounded-xl bg-gradient-to-r from-[#e5f67c] via-[#dfe84d] to-[#eaed39] p-2 text-center"
@@ -97,15 +95,15 @@
 							</div>
 
 							<div class="border-[1px] border-black bg-[#f8f14d] p-2">
-								<NuxtLink to="/auth/registration" class="text-outline"
-									>Register</NuxtLink
-								>
+								<NuxtLink to="/auth/registration" class="text-outline">
+									Register
+								</NuxtLink>
 							</div>
 
 							<div class="border-[1px] border-black bg-[#cfa0dd] p-2">
-								<NuxtLink to="/auth/confirmation" class="text-outline"
-									>Confirm</NuxtLink
-								>
+								<NuxtLink to="/auth/confirmation" class="text-outline">
+									Confirm
+								</NuxtLink>
 							</div>
 						</template>
 					</div>

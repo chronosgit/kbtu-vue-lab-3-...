@@ -31,7 +31,7 @@
 	<LoginPopup ref="login-popup-ref" :is-open="isLoginPopup" />
 
 	<header
-		class="mb-8 flex items-center justify-between gap-2 bg-gradient-to-r from-yellow-200 to-yellow-300"
+		class="fixed left-0 right-0 top-0 z-40 mb-8 flex items-center justify-between gap-2 bg-gradient-to-r from-yellow-200 to-yellow-300"
 	>
 		<AdText class="truncate pl-8 text-xl font-bold" />
 
