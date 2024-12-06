@@ -23,15 +23,16 @@
 			/>
 
 			<div class="space-y-2">
-				<!-- <NuxtLink
-					v-if="(props.user as OldInterfaceUser).nickname"
+				<NuxtLink
+					v-if="props.user.nickname"
 					:to="visitLinkUrl"
 					class="text-outline text-2xl font-bold text-blue-500"
 				>
-					{{ (props.user as IMyFriend).nickname }} ({{ props.user.username }})
-				</NuxtLink> -->
+					{{ props.user.nickname }} ({{ props.user.username }})
+				</NuxtLink>
 
 				<NuxtLink
+					v-else
 					:to="visitLinkUrl"
 					class="text-outline text-2xl font-bold text-blue-500"
 				>

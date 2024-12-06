@@ -1,6 +1,7 @@
 import User from '~/server/models/User';
 import IAccessToken from '~/interfaces/IAccessToken';
 import Friendship from '~/server/models/Friendship';
+import getMyNicknameForUser from '~/server/utils/business/getMyNicknameForUser';
 
 export default defineEventHandler(async (e) => {
 	try {
@@ -31,7 +32,6 @@ export default defineEventHandler(async (e) => {
 		const myFriendsIds = myFriendships.flatMap((mf) =>
 			mf.friends.filter((f) => !f.equals(my._id))
 		);
-
 		const myFriends = await Promise.all(
 			myFriendsIds.map(async (id) => {
 				const friend = await User.findById(id).select('-password').lean();
@@ -40,7 +40,22 @@ export default defineEventHandler(async (e) => {
 			})
 		);
 
-		return getSuccessResponse(200, 'My followings received', myFriends);
+		const returnedMyFriends = await Promise.all(
+			myFriends
+				.filter((f) => f != null)
+				.map(async (f) => {
+					const nickname = await getMyNicknameForUser(
+						decodedToken.id,
+						f._id.toString()
+					);
+
+					console.log(nickname);
+
+					return { ...f, nickname };
+				})
+		);
+
+		return getSuccessResponse(200, 'My followings received', returnedMyFriends);
 	} catch (err) {
 		console.error(err);
 

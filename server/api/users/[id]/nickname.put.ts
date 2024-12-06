@@ -1,5 +1,6 @@
 import { isValidObjectId } from 'mongoose';
 import IAccessToken from '~/interfaces/IAccessToken';
+import Nickname from '~/server/models/Nickname';
 import User from '~/server/models/User';
 import createStatActivity from '~/server/utils/createStatActivity';
 
@@ -11,9 +12,11 @@ export default defineEventHandler(async (e) => {
 		}
 
 		const targetId = getRouterParam(e, 'id');
-		const { nickname } = await readBody(e);
+		if (!isValidObjectId(targetId)) {
+			throw createError({ statusCode: 400, message: 'Invalid target ID' });
+		}
 
-		if (!isValidObjectId(targetId)) throw createError({ statusCode: 400 });
+		const { nickname } = await readBody(e);
 		if (typeof nickname !== 'string' || !nickname.length) {
 			throw createError({ statusCode: 400, message: 'Invalid nickname' });
 		}
@@ -22,23 +25,34 @@ export default defineEventHandler(async (e) => {
 		if (!me) {
 			throw createError({
 				statusCode: 404,
-				message: "User with such access token doesn't exist",
+				message: "User with ID from access token doesn't exist",
 			});
 		}
 
-		console.log(me);
-
-		const friend = me.followings.find((f) => f.toString() === targetId);
-		if (!friend) {
-			throw createError({
-				statusCode: 404,
-				message: 'Only friends can have nicknames',
-			});
-		}
-
-		console.log(friend);
+		const nicknameRel = await Nickname.findOne({
+			nicknameCreatorId: me._id,
+			nicknamedUserId: targetId,
+		});
 
 		createStatActivity(me._id.toString());
+
+		if (!nicknameRel) {
+			const newNicknameRel = new Nickname({
+				nicknameCreatorId: me._id,
+				nicknamedUserId: targetId,
+				nickname,
+			});
+
+			await newNicknameRel.save();
+
+			return getSuccessResponse(200, 'Created and updated nickname');
+		}
+
+		nicknameRel.nickname = nickname;
+		nicknameRel.markModified('nickname');
+		await nicknameRel.save();
+
+		return getSuccessResponse(200, 'Updated nickname');
 
 		return getSuccessResponse(200, 'Updated nickname');
 	} catch (err) {

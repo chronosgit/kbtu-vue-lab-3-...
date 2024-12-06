@@ -1,6 +1,5 @@
-import mongoose, { Types, Schema, Document } from 'mongoose';
+import { Types, Schema, Document } from 'mongoose';
 
-// Interface for the Nickname document
 export interface INickname extends Document {
 	nicknameCreatorId: Types.ObjectId;
 	nicknamedUserId: Types.ObjectId;
