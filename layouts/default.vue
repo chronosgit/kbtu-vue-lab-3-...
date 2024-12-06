@@ -3,7 +3,7 @@
 		<Html>
 			<Head></Head>
 
-			<Body>
+			<Body class="overflow-x-hidden">
 				<slot />
 			</Body>
 		</Html>
