@@ -25,4 +25,4 @@ const NicknameSchema = new Schema<INickname>({
 	},
 });
 
-export default mongoose.model<INickname>('Nickname', NicknameSchema);
+export default NicknameSchema;
