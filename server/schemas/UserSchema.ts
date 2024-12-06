@@ -1,10 +1,5 @@
 import { Document, Schema, Types } from 'mongoose';
 
-interface IFollowing {
-	userId: Types.ObjectId;
-	nickname?: string | null;
-}
-
 interface IUser extends Document {
 	_id: Types.ObjectId;
 	email: string;
@@ -15,25 +10,9 @@ interface IUser extends Document {
 	rating: number;
 	lastLoggedIn: Date;
 	isEmailConfirmed: boolean;
-	followings: IFollowing[];
+	followings: Types.ObjectId[];
 	likedPosts: Types.ObjectId[];
 }
-
-const FollowingSchema: Schema<IFollowing> = new Schema(
-	{
-		userId: {
-			type: Schema.Types.ObjectId,
-			ref: 'User',
-			required: true,
-		},
-		nickname: {
-			type: String,
-			trim: true,
-			default: null,
-		},
-	},
-	{ _id: false }
-);
 
 const UserSchema: Schema<IUser> = new Schema(
 	{
@@ -85,7 +64,15 @@ const UserSchema: Schema<IUser> = new Schema(
 			type: Date,
 			default: new Date(),
 		},
-		followings: [FollowingSchema],
+		followings: {
+			type: [
+				{
+					type: Schema.Types.ObjectId,
+					required: true,
+				},
+			],
+			default: [],
+		},
 		likedPosts: [
 			{
 				type: Schema.Types.ObjectId,

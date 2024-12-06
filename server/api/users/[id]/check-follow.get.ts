@@ -32,7 +32,7 @@ export default defineEventHandler(async (e) => {
 		}
 
 		const checkRes = me.followings.some(
-			(f) => f.userId.toString() === target._id.toString()
+			(f) => f.toString() === target._id.toString()
 		);
 
 		return getSuccessResponse(200, 'Performed check', checkRes);

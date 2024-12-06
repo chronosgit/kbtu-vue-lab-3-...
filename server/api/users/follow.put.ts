@@ -24,7 +24,7 @@ export default defineEventHandler(async (e) => {
 		});
 		if (!me) throw createError({ statusCode: 400 });
 
-		me.followings.push({ userId: targetId });
+		me.followings.push(targetId);
 
 		await me.save();
 
