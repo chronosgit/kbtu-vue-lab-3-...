@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/layout/my-header/index.vue';
 	import LoadingSpinner from '~/components/ui/LoadingSpinner.vue';
 
+	definePageMeta({ layout: 'main' });
 	useHead({ title: 'Authentication' });
 
 	const {
@@ -15,10 +15,8 @@
 
 <template>
 	<div
-		class="max-w-screen h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="max-w-screen h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] p-20"
 	>
-		<MyHeader />
-
 		<div class="px-2">
 			<div class="mx-auto my-0 w-full max-w-[80%] lg:max-w-[50%]">
 				<div class="mb-16 max-w-max rounded-lg bg-[#62e3eb] px-2 py-3">

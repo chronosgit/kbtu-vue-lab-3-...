@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import PostCard from '~/components/features/posts/PostCard.vue';
 	import UserProfileDetails from '~/components/features/users/UserProfileDetails.vue';
-	import MyHeader from '~/components/layout/my-header/index.vue';
 	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
 	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
 	import ChatsService from '~/services/ChatsService';

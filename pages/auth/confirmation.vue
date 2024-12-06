@@ -1,6 +1,5 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/layout/my-header/index.vue';
-
+	definePageMeta({ layout: 'main' });
 	useHead({ title: 'Confirmation' });
 
 	const {
@@ -14,10 +13,8 @@
 
 <template>
 	<div
-		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] p-20"
 	>
-		<MyHeader />
-
 		<div class="px-2">
 			<div
 				class="mx-auto my-0 flex flex-col items-center bg-gradient-to-b from-[#61eee6] via-[#53c6bf] to-[#318a84] px-2 py-6 sm:max-w-[80%]"
