@@ -6,24 +6,37 @@ import createStatActivity from '~/server/utils/createStatActivity';
 export default defineEventHandler(async (e) => {
 	try {
 		const decodedToken = e.context.decodedToken as IAccessToken;
-		if (!decodedToken) throw createError({ statusCode: 401 });
+		if (!decodedToken) {
+			throw createError({ statusCode: 401, message: 'Invalid access token' });
+		}
 
 		const targetId = getRouterParam(e, 'id');
 		const { nickname } = await readBody(e);
 
 		if (!isValidObjectId(targetId)) throw createError({ statusCode: 400 });
 		if (typeof nickname !== 'string' || !nickname.length) {
-			throw createError({ statusCode: 400 });
+			throw createError({ statusCode: 400, message: 'Invalid nickname' });
 		}
 
 		const me = await User.findById(decodedToken.id);
-		if (!me) throw createError({ statusCode: 404 });
+		if (!me) {
+			throw createError({
+				statusCode: 404,
+				message: "User with such access token doesn't exist",
+			});
+		}
 
-		const friend = me.followings.find((f) => f.userId.toString() === targetId);
-		if (!friend) throw createError({ statusCode: 404 });
+		console.log(me);
 
-		friend.nickname = nickname;
-		await me.save();
+		const friend = me.followings.find((f) => f.toString() === targetId);
+		if (!friend) {
+			throw createError({
+				statusCode: 404,
+				message: 'Only friends can have nicknames',
+			});
+		}
+
+		console.log(friend);
 
 		createStatActivity(me._id.toString());
 

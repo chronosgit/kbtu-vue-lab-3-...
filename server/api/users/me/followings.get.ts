@@ -15,13 +15,13 @@ export default defineEventHandler(async (e) => {
 		const my = await User.findById(decoded.id);
 		if (!my) throw createError({ statusCode: 404 });
 
-		const myFollowingsIds = my.followings.map((following) => following.userId);
+		const myFollowingsIds = my.followings.map((following) => following);
 		const users = await User.find({ _id: { $in: myFollowingsIds } });
 
 		const usersToReturn = users.map((u) => {
 			const nickname =
-				my.followings.find((f) => f.userId.toString() === u.id.toString())
-					?.nickname || null;
+				my.followings.find((f) => f.toString() === u.id.toString())?.nickname ||
+				null;
 
 			console.log(my.followings);
 
