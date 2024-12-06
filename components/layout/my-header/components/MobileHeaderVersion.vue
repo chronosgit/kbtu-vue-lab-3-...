@@ -31,16 +31,16 @@
 	<LoginPopup ref="login-popup-ref" :is-open="isLoginPopup" />
 
 	<header
-		class="mb-8 flex items-center justify-between bg-gradient-to-r from-yellow-200 to-yellow-300"
+		class="fixed left-0 right-0 top-0 z-40 mb-8 flex items-center justify-between gap-2 bg-gradient-to-r from-yellow-200 to-yellow-300"
 	>
 		<AdText class="truncate pl-8 text-xl font-bold" />
 
 		<div class="relative flex-shrink-0">
 			<button
-				class="flex aspect-[1/1] h-auto w-[10%] items-center justify-center bg-[#7eefff]"
+				class="flex aspect-[1/1] h-auto items-center justify-center bg-[#7eefff]"
 				@click.stop="onUserIconClick"
 			>
-				<IconUser class="" />
+				<IconUser />
 			</button>
 
 			<Dropdown ref="dropdown" :is-open="isDropdown" :snap-to-right="true">

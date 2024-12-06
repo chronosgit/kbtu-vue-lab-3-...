@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	import PostCard from '~/components/features/posts/PostCard.vue';
 	import UserProfileDetails from '~/components/features/users/UserProfileDetails.vue';
-	import MyHeader from '~/components/layout/my-header/index.vue';
 	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
 	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
 	import ChatsService from '~/services/ChatsService';
 	import UsersService from '~/services/UsersService';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
+
+	definePageMeta({ layout: 'main' });
 
 	const { isAuthenticated } = useCurrentUserStore();
 
@@ -61,10 +62,8 @@
 
 <template>
 	<div
-		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] pt-20"
 	>
-		<MyHeader />
-
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<h1 class="mb-5 text-right font-tnr text-5xl text-white">Profile</h1>
 

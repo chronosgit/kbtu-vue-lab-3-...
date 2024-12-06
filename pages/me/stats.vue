@@ -1,19 +1,16 @@
 <script setup lang="ts">
 	import StatsChart from '~/components/features/stats/StatsChart.vue';
-	import MyHeader from '~/components/layout/my-header/index.vue';
 	import { IconArrowLeft } from '~/components/ui/icons';
 
-	definePageMeta({ middleware: '4-protect-route' });
+	definePageMeta({ middleware: '4-protect-route', layout: 'main' });
 
-	const { stats, areLoading } = useMyStats();
+	const { stats } = useMyStats();
 </script>
 
 <template>
 	<div
-		class="min-h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
+		class="min-h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] p-20"
 	>
-		<MyHeader />
-
 		<main class="px-8">
 			<div class="flex items-center justify-between gap-6 px-6">
 				<button @click="useRouter().back()">

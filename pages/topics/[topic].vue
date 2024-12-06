@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import PostCard from '~/components/features/posts/PostCard.vue';
-	import MyHeader from '~/components/layout/my-header/index.vue';
 	import ChevronShapeTemplate from '~/components/shared/ChevronShapeTemplate.vue';
 	import Dropdown from '~/components/shared/Dropdown.vue';
 	import {
@@ -10,7 +9,7 @@
 	} from '~/components/ui/icons';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
-	definePageMeta({ middleware: '5-topic-check' });
+	definePageMeta({ middleware: '5-topic-check', layout: 'main' });
 
 	const {
 		params: { topic },
@@ -46,10 +45,8 @@
 
 <template>
 	<div
-		class="max-w-screen min-h-screen bg-trees bg-cover bg-center font-poppins"
+		class="min-w-screen min-h-screen bg-trees bg-cover bg-center pt-20 font-poppins"
 	>
-		<MyHeader />
-
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<ChevronShapeTemplate
 				class="bg-white bg-opacity-80 px-4 py-32 text-2xl font-bold uppercase text-white shadow-lg"

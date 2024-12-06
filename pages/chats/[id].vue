@@ -1,15 +1,18 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/layout/my-header/index.vue';
 	import ChatMessage from '~/components/features/chats/message/index.vue';
 	import ChatsService from '~/services/ChatsService';
 
-	definePageMeta({ title: 'Chat', middleware: '4-protect-route' });
+	definePageMeta({
+		title: 'Chat',
+		middleware: '4-protect-route',
+		layout: 'main',
+	});
 
 	const {
 		params: { id: chatId },
 	} = useRoute();
 
-	const { chat, isLoading, refetchChat } = useChat(chatId as string);
+	const { chat, refetchChat } = useChat(chatId as string);
 
 	const msg = defineModel<string>();
 
@@ -25,10 +28,8 @@
 
 <template>
 	<div
-		class="min-h-screen overflow-hidden bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] pb-36"
+		class="min-h-screen overflow-hidden bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] p-20 pb-36"
 	>
-		<MyHeader />
-
 		<div
 			v-if="Array.isArray(chat?.messages) && chat.messages.length"
 			class="grid gap-10 px-2"

@@ -6,7 +6,7 @@
 
 <template>
 	<aside
-		class="absolute bottom-0 left-0 top-0 z-10 max-w-[50%] -translate-x-full space-y-5 bg-[#c1ebf1] p-2 transition-transform sm:max-w-none"
+		class="absolute bottom-0 left-0 top-0 z-50 max-w-[50%] -translate-x-full space-y-5 bg-[#c1ebf1] p-2 transition-transform sm:max-w-none"
 		:class="{ 'translate-x-0': props.isActive }"
 	>
 		<div class="rounded-lg bg-white p-1 text-center">
