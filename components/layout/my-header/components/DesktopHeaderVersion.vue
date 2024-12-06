@@ -3,6 +3,7 @@
 	import SidebarMenu from '~/components/layout/SidebarMenu.vue';
 	import Dropdown from '~/components/shared/Dropdown.vue';
 	import { IconBurger, IconUser } from '~/components/ui/icons';
+	import AdText from './AdText.vue';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	const { isAuthenticated, logoutUser } = useCurrentUserStore();
@@ -41,7 +42,7 @@
 
 	<!-- Actual header -->
 	<header
-		class="mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2"
+		class="mb-8 flex items-center justify-between gap-4 bg-white bg-opacity-45 p-2 pt-2"
 	>
 		<div class="cursor-pointer" @click.stop="openSidebar">
 			<IconBurger />
@@ -50,10 +51,7 @@
 		<div
 			class="rounded-xl bg-gradient-to-r from-[#e5f67c] via-[#dfe84d] to-[#eaed39] p-2 text-center"
 		>
-			<span
-				class="bg-gradient-to-r from-[#f9bf9d] via-[#ff9480] to-[#ff794f] bg-clip-text font-tnr text-lg text-transparent"
-				>New trips on Fall season! Full details on our Instagram accounts</span
-			>
+			<AdText />
 		</div>
 
 		<ClientOnly>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import PostCard from '~/components/features/posts/PostCard.vue';
 	import MyProfileDetails from '~/components/features/users/MyProfileDetails.vue';
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 	import { IconArrowLeft, IconArrowRight } from '~/components/ui/icons';
 	import LoadingSpinner from '~/components/ui/LoadingSpinner.vue';
 	import SquareBigButton from '~/components/ui/SquareBigButton.vue';
@@ -28,9 +28,7 @@
 	<div
 		class="min-h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="pt-2">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<h1 class="mb-5 text-right font-tnr text-5xl text-white">My Profile</h1>

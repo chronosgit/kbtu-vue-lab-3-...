@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import PostCard from '~/components/features/posts/PostCard.vue';
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 	import ChevronShapeTemplate from '~/components/shared/ChevronShapeTemplate.vue';
 	import Dropdown from '~/components/shared/Dropdown.vue';
 	import {
@@ -48,9 +48,7 @@
 	<div
 		class="max-w-screen min-h-screen bg-trees bg-cover bg-center font-poppins"
 	>
-		<div class="pt-2">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<ChevronShapeTemplate

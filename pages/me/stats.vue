@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import StatsChart from '~/components/features/stats/StatsChart.vue';
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 	import { IconArrowLeft } from '~/components/ui/icons';
 
 	definePageMeta({ middleware: '4-protect-route' });
@@ -12,9 +12,7 @@
 	<div
 		class="min-h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="pt-2">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<main class="px-8">
 			<div class="flex items-center justify-between gap-6 px-6">

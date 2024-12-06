@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 
 	useHead({ title: 'Confirmation' });
 
@@ -16,9 +16,7 @@
 	<div
 		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="mb-8">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<div class="px-2">
 			<div

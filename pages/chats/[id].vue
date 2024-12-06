@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 	import ChatMessage from '~/components/features/chats/message/index.vue';
 	import ChatsService from '~/services/ChatsService';
 
@@ -27,9 +27,7 @@
 	<div
 		class="min-h-screen overflow-hidden bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3] pb-36"
 	>
-		<div class="mb-2">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<div
 			v-if="Array.isArray(chat?.messages) && chat.messages.length"

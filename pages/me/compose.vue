@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import PostComposeForm from '~/components/features/posts/PostComposeForm.vue';
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 
 	definePageMeta({ middleware: '4-protect-route' });
 </script>
@@ -9,9 +9,7 @@
 	<div
 		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="mb-4">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<div class="px-2">
 			<p class="text-outline mb-8 text-right text-2xl font-bold text-white">

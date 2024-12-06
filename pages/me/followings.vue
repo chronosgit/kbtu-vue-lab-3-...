@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import MyFriendCard from '~/components/features/users/MyFriendCard.vue';
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 	import ChatsService from '~/services/ChatsService';
 
 	const UpdateFriendNicknameForm = defineAsyncComponent(
@@ -38,9 +38,7 @@
 	<div
 		class="h-screen w-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="mb-2">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<main class="mx-auto my-0 px-4">
 			<h1 class="mb-5 text-right font-tnr text-5xl text-white">My friends</h1>
