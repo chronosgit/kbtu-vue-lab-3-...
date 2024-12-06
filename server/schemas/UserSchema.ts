@@ -6,6 +6,7 @@ interface IUser extends Document {
 	username: string;
 	password: string;
 	age: number;
+	nickname: string;
 	location: string;
 	rating: number;
 	lastLoggedIn: Date;
@@ -16,6 +17,7 @@ interface IUser extends Document {
 
 const UserSchema: Schema<IUser> = new Schema(
 	{
+		nickname: String,
 		email: {
 			type: String,
 			required: true,
@@ -63,15 +65,6 @@ const UserSchema: Schema<IUser> = new Schema(
 		lastLoggedIn: {
 			type: Date,
 			default: new Date(),
-		},
-		followings: {
-			type: [
-				{
-					type: Schema.Types.ObjectId,
-					required: true,
-				},
-			],
-			default: [],
 		},
 		likedPosts: [
 			{

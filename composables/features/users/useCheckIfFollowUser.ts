@@ -6,6 +6,7 @@ export default function (userId: string) {
 		async () => {
 			try {
 				const res = await UsersService.checkIfFollowUser(userId);
+				if (res == null) return null;
 
 				return res.data;
 			} catch (err) {

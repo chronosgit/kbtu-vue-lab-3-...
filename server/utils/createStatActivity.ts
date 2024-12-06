@@ -6,8 +6,6 @@ export default async function (userId: string) {
 
 	const userStats = await Statistics.findOne({ userId });
 
-	console.log(userStats);
-
 	// Add current timestamp
 	if (userStats) {
 		userStats.activities.push(new Date());

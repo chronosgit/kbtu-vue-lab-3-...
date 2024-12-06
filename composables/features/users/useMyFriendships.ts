@@ -1,32 +1,34 @@
 import UsersService from '~/services/UsersService';
-import type IMyFriend from '~/interfaces/IMyFriend';
+import type IUser from '~/interfaces/features/users/IUser';
 
 export default function () {
 	const {
 		data: users,
 		status,
 		execute: fetchMyFollowings,
-	} = useAsyncData<IMyFriend[] | null>('useMyFollowing', async () => {
-		try {
-			const {
-				data: { users },
-			} = await UsersService.getMyFollowings();
+	} = useAsyncData<IUser[] | null>(
+		'features.users.useMyFriendships',
+		async () => {
+			try {
+				const res = await UsersService.getMyFriendships();
+				if (res == null) return null;
 
-			return users;
-		} catch (err) {
-			console.error(err);
+				return res.data;
+			} catch (err) {
+				console.error(err);
 
-			return null;
+				return null;
+			}
 		}
-	});
+	);
 
 	const unfollowUser = async (targetId: string) => {
 		try {
-			if (!users.value) return;
+			if (users.value == null) return;
 
 			await UsersService.unfollowUser(targetId);
 
-			const targetInArrId = users.value.findIndex((u) => u.id === targetId);
+			const targetInArrId = users.value.findIndex((u) => u._id === targetId);
 
 			users.value.splice(targetInArrId, 1);
 		} catch (err) {

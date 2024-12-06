@@ -1,15 +1,14 @@
 <script setup lang="ts">
-	import type IMyFriend from '~/interfaces/IMyFriend';
-	import type IUser from '~/interfaces/IUser';
+	import type IUser from '~/interfaces/features/users/IUser';
 	import useCurrentUserStore from '~/store/useCurrentUserStore';
 
 	const curUserStore = useCurrentUserStore();
 
-	const props = defineProps<{ user: IUser | IMyFriend }>();
+	const props = defineProps<{ user: IUser }>();
 	const visitLinkUrl = computed(() => {
-		if (props.user.id === curUserStore.user.value?.id) return '/me';
+		if (props.user._id === curUserStore.user.value?.id) return '/me';
 
-		return `/users/${props.user.id}`;
+		return `/users/${props.user._id}`;
 	});
 </script>
 
@@ -24,16 +23,15 @@
 			/>
 
 			<div class="space-y-2">
-				<NuxtLink
-					v-if="(props.user as IMyFriend).nickname"
+				<!-- <NuxtLink
+					v-if="(props.user as OldInterfaceUser).nickname"
 					:to="visitLinkUrl"
 					class="text-outline text-2xl font-bold text-blue-500"
 				>
 					{{ (props.user as IMyFriend).nickname }} ({{ props.user.username }})
-				</NuxtLink>
+				</NuxtLink> -->
 
 				<NuxtLink
-					v-else
 					:to="visitLinkUrl"
 					class="text-outline text-2xl font-bold text-blue-500"
 				>
