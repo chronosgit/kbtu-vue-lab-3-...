@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import MyHeader from '~/components/layout/MyHeader.vue';
+	import MyHeader from '~/components/layout/my-header/index.vue';
 	import LoadingSpinner from '~/components/ui/LoadingSpinner.vue';
 
 	useHead({ title: 'Authentication' });
@@ -17,9 +17,7 @@
 	<div
 		class="max-w-screen h-screen bg-gradient-to-b from-[#84cae9] via-[#bddded] to-[#faf2f3]"
 	>
-		<div class="mb-8">
-			<MyHeader />
-		</div>
+		<MyHeader />
 
 		<div class="px-2">
 			<div class="mx-auto my-0 w-full max-w-[80%] lg:max-w-[50%]">
