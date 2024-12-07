@@ -10,6 +10,8 @@ export default function (userId: string) {
 			const res = await UsersService.getUserFollowings(userId);
 			if (!res) return null;
 
+			console.log(res.data);
+
 			return res.data;
 		} catch (err) {
 			console.error(err);

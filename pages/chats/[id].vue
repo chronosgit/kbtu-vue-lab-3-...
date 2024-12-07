@@ -40,7 +40,7 @@
 		<p v-else class="px-2 text-2xl font-bold">No messages</p>
 
 		<form
-			class="fixed bottom-0 left-1/2 z-10 flex h-16 w-4/5 -translate-x-1/2 items-stretch overflow-hidden rounded-t-lg"
+			class="fixed bottom-0 left-1/2 z-10 flex h-16 w-4/5 -translate-x-1/2 -translate-y-10 items-stretch overflow-hidden rounded-t-lg"
 			@submit.prevent="sendMessage"
 		>
 			<input

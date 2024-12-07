@@ -50,7 +50,7 @@
 					<MyFriendCard :user="u" />
 
 					<!-- Buttons -->
-					<div class="flex items-center gap-4">
+					<div class="flex flex-col items-center gap-4 sm:flex-row">
 						<button
 							class="rounded-full bg-red-500 px-4 py-1 font-medium uppercase text-white"
 							@click="unfollowUser(u._id)"

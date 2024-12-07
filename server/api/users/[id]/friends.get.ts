@@ -1,4 +1,5 @@
 import { isValidObjectId } from 'mongoose';
+import Friendship from '~/server/models/Friendship';
 import User from '~/server/models/User';
 
 export default defineEventHandler(async (e) => {
@@ -9,22 +10,23 @@ export default defineEventHandler(async (e) => {
 		const user = await User.findById(userId);
 		if (!user) throw createError({ statusCode: 404 });
 
-		const users = await Promise.all(
-			user.followings.map(async (u) => {
-				const i = await User.findById(u.userId, {
-					password: false,
-					email: false,
-					isEmailConfirmed: false,
-					followings: false,
-				}).lean();
+		const friendships = await Friendship.find({ friends: { $in: [user._id] } });
 
-				return i;
-			})
+		const friendsIds = friendships
+			.flatMap((friendship) => friendship.friends)
+			.filter((id) => id.toString() !== user._id.toString());
+
+		const friends = await Promise.all(
+			friendsIds
+				.map(async (id) => {
+					const user = await User.findById(id).select('-password').lean();
+
+					return user;
+				})
+				.filter((u) => u != null)
 		);
 
-		console.log(users);
-
-		return getSuccessResponse(200, 'Received friends', users);
+		return getSuccessResponse(200, 'Received friends', friends);
 	} catch (err) {
 		console.error(err);
 
