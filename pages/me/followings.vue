@@ -46,11 +46,11 @@
 				v-if="Array.isArray(users) && users.length > 0"
 				class="grid justify-center gap-4"
 			>
-				<div v-for="u in users" class="flex gap-4">
+				<div v-for="u in users" class="md:flex md:gap-4">
 					<MyFriendCard :user="u" />
 
 					<!-- Buttons -->
-					<div class="flex flex-col items-center gap-4 sm:flex-row">
+					<div class="flex flex-col items-stretch gap-4 sm:flex-row">
 						<button
 							class="rounded-full bg-red-500 px-4 py-1 font-medium uppercase text-white"
 							@click="unfollowUser(u._id)"

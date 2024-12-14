@@ -49,7 +49,7 @@
 	>
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<ChevronShapeTemplate
-				class="bg-white bg-opacity-80 px-4 py-32 text-2xl font-bold uppercase text-white shadow-lg"
+				class="bg-white bg-opacity-80 px-4 py-64 text-2xl font-bold uppercase text-white shadow-lg"
 			>
 				<div class="mb-4 max-w-max rounded-lg bg-[#5ab8cd] p-4">
 					<p>{{ getReadableDate(new Date()) }}</p>

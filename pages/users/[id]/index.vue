@@ -67,7 +67,7 @@
 		<main class="mx-auto my-0 max-w-screen-lg px-4">
 			<h1 class="mb-5 text-right font-tnr text-5xl text-white">Profile</h1>
 
-			<div class="flex items-start justify-between">
+			<div class="items-start justify-between md:flex">
 				<UserProfileDetails
 					:username="user?.username || 'Guest'"
 					:age="user?.age !== undefined ? String(user.age) : 'N/A'"
